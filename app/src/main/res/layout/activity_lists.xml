@@ -32,14 +32,14 @@
             android:textSize="30sp" />
 
         <TextView
-            android:text="Queste sono le tue liste della spesa"
-            android:layout_width="match_parent"
+            android:text="Le tue liste"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textTueListe"
-            android:textSize="18sp"
-            android:layout_below="@+id/textBenvenuto"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="24dp" />
+            android:layout_centerHorizontal="true"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
 
     </RelativeLayout>
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/listViewMie"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 
@@ -61,14 +61,15 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Queste sono le liste della spesa condivise con te"
+            android:text="Condivise con te"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textAltreListe"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textAlignment="textStart"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
 
     </RelativeLayout>
 
@@ -81,7 +82,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/listViewCondivise"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 

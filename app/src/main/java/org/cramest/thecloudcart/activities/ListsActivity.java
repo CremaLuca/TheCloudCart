@@ -41,7 +41,9 @@ public class ListsActivity extends Activity implements DataHandler {
         InizializzaApplicazione();
         //Carichiamo la lista
         CaricaListaMie();
+        setAdapter(R.id.listViewMie,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento..."))));
         CaricaListaCondivise();
+        setAdapter(R.id.listViewCondivise,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento..."))));
     }
 
     private void InizializzaApplicazione(){
@@ -72,9 +74,9 @@ public class ListsActivity extends Activity implements DataHandler {
         Connettore.getInstance(this).GetDataFromWebsite(this,"listeSpesaCondivise",parametri,valori);
     }
 
-    private void setAdapter(final ArrayList<Lista> lista){
+    private void setAdapter(int viewID, final ArrayList<Lista> lista){
         ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ricavaNomeListe(lista));
-        ListView lv = (ListView) findViewById(R.id.listViewMie);
+        ListView lv = (ListView) findViewById(viewID);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,13 +98,13 @@ public class ListsActivity extends Activity implements DataHandler {
                 //Convertiamo i dati in liste
                 ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
                 //Inseriamo nel ListView le liste
-                setAdapter(liste);
+                setAdapter(R.id.listViewMie,liste);
             }
             if(nome.equals("listeSpesaCondivise")){
                 //Convertiamo i dati in liste
                 ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
                 //Inseriamo nel ListView le liste
-                setAdapter(liste);
+                setAdapter(R.id.listViewCondivise,liste);
             }
         }else{
             Toast.makeText(this, "Errore : " + data, Toast.LENGTH_SHORT).show();
