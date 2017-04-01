@@ -7,23 +7,23 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.EditText;
 
-/*import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;*/
+import com.google.android.gms.common.api.Scope;
 
 import org.cramest.thecloudcart.network.LoginApp;
 import org.cramest.thecloudcart.R;
 
-public class LoginActivity extends FragmentActivity implements /*GoogleApiClient.OnConnectionFailedListener,*/View.OnClickListener{
+public class LoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
 
 
 
-    //GoogleApiClient mGoogleApiClient;
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.PLUS_LOGIN))
                 .requestEmail()
                 .build();
@@ -44,7 +44,7 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        findViewById(R.id.sign_in_button).setOnClickListener(this);*/
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.loginButton).setOnClickListener(this);
         findViewById(R.id.registerButton).setOnClickListener(this);
     }
@@ -57,9 +57,9 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //case R.id.sign_in_button:
-                //signIn();
-               // break;
+            case R.id.sign_in_button:
+                signIn();
+                break;
             case R.id.loginButton:
                 String username = ((EditText)findViewById(R.id.editUsername)).getText().toString();
                 String password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
@@ -80,8 +80,8 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
     }
 
     private void signIn() {
-       // Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        //startActivityForResult(signInIntent, 5);
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, 5);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -89,12 +89,12 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == 5) {
-           // GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            //handleSignInResult(result);
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
         }
     }
 
-    /*private void handleSignInResult(GoogleSignInResult result) {
+    private void handleSignInResult(GoogleSignInResult result) {
         //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         System.out.println("handleSignInResult:" + result.isSuccess() + " status : " + result.getStatus());
         if (result.isSuccess()) {
@@ -105,7 +105,7 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
             System.out.println("Non oke");
         }
         result.getStatus();
-    }*/
+    }
 
     @Override
     protected void onRestart() {
@@ -132,8 +132,8 @@ public class LoginActivity extends FragmentActivity implements /*GoogleApiClient
         super.onStop();
     }
 
-    /*@Override
+    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }*/
+    }
 }

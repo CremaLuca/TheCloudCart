@@ -25,7 +25,7 @@ public class ListsActivity extends Activity implements DataHandler {
 
     private String username;
     private String password;
-    private ArrayList<Lista> liste;
+    //private ArrayList<Lista> liste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,8 @@ public class ListsActivity extends Activity implements DataHandler {
         //Inizializziamo categorie e prodotti dell'utente
         InizializzaApplicazione();
         //Carichiamo la lista
-        CaricaLista();
+        CaricaListaMie();
+        CaricaListaCondivise();
     }
 
     private void InizializzaApplicazione(){
@@ -53,7 +54,7 @@ public class ListsActivity extends Activity implements DataHandler {
 
     /** La richiesta delle liste della spesa dell'utente
      */
-    private void CaricaLista(){
+    private void CaricaListaMie(){
         System.out.println("ListsActivity - Carico le liste dell'utente " + username);
         //richiesta = "userlist" & user = username
         String[] parametri = {"req","user"};
@@ -62,29 +63,46 @@ public class ListsActivity extends Activity implements DataHandler {
         Connettore.getInstance(this).GetDataFromWebsite(this,"listeSpesaMie",parametri,valori);
     }
 
+    private void CaricaListaCondivise(){
+        System.out.println("ListsActivity - Carico le liste dell'utente " + username);
+        //richiesta = "userlist" & user = username
+        String[] parametri = {"req","user"};
+        String[] valori = {"getCondivisioniUtente",username};
+        //Chiediamo al sito le liste
+        Connettore.getInstance(this).GetDataFromWebsite(this,"listeSpesaCondivise",parametri,valori);
+    }
+
+    private void setAdapter(final ArrayList<Lista> lista){
+        ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ricavaNomeListe(lista));
+        ListView lv = (ListView) findViewById(R.id.listViewMie);
+        lv.setAdapter(listViewadapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Nuovo intent per aprire la activity per visualizzare i prodotti in questa lista
+                Intent i = new Intent(ListsActivity.this,ProdottiActivity.class);
+                i.putExtra("IDLista",lista.get(position).getID());
+                startActivity(i);
+            }
+        });
+    }
+
     @Override
     public void HandleData(String nome, boolean successo,String data){
         if(successo) {
+            System.out.println("Liste : " + data);
             //Controlliamo che siano tornati i miei dati e non altri
             if (nome.equals("listeSpesaMie")) {
                 //Convertiamo i dati in liste
-                liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
+                ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
                 //Inseriamo nel ListView le liste
-                ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ricavaNomeListe(liste));
-                ListView lv = (ListView) findViewById(R.id.listViewMie);
-                lv.setAdapter(listViewadapter);
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //Nuovo intent per aprire la activity per visualizzare i prodotti in questa lista
-                        Intent i = new Intent(ListsActivity.this,ProdottiActivity.class);
-                        i.putExtra("IDLista",liste.get(position).getID());
-                        startActivity(i);
-                    }
-                });
+                setAdapter(liste);
             }
             if(nome.equals("listeSpesaCondivise")){
-
+                //Convertiamo i dati in liste
+                ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
+                //Inseriamo nel ListView le liste
+                setAdapter(liste);
             }
         }else{
             Toast.makeText(this, "Errore : " + data, Toast.LENGTH_SHORT).show();
@@ -92,6 +110,7 @@ public class ListsActivity extends Activity implements DataHandler {
     }
 
     private String[] ricavaNomeListe(ArrayList<Lista> liste){
+        System.out.print("Nome Liste " + liste.get(0).getNome());
         String[] nomi = new String[liste.size()];
         for(int i=0;i<liste.size();i++){
             nomi[i] = liste.get(i).getNome();
