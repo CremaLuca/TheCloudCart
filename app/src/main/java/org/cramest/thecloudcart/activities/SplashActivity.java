@@ -13,7 +13,6 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
         Intent intent = new Intent(this,LandActivity.class);
         startActivity(intent);
         //impediamo di tornare indietro con finish()
