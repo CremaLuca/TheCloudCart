@@ -22,16 +22,16 @@
         </activity>
         <activity
             android:name=".activities.LandActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
         <activity
             android:name=".activities.LoginActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
         <activity
             android:name=".activities.ListsActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
         <activity
             android:name=".activities.ProdottiActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
     </application>
 
 </manifest>
