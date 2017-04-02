@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.ListaProdotti;
+import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.network.Connettore;
@@ -36,6 +37,16 @@ public class ProdottiActivity extends Activity implements DataHandler {
         String[] pars = {"req","listID"};
         String[] vals = {"getProductList",IDLista+""};
         Connettore.getInstance(this).GetDataFromWebsite(this,"ProdottiLista",pars,vals);
+        prodottiInLista = new ArrayList<ProdottoInLista>();
+        prodottiInLista.add(new ProdottoInLista(new Prodotto("Caricamento..."),-1,""));
+        setListAdapter();
+
+    }
+
+    private void setListAdapter(){
+        ListView lv = (ListView) findViewById(R.id.listProdotti);
+        ProdottoAdapter listViewadapter = new ProdottoAdapter(this, R.layout.list_prodotto, prodottiInLista);
+        lv.setAdapter(listViewadapter);
     }
 
     @Override
@@ -43,19 +54,10 @@ public class ProdottiActivity extends Activity implements DataHandler {
         if(success){
             if(nome.equals("ProdottiLista")){
                 prodottiInLista = new ArrayList<ProdottoInLista>(Arrays.asList(WebsiteDataManager.getProdottiInLista(data)));
+                prodottiInLista.add(new ProdottoInLista(new Prodotto("Aggiungi prodotto"),0,""));
                 //Inseriamo nel ListView le liste
-                ListView lv = (ListView) findViewById(R.id.listProdotti);
-                ProdottoAdapter listViewadapter = new ProdottoAdapter(this, R.layout.list_prodotto, prodottiInLista);
-                lv.setAdapter(listViewadapter);
+                setListAdapter();
             }
         }
-    }
-
-    private String[] ricavaNomeProdotti(ArrayList<ProdottoInLista> prodotti){
-        String[] nomi = new String[prodotti.size()];
-        for(int i=0;i<prodotti.size();i++){
-            nomi[i] = prodotti.get(i).getProdotto().getNome();
-        }
-        return nomi;
     }
 }

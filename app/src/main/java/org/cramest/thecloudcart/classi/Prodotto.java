@@ -22,6 +22,11 @@ public class Prodotto {
         this.categoria = categoria;
     }
 
+    public Prodotto(String nome){
+        this.ID = -1;
+        this.nome = nome;
+    }
+
     public int getID() { return ID; }
     public String getNome() {
         return nome;

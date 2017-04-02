@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -27,7 +28,7 @@
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewNumProdotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textViewQta"
@@ -35,4 +36,13 @@
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/textViewQta"
         android:text="Quantità :" />
+
+    <TextView
+        android:id="@+id/textViewDescrizioneProdotto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewNomeProdotto"
+        android:text="Descrizione" />
 </RelativeLayout>

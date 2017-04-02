@@ -33,7 +33,7 @@ public class ListaAdapter extends ArrayAdapter<Lista> {
         if (i != null) {
             TextView nomeProdotto = (TextView) v.findViewById(R.id.textViewNomeLista);
             TextView quantita = (TextView) v.findViewById(R.id.textViewQtaLista);
-            TextView numProdotti = (TextView) v.findViewById(R.id.textViewNumProdotti);
+            TextView numProdotti = (TextView) v.findViewById(R.id.textViewNumProdotto);
             nomeProdotto.setText(i.getNome());
             if(i.getQuantita() >= 0) {
                 quantita.setVisibility(View.VISIBLE);

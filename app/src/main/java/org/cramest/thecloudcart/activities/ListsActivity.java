@@ -79,10 +79,18 @@ public class ListsActivity extends Activity implements DataHandler {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Nuovo intent per aprire la activity per visualizzare i prodotti in questa lista
-                Intent i = new Intent(ListsActivity.this,ProdottiActivity.class);
-                i.putExtra("IDLista",lista.get(position).getID());
-                startActivity(i);
+                int idProdotto = lista.get(position).getID();
+                if(idProdotto != -1) {
+                    //Nuovo intent per aprire la activity per visualizzare i prodotti in questa lista
+                    Intent i = new Intent(ListsActivity.this, ProdottiActivity.class);
+                    i.putExtra("IDLista", idProdotto);
+                    startActivity(i);
+                }else{
+                    //Nuovo intent per aggiungere una nuova lista
+                    // TODO : Intent i = new Intent(ListsActivity.this, AggiungiLista.class);
+                    //i.putExtra("username", username);
+                    //startActivity(i);
+                }
             }
         });
     }
@@ -90,17 +98,16 @@ public class ListsActivity extends Activity implements DataHandler {
     @Override
     public void HandleData(String nome, boolean successo,String data){
         if(successo) {
-            System.out.println("Liste : " + data);
-            //Controlliamo che siano tornati i miei dati e non altri
+            //Dato che facciamo solo due richieste ed entrambe tornano un arraylist di liste facciamo il recupero di entrambe fuori
+            //Convertiamo i dati in liste
+            ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
             if (nome.equals("listeSpesaMie")) {
-                //Convertiamo i dati in liste
-                ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
+                //Aggiungamo il bottone crea nuova lista
+                liste.add(new Lista(-1,"Crea nuova lista",-1));
                 //Inseriamo nel ListView le liste
                 setAdapter(R.id.listViewMie,liste);
             }
             if(nome.equals("listeSpesaCondivise")){
-                //Convertiamo i dati in liste
-                ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
                 //Inseriamo nel ListView le liste
                 setAdapter(R.id.listViewCondivise,liste);
             }

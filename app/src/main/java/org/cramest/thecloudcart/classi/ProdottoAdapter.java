@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
@@ -33,8 +34,20 @@ public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
         if (i != null) {
             TextView nomeProdotto = (TextView) v.findViewById(R.id.textViewNomeProdotto);
             TextView quantita = (TextView) v.findViewById(R.id.textViewQta);
+            TextView descrizione = (TextView) v.findViewById(R.id.textViewDescrizioneProdotto);
             nomeProdotto.setText(i.getProdotto().getNome());
-            quantita.setText(i.getQuantita() + "");
+            if(i.getQuantita() > 0) {
+                quantita.setText(i.getQuantita() + "");
+            }else{
+                ((TextView) v.findViewById(R.id.textViewNumProdotto)).setText("");
+                quantita.setText("");
+            }
+            if(i.getDescrizione() != null || !i.getDescrizione().equals("")){
+                descrizione.setText(i.getDescrizione());
+            }else{
+                //descrizione.setVisibility(View.GONE);
+                descrizione.setHeight(0);
+            }
         }
 
         return v;
