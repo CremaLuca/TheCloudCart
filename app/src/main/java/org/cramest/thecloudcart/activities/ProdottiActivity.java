@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.ListaProdotti;
+import org.cramest.thecloudcart.classi.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
@@ -41,8 +44,8 @@ public class ProdottiActivity extends Activity implements DataHandler {
             if(nome.equals("ProdottiLista")){
                 prodottiInLista = new ArrayList<ProdottoInLista>(Arrays.asList(WebsiteDataManager.getProdottiInLista(data)));
                 //Inseriamo nel ListView le liste
-                ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ricavaNomeProdotti(prodottiInLista));
                 ListView lv = (ListView) findViewById(R.id.listProdotti);
+                ProdottoAdapter listViewadapter = new ProdottoAdapter(this, R.layout.list_prodotto, prodottiInLista);
                 lv.setAdapter(listViewadapter);
             }
         }
