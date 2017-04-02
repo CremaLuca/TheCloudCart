@@ -35,9 +35,6 @@ public class ListsActivity extends Activity implements DataHandler {
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
         password = getIntent().getExtras().getString("password");
-        //recuperiamo il testo di benvenuto e mettiamo il nome dell'utente
-        TextView textBenvenuto = (TextView) findViewById(R.id.textBenvenuto);
-        textBenvenuto.setText("Benvenuto, " + username);
         //Inizializziamo categorie e prodotti dell'utente
         InizializzaApplicazione();
         //Carichiamo la lista
@@ -110,14 +107,5 @@ public class ListsActivity extends Activity implements DataHandler {
         }else{
             Toast.makeText(this, "Errore : " + data, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private String[] ricavaNomeListe(ArrayList<Lista> liste){
-        System.out.print("Nome Liste " + liste.get(0).getNome());
-        String[] nomi = new String[liste.size()];
-        for(int i=0;i<liste.size();i++){
-            nomi[i] = liste.get(i).getNome();
-        }
-        return nomi;
     }
 }
