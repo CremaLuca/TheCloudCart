@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.ListaAdapter;
 import org.cramest.thecloudcart.classi.ListaCategorie;
 import org.cramest.thecloudcart.classi.ListaProdotti;
 import org.cramest.thecloudcart.network.Connettore;
@@ -41,9 +42,9 @@ public class ListsActivity extends Activity implements DataHandler {
         InizializzaApplicazione();
         //Carichiamo la lista
         CaricaListaMie();
-        setAdapter(R.id.listViewMie,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento..."))));
+        setAdapter(R.id.listViewMie,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento...",-1))));
         CaricaListaCondivise();
-        setAdapter(R.id.listViewCondivise,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento..."))));
+        setAdapter(R.id.listViewCondivise,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento...",-1))));
     }
 
     private void InizializzaApplicazione(){
@@ -75,7 +76,7 @@ public class ListsActivity extends Activity implements DataHandler {
     }
 
     private void setAdapter(int viewID, final ArrayList<Lista> lista){
-        ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ricavaNomeListe(lista));
+        ListaAdapter listViewadapter = new ListaAdapter(this, R.layout.list_lista_prodotti, lista);
         ListView lv = (ListView) findViewById(viewID);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

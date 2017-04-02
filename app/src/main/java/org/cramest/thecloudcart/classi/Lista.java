@@ -7,10 +7,12 @@ public class Lista {
 
     private int ID;
     private String nome;
+    private int quantita;
 
-    public Lista(int ID, String nome) {
+    public Lista(int ID, String nome,int quantita) {
         this.ID = ID;
         this.nome = nome;
+        this.quantita = quantita;
     }
 
     public int getID() {
@@ -20,4 +22,6 @@ public class Lista {
     public String getNome() {
         return nome;
     }
+
+    public int getQuantita() { return quantita; }
 }

@@ -9,14 +9,23 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="Login in corso..."
-        android:layout_width="match_parent"
         android:id="@+id/textView2"
-        android:textAlignment="center"
-        android:textSize="24sp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/progressBar"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="234dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginBottom="17dp"
+        android:text="Login in corso..."
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
 </RelativeLayout>
