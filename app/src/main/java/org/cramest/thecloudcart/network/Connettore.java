@@ -142,7 +142,8 @@ public class Connettore {
                     handler.HandleData(nome, success, risultati[1]);
                     super.onPostExecute(result);
                 }else{
-                    System.out.println("ERRORE NEL RESULT : " + result + " richiesta con nome : " + nome);
+                    System.out.println("Result vuoto : " + result + " richiesta con nome : " + nome);
+                    handler.HandleData(nome, true, null);
                 }
             }else{
                 System.out.println("Result = null");

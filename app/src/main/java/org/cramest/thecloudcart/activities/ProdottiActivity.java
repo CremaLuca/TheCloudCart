@@ -53,10 +53,14 @@ public class ProdottiActivity extends Activity implements DataHandler {
     public void HandleData(String nome, boolean success, String data) {
         if(success){
             if(nome.equals("ProdottiLista")){
-                prodottiInLista = new ArrayList<ProdottoInLista>(Arrays.asList(WebsiteDataManager.getProdottiInLista(data)));
-                prodottiInLista.add(new ProdottoInLista(new Prodotto("Aggiungi prodotto"),0,""));
-                //Inseriamo nel ListView le liste
-                setListAdapter();
+                if(data != null) {
+                    prodottiInLista = new ArrayList<ProdottoInLista>(Arrays.asList(WebsiteDataManager.getProdottiInLista(data)));
+                    prodottiInLista.add(new ProdottoInLista(new Prodotto("Aggiungi prodotto"), 0, ""));
+                    //Inseriamo nel ListView le liste
+                    setListAdapter();
+                }else{
+                    prodottiInLista.clear();
+                }
             }
         }
     }
