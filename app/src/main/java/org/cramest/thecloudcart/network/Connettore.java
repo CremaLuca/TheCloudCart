@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -107,6 +108,11 @@ public class Connettore {
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
+            } catch(ConnectException e){
+                System.out.println("Connettore - ConnectException : Ora riprovo a caricare la pagina se c'è internet");
+                if(isNetworkAvailable()) {
+                    doInBackground(); //Riprova a caricare
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

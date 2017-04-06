@@ -59,8 +59,12 @@ public class ListsActivity extends Activity implements DataHandler {
         //richiesta = "userlist" & user = username
         String[] parametri = {"req","user"};
         String[] valori = {"getUserList",username};
-        //Chiediamo al sito le liste
-        Connettore.getInstance(this).GetDataFromWebsite(this,"listeSpesaMie",parametri,valori);
+        if(Connettore.getInstance(this).isNetworkAvailable()) {
+            //Chiediamo al sito le liste
+            Connettore.getInstance(this).GetDataFromWebsite(this, "listeSpesaMie", parametri, valori);
+        }else{
+            //TODO : Carichiamo le liste dal locale
+        }
     }
 
     private void CaricaListaCondivise(){
@@ -68,8 +72,13 @@ public class ListsActivity extends Activity implements DataHandler {
         //richiesta = "userlist" & user = username
         String[] parametri = {"req","user"};
         String[] valori = {"getCondivisioniUtente",username};
-        //Chiediamo al sito le liste
-        Connettore.getInstance(this).GetDataFromWebsite(this,"listeSpesaCondivise",parametri,valori);
+        if(Connettore.getInstance(this).isNetworkAvailable()) {
+            //Chiediamo al sito le liste
+            Connettore.getInstance(this).GetDataFromWebsite(this, "listeSpesaCondivise", parametri, valori);
+        }else{
+            //non carichiamo niente perchè tanto gli altri non possono visualizzare le modifiche, eliminiamo la scritta liste condivise
+            ((TextView)findViewById(R.id.textAltreListe)).setVisibility(View.GONE);
+        }
     }
 
     private void setAdapter(int viewID, final ArrayList<Lista> lista){
