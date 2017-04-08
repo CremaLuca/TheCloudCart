@@ -36,7 +36,7 @@ public class AggiungiListaActivity extends Activity implements View.OnClickListe
                 i = new Intent(AggiungiListaActivity.this, AggiungiListaCondividiActivity.class);
                 i.putExtra("nomeLista", nomeLista);
                 //Aggiungiamo la lista tramite l'API
-                String[] parametri = {"req","user","name"};
+                String[] parametri = {"req","user","listName"};
                 String[] valori = {"addList",username,nomeLista};
                 if(Connettore.getInstance(this).isNetworkAvailable()) {
                     //Chiediamo al sito le liste
@@ -51,6 +51,7 @@ public class AggiungiListaActivity extends Activity implements View.OnClickListe
     @Override
     public void HandleData(String nome, boolean success, String data) {
         if(success) {
+            System.out.println("OK : " + data);
             startActivity(i);
         }else{
             Toast.makeText(this,data, Toast.LENGTH_SHORT).show();
