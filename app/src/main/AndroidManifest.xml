@@ -32,6 +32,8 @@
         <activity
             android:name=".activities.ProdottiActivity"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+        <activity android:name=".activities.AggiungiListaActivity" />
+        <activity android:name=".activities.AggiungiListaCondividiActivity"></activity>
     </application>
 
 </manifest>

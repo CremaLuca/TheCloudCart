@@ -96,9 +96,9 @@ public class ListsActivity extends Activity implements DataHandler {
                     startActivity(i);
                 }else{
                     //Nuovo intent per aggiungere una nuova lista
-                    // TODO : Intent i = new Intent(ListsActivity.this, AggiungiLista.class);
-                    //i.putExtra("username", username);
-                    //startActivity(i);
+                    Intent i = new Intent(ListsActivity.this, AggiungiListaActivity.class);
+                    i.putExtra("username", username);
+                    startActivity(i);
                 }
             }
         });
