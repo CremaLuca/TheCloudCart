@@ -26,6 +26,8 @@ import java.util.Arrays;
 public class ProdottiActivity extends Activity implements DataHandler {
 
     private int IDLista;
+    private String username;
+    private String userID;
     private ArrayList<ProdottoInLista> prodottiInLista;
 
     @Override
@@ -34,6 +36,8 @@ public class ProdottiActivity extends Activity implements DataHandler {
         setContentView(R.layout.activity_prodotti);
         //recuperiamo l'id della lista corrente
         IDLista = getIntent().getExtras().getInt("IDLista");
+        username = getIntent().getExtras().getString("username");
+        userID = getIntent().getExtras().getString("userID");
         String[] pars = {"req","listID"};
         String[] vals = {"getProductList",IDLista+""};
         Connettore.getInstance(this).GetDataFromWebsite(this,"ProdottiLista",pars,vals);

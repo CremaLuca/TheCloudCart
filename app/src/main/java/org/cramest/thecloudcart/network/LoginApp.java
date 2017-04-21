@@ -15,15 +15,15 @@ import org.cramest.utils.DataSaver;
 
 public class LoginApp implements DataHandler {
 
-    String Username;
-    String Password;
+    private String username;
+    private String password;
     Activity a;
 
     public LoginApp(Activity a, String username, String password){
         String[] parametri = {"req","user","pass"};
         String[] valori = {"login",username,password};
-        Username = username;
-        Password = password;
+        this.username = username;
+        this.password = password;
         this.a = a;
         System.out.println("LoginApp - Richiedo il login");
         Connettore.getInstance(a).GetDataFromWebsite(this,"loginApp",parametri,valori);
@@ -38,11 +38,12 @@ public class LoginApp implements DataHandler {
                 if(nome.equals("loginApp")) {
                     System.out.println("Nome utente e password corretti");
                     Intent i = new Intent(a, ListsActivity.class);
-                    i.putExtra("username", Username);
-                    i.putExtra("password", Password);
+                    i.putExtra("username", username);
+                    i.putExtra("userID", data);
                     //Salviamo nella memoria i nostri dati
-                    DataSaver.getInstance().saveDataString(a, "username", Username);
-                    DataSaver.getInstance().saveDataString(a, "password", Password);
+                    DataSaver.getInstance().saveDataString(a, "username", username);
+                    DataSaver.getInstance().saveDataString(a, "userID", data);
+                    DataSaver.getInstance().saveDataString(a, "password", password);
                     //System.out.println("Salvato nome utente e password : " + DataSaver.getInstance().getDataString(c,"username") + " - " + DataSaver.getInstance().getDataString(c,"password"));
                     a.startActivity(i);
                     a.finish();

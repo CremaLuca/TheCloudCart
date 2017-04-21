@@ -25,7 +25,7 @@ import java.util.Arrays;
 public class ListsActivity extends Activity implements DataHandler {
 
     private String username;
-    private String password;
+    private String userID;
     //private ArrayList<Lista> liste;
 
     @Override
@@ -34,7 +34,7 @@ public class ListsActivity extends Activity implements DataHandler {
         setContentView(R.layout.activity_lists);
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
-        password = getIntent().getExtras().getString("password");
+        userID = getIntent().getExtras().getString("userID");
         //Inizializziamo categorie e prodotti dell'utente
         InizializzaApplicazione();
         //Carichiamo la lista
@@ -57,8 +57,8 @@ public class ListsActivity extends Activity implements DataHandler {
     private void CaricaListaMie(){
         System.out.println("ListsActivity - Carico le liste dell'utente " + username);
         //richiesta = "userlist" & user = username
-        String[] parametri = {"req","user"};
-        String[] valori = {"getUserList",username};
+        String[] parametri = {"req","userID"};
+        String[] valori = {"getUserList",userID};
         if(Connettore.getInstance(this).isNetworkAvailable()) {
             //Chiediamo al sito le liste
             Connettore.getInstance(this).GetDataFromWebsite(this, "listeSpesaMie", parametri, valori);
@@ -70,8 +70,8 @@ public class ListsActivity extends Activity implements DataHandler {
     private void CaricaListaCondivise(){
         System.out.println("ListsActivity - Carico le liste dell'utente " + username);
         //richiesta = "userlist" & user = username
-        String[] parametri = {"req","user"};
-        String[] valori = {"getCondivisioniUtente",username};
+        String[] parametri = {"req","userID"};
+        String[] valori = {"getCondivisioniUtente",userID};
         if(Connettore.getInstance(this).isNetworkAvailable()) {
             //Chiediamo al sito le liste
             Connettore.getInstance(this).GetDataFromWebsite(this, "listeSpesaCondivise", parametri, valori);
@@ -93,11 +93,14 @@ public class ListsActivity extends Activity implements DataHandler {
                     //Nuovo intent per aprire la activity per visualizzare i prodotti in questa lista
                     Intent i = new Intent(ListsActivity.this, ProdottiActivity.class);
                     i.putExtra("IDLista", idProdotto);
+                    i.putExtra("username", username);
+                    i.putExtra("userID", userID);
                     startActivity(i);
                 }else{
                     //Nuovo intent per aggiungere una nuova lista
                     Intent i = new Intent(ListsActivity.this, AggiungiListaActivity.class);
                     i.putExtra("username", username);
+                    i.putExtra("userID", userID);
                     startActivity(i);
                 }
             }
