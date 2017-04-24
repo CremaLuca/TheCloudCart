@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.activities.ListsActivity;
+import org.cramest.thecloudcart.activities.ListsFragmentsActivity;
+import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.utils.DataSaver;
@@ -37,7 +39,7 @@ public class LoginApp implements DataHandler {
             if(success){
                 if(nome.equals("loginApp")) {
                     System.out.println("Nome utente e password corretti");
-                    Intent i = new Intent(a, ListsActivity.class);
+                    Intent i = new Intent(a, ListsFragmentsActivity.class);
                     i.putExtra("username", username);
                     i.putExtra("userID", data);
                     //Salviamo nella memoria i nostri dati
