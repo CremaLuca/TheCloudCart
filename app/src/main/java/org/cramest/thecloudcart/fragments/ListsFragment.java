@@ -90,10 +90,14 @@ public class ListsFragment extends Fragment implements DataHandler{
         super.onCreate(savedInstanceState);
     }
 
+    public void OnActivityCreated(Bundle savedInstanceState){
+        main();
+        super.onActivityCreated(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        main();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lists, container, false);
     }
