@@ -63,9 +63,8 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
             case R.id.loginButton:
                 String username = ((EditText)findViewById(R.id.editUsername)).getText().toString();
                 String password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
-                new LoginApp(this,username,password);
+                LoginApp l = new LoginApp(this,username,password);
                 finish();
-                System.out.println("LOGINACTIVITY - CIAOOOOOONEE");
                 break;
             case R.id.registerButton:
                 loadAppRegister();
@@ -102,7 +101,7 @@ public class LoginActivity extends FragmentActivity implements GoogleApiClient.O
             GoogleSignInAccount acct = result.getSignInAccount();
             System.out.println("Benvenuto " + acct.getGivenName());
         } else {
-            System.out.println("Non oke");
+            System.out.println("Non oke, errore del codice della app, non registrata");
         }
         result.getStatus();
     }

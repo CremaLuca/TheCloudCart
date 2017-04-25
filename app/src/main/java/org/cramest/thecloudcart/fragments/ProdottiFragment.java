@@ -52,7 +52,6 @@ public class ProdottiFragment extends Fragment implements DataHandler{
      * @param listName Nome della lista da mostrare.
      * @return A new instance of fragment ProdottiFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ProdottiFragment newInstance(int listID,String listName) {
         ProdottiFragment fragment = new ProdottiFragment();
         Bundle args = new Bundle();

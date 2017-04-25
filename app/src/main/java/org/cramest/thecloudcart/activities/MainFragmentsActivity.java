@@ -1,18 +1,14 @@
 package org.cramest.thecloudcart.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
-public class ListsFragmentsActivity extends FragmentActivity implements ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener{
+public class MainFragmentsActivity extends FragmentActivity implements ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener{
 
     private String username;
     private String userID;
@@ -23,7 +19,7 @@ public class ListsFragmentsActivity extends FragmentActivity implements ListsFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lists_fragments);
+        setContentView(R.layout.main_activity_fragments);
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");

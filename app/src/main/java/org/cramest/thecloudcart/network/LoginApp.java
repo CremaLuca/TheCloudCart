@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
-import org.cramest.thecloudcart.activities.ListsFragmentsActivity;
+import org.cramest.thecloudcart.activities.MainFragmentsActivity;
 import org.cramest.utils.DataSaver;
 
 /**
@@ -35,7 +35,7 @@ public class LoginApp implements DataHandler {
             if(success){
                 if(nome.equals("loginApp")) {
                     System.out.println("Nome utente e password corretti");
-                    Intent i = new Intent(a, ListsFragmentsActivity.class);
+                    Intent i = new Intent(a, MainFragmentsActivity.class);
                     i.putExtra("username", username);
                     i.putExtra("userID", data);
                     //Salviamo nella memoria i nostri dati
