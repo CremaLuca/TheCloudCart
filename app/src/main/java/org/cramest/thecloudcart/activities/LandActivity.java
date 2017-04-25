@@ -38,7 +38,7 @@ public class LandActivity extends Activity {
 
             if(username != null) {
                 //Passiamo direttamente alla activity in cui mostriamo la lista
-                Intent i = new Intent(this, ListsActivity.class);
+                Intent i = new Intent(this, ListsFragmentsActivity.class);
                 i.putExtra("username", username);
                 i.putExtra("password", password);
                 startActivity(i);

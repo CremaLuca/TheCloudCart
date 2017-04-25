@@ -26,6 +26,7 @@ import java.util.Arrays;
 public class ProdottiActivity extends Activity implements DataHandler {
 
     private int IDLista;
+    private String nomeLista;
     private String username;
     private String userID;
     private ArrayList<ProdottoInLista> prodottiInLista;
@@ -34,10 +35,12 @@ public class ProdottiActivity extends Activity implements DataHandler {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prodotti);
-        //recuperiamo l'id della lista corrente
+        //recuperiamo i dati della lista corrente
         IDLista = getIntent().getExtras().getInt("IDLista");
+        nomeLista = getIntent().getExtras().getString("nomeLista");
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");
+
         String[] pars = {"req","listID"};
         String[] vals = {"getProductList",IDLista+""};
         Connettore.getInstance(this).GetDataFromWebsite(this,"ProdottiLista",pars,vals);
@@ -51,6 +54,18 @@ public class ProdottiActivity extends Activity implements DataHandler {
         ListView lv = (ListView) findViewById(R.id.listProdotti);
         ProdottoAdapter listViewadapter = new ProdottoAdapter(this, R.layout.list_prodotto, prodottiInLista);
         lv.setAdapter(listViewadapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProdottoInLista curProdotto = prodottiInLista.get(position);
+                if(curProdotto.getQuantita() > 0){
+                    //Se e' un prodotto normale apriremo una finestra con i dettagli del prodotto, senza una nuova activity
+                }else if(curProdotto.getQuantita() == 0){
+                    //Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
+                    //Nuova activity chiederemo i dettagli del prodotto da aggiungere
+                }
+            }
+        });
     }
 
     @Override
@@ -63,7 +78,10 @@ public class ProdottiActivity extends Activity implements DataHandler {
                     //Inseriamo nel ListView le liste
                     setListAdapter();
                 }else{
+                    System.out.println("Lista "+ nomeLista + " vuota");
                     prodottiInLista.clear();
+                    prodottiInLista.add(new ProdottoInLista(new Prodotto("Aggiungi prodotto"), 0, ""));
+                    setListAdapter();
                 }
             }
         }

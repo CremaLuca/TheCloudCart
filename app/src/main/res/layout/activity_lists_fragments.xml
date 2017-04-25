@@ -3,12 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="org.cramest.thecloudcart.fragments.ListsFragment"
-        android:id="@+id/fragment"
-        android:layout_gravity="center_horizontal"
-        tools:layout="@layout/fragment_lists" />
+    android:weightSum="1"
+    android:id="@+id/fragment_list_container">
+
 </LinearLayout>

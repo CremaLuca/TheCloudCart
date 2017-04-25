@@ -15,7 +15,7 @@ import org.cramest.thecloudcart.network.DataHandler;
 
 public class AggiungiListaActivity extends Activity implements View.OnClickListener,DataHandler{
 
-    private String username;
+    private String userID;
     private Intent i;
 
     @Override
@@ -23,7 +23,7 @@ public class AggiungiListaActivity extends Activity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiungi_lista);
         //recuperiamo nome utente dall'intent
-        username = getIntent().getExtras().getString("username");
+        userID = getIntent().getExtras().getString("userID");
         ((Button)findViewById(R.id.buttonCreaLista)).setOnClickListener(this);
     }
 
@@ -36,11 +36,12 @@ public class AggiungiListaActivity extends Activity implements View.OnClickListe
                 i = new Intent(AggiungiListaActivity.this, AggiungiListaCondividiActivity.class);
                 i.putExtra("nomeLista", nomeLista);
                 //Aggiungiamo la lista tramite l'API
-                String[] parametri = {"req","user","listName"};
-                String[] valori = {"addList",username,nomeLista};
+                String[] parametri = {"req","userID","listName"};
+                String[] valori = {"addList",userID,nomeLista};
                 if(Connettore.getInstance(this).isNetworkAvailable()) {
                     //Chiediamo al sito le liste
                     Connettore.getInstance(this).GetDataFromWebsite(this, "aggiungiLista", parametri, valori);
+                    //TODO : Aprire la activity condividi per condividere la lista con gli amici
                 }else{
                     //TODO : Aggiunta liste in locale e aggiunta alla lista di cose da aggiornare
                 }

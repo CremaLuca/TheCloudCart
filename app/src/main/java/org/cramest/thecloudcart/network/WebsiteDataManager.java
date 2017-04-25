@@ -18,7 +18,6 @@ public class WebsiteDataManager {
         String[] strListe = data.split(sepRighe);
         Lista[] liste = new Lista[strListe.length];
         for(int i=0;i<strListe.length;i++){
-            System.out.println("Separo : " + strListe[i]);
             String[] pezziLista = strListe[i].split(sepColonne);
             liste[i] = new Lista(Integer.parseInt(pezziLista[0]),pezziLista[1],Integer.parseInt(pezziLista[2]));
         }

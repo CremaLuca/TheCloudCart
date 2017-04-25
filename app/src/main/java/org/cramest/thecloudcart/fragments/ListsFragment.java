@@ -2,10 +2,8 @@ package org.cramest.thecloudcart.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +14,6 @@ import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.activities.AggiungiListaActivity;
-import org.cramest.thecloudcart.activities.ListsActivity;
-import org.cramest.thecloudcart.activities.ProdottiActivity;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.ListaAdapter;
 import org.cramest.thecloudcart.classi.ListaCategorie;
@@ -32,21 +28,19 @@ import java.util.Arrays;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ListsFragment.OnFragmentInteractionListener} interface
+ * {@link ListsFragment.OnListFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ListsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListsFragment extends Fragment implements DataHandler{
+public class ListsFragment extends Fragment implements DataHandler {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "username";
-    private static final String ARG_PARAM2 = "userID";
+    private static final String ARG_PARAM = "userID";
 
     private String username;
     private String userID;
 
-    private OnFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener mListener;
 
     public ListsFragment() {
         // Required empty public constructor
@@ -56,16 +50,14 @@ public class ListsFragment extends Fragment implements DataHandler{
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param userID L'ID dell'utente.
      * @return A new instance of fragment ListsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ListsFragment newInstance(String param1, String param2) {
+
+    public static ListsFragment newInstance(String userID) {
         ListsFragment fragment = new ListsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM, userID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,8 +65,7 @@ public class ListsFragment extends Fragment implements DataHandler{
     public void main(){
         //recuperiamo nome utente e password dai parametri
         if (getArguments() != null) {
-            username = getArguments().getString(ARG_PARAM1);
-            userID = getArguments().getString(ARG_PARAM2);
+            userID = getArguments().getString(ARG_PARAM);
         }
         //Inizializziamo categorie e prodotti dell'utente
         InizializzaApplicazione();
@@ -90,7 +81,9 @@ public class ListsFragment extends Fragment implements DataHandler{
         super.onCreate(savedInstanceState);
     }
 
-    public void OnActivityCreated(Bundle savedInstanceState){
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        System.out.println("OnActivityCreated - main");
         main();
         super.onActivityCreated(savedInstanceState);
     }
@@ -99,21 +92,21 @@ public class ListsFragment extends Fragment implements DataHandler{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lists, container, false);
+        View view = inflater.inflate(R.layout.fragment_lists, container, false);
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void apriLista(int listID) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.OnListFragmentInteractionListener(listID);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -126,8 +119,8 @@ public class ListsFragment extends Fragment implements DataHandler{
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public interface OnListFragmentInteractionListener {
+        void OnListFragmentInteractionListener(int listID);
     }
 
     private void InizializzaApplicazione(){
@@ -157,6 +150,7 @@ public class ListsFragment extends Fragment implements DataHandler{
         System.out.println("ListsActivity - Carico le liste dell'utente " + username);
         //richiesta = "userlist" & user = username
         String[] parametri = {"req","userID"};
+        System.out.println("Ho ricavato l'userID " + userID);
         String[] valori = {"getCondivisioniUtente",userID};
         if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
             //Chiediamo al sito le liste
@@ -174,14 +168,9 @@ public class ListsFragment extends Fragment implements DataHandler{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int idProdotto = lista.get(position).getID();
-                if(idProdotto != -1) {
-                    //Nuovo intent per aprire la activity per visualizzare i prodotti in questa lista
-                    Intent i = new Intent(getActivity(), ProdottiActivity.class);
-                    i.putExtra("IDLista", idProdotto);
-                    i.putExtra("username", username);
-                    i.putExtra("userID", userID);
-                    startActivity(i);
+                int idLista = lista.get(position).getID();
+                if(idLista != -1) {
+                    apriLista(idLista);
                 }else{
                     //Nuovo intent per aggiungere una nuova lista
                     Intent i = new Intent(getActivity(), AggiungiListaActivity.class);
