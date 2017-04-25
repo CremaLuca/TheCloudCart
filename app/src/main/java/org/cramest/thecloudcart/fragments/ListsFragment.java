@@ -83,9 +83,8 @@ public class ListsFragment extends Fragment implements DataHandler {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
-        System.out.println("OnActivityCreated - main");
-        main();
         super.onActivityCreated(savedInstanceState);
+        main();
     }
 
     @Override
@@ -124,7 +123,7 @@ public class ListsFragment extends Fragment implements DataHandler {
     }
 
     private void InizializzaApplicazione(){
-        System.out.println("ListsActivity - Recupero le categorie e i prodotti");
+        System.out.println("ListsFragment - Recupero le categorie e i prodotti");
         //recuperiamo le categorie
         new ListaCategorie().recuperaCategorie(getActivity());
         //recuperiamo tutti i prodotti
@@ -134,7 +133,7 @@ public class ListsFragment extends Fragment implements DataHandler {
     /** La richiesta delle liste della spesa dell'utente
      */
     private void CaricaListaMie(){
-        System.out.println("ListsActivity - Carico le liste dell'utente " + username);
+        System.out.println("ListsFragment - Carico le liste dell'utente " + username);
         //richiesta = "userlist" & user = username
         String[] parametri = {"req","userID"};
         String[] valori = {"getUserList",userID};
@@ -147,7 +146,7 @@ public class ListsFragment extends Fragment implements DataHandler {
     }
 
     private void CaricaListaCondivise(){
-        System.out.println("ListsActivity - Carico le liste dell'utente " + username);
+        System.out.println("ListsFragment - Carico le liste dell'utente " + username);
         //richiesta = "userlist" & user = username
         String[] parametri = {"req","userID"};
         System.out.println("Ho ricavato l'userID " + userID);
