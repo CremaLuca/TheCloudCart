@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Prodotto;
-import org.cramest.thecloudcart.classi.ProdottoAdapter;
+import org.cramest.thecloudcart.adapter.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;

@@ -3,6 +3,7 @@ package org.cramest.thecloudcart.classi;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import org.cramest.thecloudcart.fragments.ProdottiFragment;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.WebsiteDataManager;
@@ -16,6 +17,8 @@ import java.util.Arrays;
 
 public class Dati implements DataHandler{
 
+    private OnDatiLoadedListener mListener;
+
     private static ArrayList<Lista> listeMie;
     private static ArrayList<Lista> listeCondivise;
     private static ArrayList<Categoria> categorie;
@@ -23,6 +26,13 @@ public class Dati implements DataHandler{
 
     public Dati(Context ctx,String userID){
         System.out.println("User id passato : " + userID);
+        //Ci salviamo il listener se esiste
+        if (ctx instanceof OnDatiLoadedListener) {
+            mListener = (OnDatiLoadedListener) ctx;
+        } else {
+            throw new RuntimeException(ctx.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
         //richiediamo le categorie
         Connettore.getInstance(ctx).GetDataFromWebsite(this,"categorie","req","getAllCategorie");
         //richiediamo i prodotti
@@ -51,6 +61,10 @@ public class Dati implements DataHandler{
             }
             if(nome.equals("listeSpesaCondivise")){
                 listeCondivise = new ArrayList<Lista>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
+            }
+
+            if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null){
+                LoadedDati();
             }
 
         }
@@ -88,5 +102,15 @@ public class Dati implements DataHandler{
             return listeCondivise;
         }
         return null;
+    }
+
+    public interface OnDatiLoadedListener{
+        void OnDatiLoaded();
+    }
+
+    public void LoadedDati() {
+        if (mListener != null) {
+            mListener.OnDatiLoaded();
+        }
     }
 }
