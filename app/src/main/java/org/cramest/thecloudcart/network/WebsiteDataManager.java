@@ -44,7 +44,7 @@ public class WebsiteDataManager {
             double prezzo = Double.parseDouble(strProdotto[2]);
             String marca = strProdotto[3];
             String dimensione = strProdotto[4];
-            Categoria categoria = ListaCategorie.getCategoriaFromID(Integer.parseInt(strProdotto[5]));
+            Categoria categoria = Dati.getCategoriaFromID(Integer.parseInt(strProdotto[5]));
             prodotti[i] = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
         }
         return  prodotti;
@@ -56,7 +56,7 @@ public class WebsiteDataManager {
         for(int i=0;i<strProdottiInLista.length;i++){
             String[] strProdottoInLista = strProdottiInLista[i].split(sepColonne);
             System.out.println("IDProdotto : " + strProdottoInLista[0]);
-            Prodotto prodotto = ListaProdotti.getProdottoFromID(Integer.parseInt(strProdottoInLista[0]));
+            Prodotto prodotto = Dati.getProdottoFromID(Integer.parseInt(strProdottoInLista[0]));
             System.out.println("Qta : " + strProdottoInLista[1]);
             int qta = Integer.parseInt(strProdottoInLista[1]);
             String descrizione = "";

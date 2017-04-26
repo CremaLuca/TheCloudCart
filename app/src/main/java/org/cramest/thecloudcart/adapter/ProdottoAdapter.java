@@ -1,4 +1,4 @@
-package org.cramest.thecloudcart.classi;
+package org.cramest.thecloudcart.adapter;
 
 import java.util.ArrayList;
 
@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
 

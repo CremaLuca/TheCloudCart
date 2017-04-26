@@ -1,4 +1,4 @@
-package org.cramest.thecloudcart.classi;
+package org.cramest.thecloudcart.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.Lista;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class ListaAdapter extends ArrayAdapter<Lista> {
         this.objects = objects;
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent){
 
         View v = convertView;

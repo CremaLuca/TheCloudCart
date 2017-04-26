@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
@@ -14,7 +15,6 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
     private String userID;
 
     private ListsFragment listFragment;
-    private ProdottiFragment prodottiFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");
+        InizializzaApplicazione();
         mostraFragmentListe(savedInstanceState);
     }
 
@@ -53,7 +54,7 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
 
     private void mostraFragmentProdotti(int listID,String listName){
         System.out.println("Genero il fragment dei prodotti");
-        prodottiFragment = ProdottiFragment.newInstance(listID, listName);
+        ProdottiFragment prodottiFragment = ProdottiFragment.newInstance(listID, listName);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
@@ -75,5 +76,10 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
     @Override
     public void OnProdottiFragmentInteraction() {
         //Questa funzione viene chiamata invece dal fragment dei prodotti quando uno della lista viene cliccato
+    }
+
+    private void InizializzaApplicazione(){
+        System.out.println("ListsFragment - Recupero le categorie e i prodotti");
+        Dati dati = new Dati(this,userID);
     }
 }

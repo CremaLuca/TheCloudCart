@@ -14,10 +14,9 @@ import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.activities.AggiungiListaActivity;
+import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.ListaAdapter;
-import org.cramest.thecloudcart.classi.ListaCategorie;
-import org.cramest.thecloudcart.classi.ListaProdotti;
+import org.cramest.thecloudcart.adapter.ListaAdapter;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.WebsiteDataManager;
@@ -62,29 +61,40 @@ public class ListsFragment extends Fragment implements DataHandler {
         return fragment;
     }
 
-    public void main(){
+    public void mainBeforeView(){
         //recuperiamo nome utente e password dai parametri
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
         }
-        //Inizializziamo categorie e prodotti dell'utente
-        InizializzaApplicazione();
         //Carichiamo la lista
-        CaricaListaMie();
-        setAdapter(R.id.listViewMie,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento...",-1))));
-        CaricaListaCondivise();
-        setAdapter(R.id.listViewCondivise,new ArrayList<Lista>(Arrays.asList(new Lista(0,"Caricamento...",-1))));
+        //CaricaListaMie();
+        //CaricaListaCondivise();
+    }
+
+    public void mainAfterView(){
+        if(Dati.getListeMie() == null) {
+            setAdapter(R.id.listViewMie, new ArrayList<Lista>(Arrays.asList(new Lista(0, "Caricamento...", -1))));
+        }else{
+            setAdapter(R.id.listViewMie,Dati.getListeMie());
+        }
+        if(Dati.getListeCondivise() == null) {
+            setAdapter(R.id.listViewCondivise, new ArrayList<Lista>(Arrays.asList(new Lista(0, "Caricamento...", -1))));
+        }else{
+            setAdapter(R.id.listViewCondivise,Dati.getListeCondivise());
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Lo chiamo qui così viene chiamato una volta sola teoricamente
+        mainBeforeView();
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        main();
+        mainAfterView();
     }
 
     @Override
@@ -122,13 +132,6 @@ public class ListsFragment extends Fragment implements DataHandler {
         void OnListFragmentInteractionListener(int listID);
     }
 
-    private void InizializzaApplicazione(){
-        System.out.println("ListsFragment - Recupero le categorie e i prodotti");
-        //recuperiamo le categorie
-        new ListaCategorie().recuperaCategorie(getActivity());
-        //recuperiamo tutti i prodotti
-        new ListaProdotti().recuperaProdotti(getActivity());
-    }
 
     /** La richiesta delle liste della spesa dell'utente
      */
@@ -188,14 +191,16 @@ public class ListsFragment extends Fragment implements DataHandler {
             //Convertiamo i dati in liste
             ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
             if (nome.equals("listeSpesaMie")) {
+                //listeMie = liste;
                 //Aggiungamo il bottone crea nuova lista
                 liste.add(new Lista(-1,"Crea nuova lista",-1));
                 //Inseriamo nel ListView le liste
-                setAdapter(R.id.listViewMie,liste);
+                //setAdapter(R.id.listViewMie,listeMie);
             }
             if(nome.equals("listeSpesaCondivise")){
+                //listeCondivise = liste;
                 //Inseriamo nel ListView le liste
-                setAdapter(R.id.listViewCondivise,liste);
+                //setAdapter(R.id.listViewCondivise,listeCondivise);
             }
         }else{
             Toast.makeText(getActivity(), "Errore : " + data, Toast.LENGTH_SHORT).show();
