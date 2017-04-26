@@ -30,9 +30,6 @@
         <activity android:name=".activities.MainFragmentsActivity"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
 
-        <activity android:name=".activities.AggiungiListaActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
-
         <activity android:name=".activities.AggiungiListaCondividiActivity"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
     </application>

@@ -8,18 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.activities.AggiungiListaActivity;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.adapter.ListaAdapter;
 import org.cramest.thecloudcart.network.Connettore;
-import org.cramest.thecloudcart.network.DataHandler;
-import org.cramest.thecloudcart.network.WebsiteDataManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,12 +30,14 @@ import java.util.Arrays;
  * Use the {@link ListsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListsFragment extends Fragment implements DataHandler {
+public class ListsFragment extends Fragment{
 
     private static final String ARG_PARAM = "userID";
 
-    private String username;
     private String userID;
+
+    private ArrayList<Lista> listeMie;
+    private ArrayList<Lista> listeCondivise;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -65,22 +65,22 @@ public class ListsFragment extends Fragment implements DataHandler {
         //recuperiamo nome utente e password dai parametri
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
+            listeMie = Dati.getListeMie();
+            listeMie.add(new Lista(-1,"Aggiungi nuova lista",-1));
+            listeCondivise = Dati.getListeCondivise();
         }
-        //Carichiamo la lista
-        //CaricaListaMie();
-        //CaricaListaCondivise();
     }
 
     public void mainAfterView(){
         if(Dati.getListeMie() == null) {
             setAdapter(R.id.listViewMie, new ArrayList<Lista>(Arrays.asList(new Lista(0, "Caricamento...", -1))));
         }else{
-            setAdapter(R.id.listViewMie,Dati.getListeMie());
+            setAdapter(R.id.listViewMie,listeMie);
         }
         if(Dati.getListeCondivise() == null) {
             setAdapter(R.id.listViewCondivise, new ArrayList<Lista>(Arrays.asList(new Lista(0, "Caricamento...", -1))));
         }else{
-            setAdapter(R.id.listViewCondivise,Dati.getListeCondivise());
+            setAdapter(R.id.listViewCondivise,listeCondivise);
         }
     }
 
@@ -107,7 +107,13 @@ public class ListsFragment extends Fragment implements DataHandler {
 
     public void apriLista(int listID) {
         if (mListener != null) {
-            mListener.OnListFragmentInteractionListener(listID);
+            mListener.OnListaClicked(listID);
+        }
+    }
+
+    public void aggiungiLista() {
+        if (mListener != null) {
+            mListener.OnAggiungiLista();
         }
     }
 
@@ -129,38 +135,8 @@ public class ListsFragment extends Fragment implements DataHandler {
     }
 
     public interface OnListFragmentInteractionListener {
-        void OnListFragmentInteractionListener(int listID);
-    }
-
-
-    /** La richiesta delle liste della spesa dell'utente
-     */
-    private void CaricaListaMie(){
-        System.out.println("ListsFragment - Carico le liste dell'utente " + username);
-        //richiesta = "userlist" & user = username
-        String[] parametri = {"req","userID"};
-        String[] valori = {"getUserList",userID};
-        if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-            //Chiediamo al sito le liste
-            Connettore.getInstance(getActivity()).GetDataFromWebsite(this, "listeSpesaMie", parametri, valori);
-        }else{
-            //TODO : Carichiamo le liste dal locale
-        }
-    }
-
-    private void CaricaListaCondivise(){
-        System.out.println("ListsFragment - Carico le liste dell'utente " + username);
-        //richiesta = "userlist" & user = username
-        String[] parametri = {"req","userID"};
-        System.out.println("Ho ricavato l'userID " + userID);
-        String[] valori = {"getCondivisioniUtente",userID};
-        if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-            //Chiediamo al sito le liste
-            Connettore.getInstance(getActivity()).GetDataFromWebsite(this, "listeSpesaCondivise", parametri, valori);
-        }else{
-            //non carichiamo niente perchè tanto gli altri non possono visualizzare le modifiche, eliminiamo la scritta liste condivise
-            ((TextView)getView().findViewById(R.id.textAltreListe)).setVisibility(View.GONE);
-        }
+        void OnListaClicked(int listID);
+        void OnAggiungiLista();
     }
 
     private void setAdapter(int viewID, final ArrayList<Lista> lista){
@@ -175,35 +151,9 @@ public class ListsFragment extends Fragment implements DataHandler {
                     apriLista(idLista);
                 }else{
                     //Nuovo intent per aggiungere una nuova lista
-                    Intent i = new Intent(getActivity(), AggiungiListaActivity.class);
-                    i.putExtra("username", username);
-                    i.putExtra("userID", userID);
-                    startActivity(i);
+                    aggiungiLista();
                 }
             }
         });
-    }
-
-    @Override
-    public void HandleData(String nome, boolean successo,String data){
-        if(successo) {
-            //Dato che facciamo solo due richieste ed entrambe tornano un arraylist di liste facciamo il recupero di entrambe fuori
-            //Convertiamo i dati in liste
-            ArrayList<Lista> liste = new ArrayList<>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
-            if (nome.equals("listeSpesaMie")) {
-                //listeMie = liste;
-                //Aggiungamo il bottone crea nuova lista
-                liste.add(new Lista(-1,"Crea nuova lista",-1));
-                //Inseriamo nel ListView le liste
-                //setAdapter(R.id.listViewMie,listeMie);
-            }
-            if(nome.equals("listeSpesaCondivise")){
-                //listeCondivise = liste;
-                //Inseriamo nel ListView le liste
-                //setAdapter(R.id.listViewCondivise,listeCondivise);
-            }
-        }else{
-            Toast.makeText(getActivity(), "Errore : " + data, Toast.LENGTH_SHORT).show();
-        }
     }
 }

@@ -6,11 +6,12 @@ import android.support.v4.app.FragmentTransaction;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
-public class MainFragmentsActivity extends FragmentActivity implements ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener{
+public class MainFragmentsActivity extends FragmentActivity implements ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener{
 
     private String username;
     private String userID;
@@ -61,14 +62,11 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
         }
     }
 
-    private void mostraFragmentProdotti(int listID,String listName){
+    private void mostraFragmentProdotti(int listID){
         System.out.println("Genero il fragment dei prodotti");
-        ProdottiFragment prodottiFragment = ProdottiFragment.newInstance(listID, listName);
+        ProdottiFragment prodottiFragment = ProdottiFragment.newInstance(listID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
 
         transaction.replace(R.id.fragment_container, prodottiFragment);
         transaction.addToBackStack(null);
@@ -77,19 +75,43 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
         transaction.commit();
     }
 
-    @Override
-    public void OnListFragmentInteractionListener(int listID/*,TODO : String listName*/) {
-        //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
-        mostraFragmentProdotti(listID,"Mario");
+    private void mostraFragmentAggiungiLista(){
+        AggiungiListaFragment aggiungiListaFragment = AggiungiListaFragment.newInstance(userID);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, aggiungiListaFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
-    public void OnProdottiFragmentInteraction() {
+    public void OnListaClicked(int listID) {
+        //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
+        mostraFragmentProdotti(listID);
+    }
+
+    @Override
+    public void OnAggiungiLista() {
+        //Viene chiamata quando si preme il pulsante "Aggiungi lista"
+        mostraFragmentAggiungiLista();
+    }
+
+    @Override
+    public void OnProdottoClicked() {
         //Questa funzione viene chiamata invece dal fragment dei prodotti quando uno della lista viene cliccato
+    }
+
+    @Override
+    public void OnAggiungiProdotto() {
+        //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
     }
 
     private void InizializzaApplicazione(){
         System.out.println("ListsFragment - Recupero le categorie e i prodotti");
+        //Con una nuova istanza di dati li scarichiamo tutti per essere accessibili via static
         Dati dati = new Dati(this,userID);
     }
 
@@ -97,5 +119,10 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
     public void OnDatiLoaded() {
         //Quando la prima volta vengono caricati i dati viene mostrata questa finestra
         mostraFragmentListe();
+    }
+
+    @Override
+    public void onAggiungiLista() {
+        //Nel caso venga confermata l'aggiunta della lista
     }
 }

@@ -11,15 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.Prodotto;
+import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.adapter.ProdottoAdapter;
+import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
-import org.cramest.thecloudcart.network.Connettore;
-import org.cramest.thecloudcart.network.DataHandler;
-import org.cramest.thecloudcart.network.WebsiteDataManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,13 +27,12 @@ import java.util.Arrays;
  * Use the {@link ProdottiFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProdottiFragment extends Fragment implements DataHandler{
+public class ProdottiFragment extends Fragment{
 
-    private static final String ARG_PARAM1 = "listID";
-    private static final String ARG_PARAM2 = "listName";
+    private static final String ARG_PARAM = "listID";
 
     private int listID;
-    private String listName;
+    private Lista curList;
     private ArrayList<ProdottoInLista> prodottiInLista;
 
     private OnProdottiFragmentInteractionListener mListener;
@@ -49,14 +46,12 @@ public class ProdottiFragment extends Fragment implements DataHandler{
      * this fragment using the provided parameters.
      *
      * @param listID ID della lista da cui ricavare i prodotti.
-     * @param listName Nome della lista da mostrare.
      * @return A new instance of fragment ProdottiFragment.
      */
-    public static ProdottiFragment newInstance(int listID,String listName) {
+    public static ProdottiFragment newInstance(int listID) {
         ProdottiFragment fragment = new ProdottiFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, listID);
-        args.putString(ARG_PARAM2, listName);
+        args.putInt(ARG_PARAM, listID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,17 +60,14 @@ public class ProdottiFragment extends Fragment implements DataHandler{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listID = getArguments().getInt(ARG_PARAM1);
-            listName = getArguments().getString(ARG_PARAM2);
+            listID = getArguments().getInt(ARG_PARAM);
+            curList = Dati.getListaByID(listID);
         }
     }
 
     private void main(){
-        String[] pars = {"req","listID"};
-        String[] vals = {"getProductList",listID+""};
-        Connettore.getInstance(getActivity()).GetDataFromWebsite(this,"ProdottiLista",pars,vals);
-        prodottiInLista = new ArrayList<ProdottoInLista>();
-        prodottiInLista.add(new ProdottoInLista(new Prodotto("Caricamento..."),-1,""));
+        prodottiInLista = Dati.getProdottoInListaByListID(listID);
+        prodottiInLista.add(new ProdottoInLista(0,new Prodotto("Aggiungi"),0,""));
         setListAdapter();
     }
 
@@ -88,10 +80,12 @@ public class ProdottiFragment extends Fragment implements DataHandler{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProdottoInLista curProdotto = prodottiInLista.get(position);
                 if(curProdotto.getQuantita() > 0){
-                    //Se e' un prodotto normale apriremo una finestra con i dettagli del prodotto, senza una nuova activity
+                    //TODO : Se e' un prodotto normale apriremo una finestra con i dettagli del prodotto, senza una nuova activity
+                    onProdottoClicked();
                 }else if(curProdotto.getQuantita() == 0){
-                    //Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
+                    //TODO : Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
                     //Nuova activity chiederemo i dettagli del prodotto da aggiungere
+                    onAggiungiProdotto();
                 }
             }
         });
@@ -104,9 +98,15 @@ public class ProdottiFragment extends Fragment implements DataHandler{
         return inflater.inflate(R.layout.fragment_prodotti, container, false);
     }
 
-    public void onButtonPressed(Uri uri) {
+    public void onProdottoClicked() {
         if (mListener != null) {
-            mListener.OnProdottiFragmentInteraction();
+            mListener.OnProdottoClicked();
+        }
+    }
+
+    public void onAggiungiProdotto() {
+        if (mListener != null) {
+            mListener.OnAggiungiProdotto();
         }
     }
 
@@ -133,26 +133,8 @@ public class ProdottiFragment extends Fragment implements DataHandler{
         mListener = null;
     }
 
-    @Override
-    public void HandleData(String nome, boolean success, String data) {
-        if(success){
-            if(nome.equals("ProdottiLista")){
-                if(data != null) {
-                    prodottiInLista = new ArrayList<ProdottoInLista>(Arrays.asList(WebsiteDataManager.getProdottiInLista(data)));
-                    prodottiInLista.add(new ProdottoInLista(new Prodotto("Aggiungi prodotto"), 0, ""));
-                    //Inseriamo nel ListView le liste
-                    setListAdapter();
-                }else{
-                    System.out.println("Lista "+ listName + " vuota");
-                    prodottiInLista.clear();
-                    prodottiInLista.add(new ProdottoInLista(new Prodotto("Aggiungi prodotto"), 0, ""));
-                    setListAdapter();
-                }
-            }
-        }
-    }
-
     public interface OnProdottiFragmentInteractionListener {
-        void OnProdottiFragmentInteraction();
+        void OnProdottoClicked();
+        void OnAggiungiProdotto();
     }
 }

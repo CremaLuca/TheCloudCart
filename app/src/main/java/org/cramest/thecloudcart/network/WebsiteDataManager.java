@@ -2,9 +2,6 @@ package org.cramest.thecloudcart.network;
 
 import org.cramest.thecloudcart.classi.*;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
 /**
  * Created by User on 20/01/2017.
  */
@@ -44,30 +41,37 @@ public class WebsiteDataManager {
             double prezzo = Double.parseDouble(strProdotto[2]);
             String marca = strProdotto[3];
             String dimensione = strProdotto[4];
-            Categoria categoria = Dati.getCategoriaFromID(Integer.parseInt(strProdotto[5]));
+            Categoria categoria = Dati.getCategoriaByID(Integer.parseInt(strProdotto[5]));
             prodotti[i] = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
         }
         return  prodotti;
     }
 
-    public static ProdottoInLista[] getProdottiInLista(String data){
-        String[] strProdottiInLista = data.split(sepRighe);
-        ProdottoInLista[] prodottiInLista = new ProdottoInLista[strProdottiInLista.length];
-        for(int i=0;i<strProdottiInLista.length;i++){
-            String[] strProdottoInLista = strProdottiInLista[i].split(sepColonne);
-            System.out.println("IDProdotto : " + strProdottoInLista[0]);
-            Prodotto prodotto = Dati.getProdottoFromID(Integer.parseInt(strProdottoInLista[0]));
-            System.out.println("Qta : " + strProdottoInLista[1]);
-            int qta = Integer.parseInt(strProdottoInLista[1]);
-            String descrizione = "";
-            if(strProdottoInLista.length> 2) {
-                System.out.println("Desc : " + strProdottoInLista[2]);
-                descrizione = strProdottoInLista[2];
-            }
+    public static ProdottoInLista[] getProdottiInLista(String data,int listID){
+        if(data != null){
+            String[] strProdottiInLista = data.split(sepRighe);
+            if(strProdottiInLista.length > 0) {
+                ProdottoInLista[] prodottiInLista = new ProdottoInLista[strProdottiInLista.length];
+                for (int i = 0; i < strProdottiInLista.length; i++) {
+                    String[] strProdottoInLista = strProdottiInLista[i].split(sepColonne);
+                    System.out.println("IDProdotto : " + strProdottoInLista[0]);
 
-            prodottiInLista[i] = new ProdottoInLista(prodotto,qta,descrizione);
+                    Prodotto prodotto = Dati.getProdottoByID(Integer.parseInt(strProdottoInLista[0]));
+
+                    int qta = Integer.parseInt(strProdottoInLista[1]);
+
+                    String descrizione = "";
+                    if (strProdottoInLista.length > 2) {
+                        descrizione = strProdottoInLista[2];
+                    }
+
+                    prodottiInLista[i] = new ProdottoInLista(listID, prodotto, qta, descrizione);
+                }
+                return prodottiInLista;
+            }
+            return null;
         }
-        return  prodottiInLista;
+        return null;
     }
 
 }
