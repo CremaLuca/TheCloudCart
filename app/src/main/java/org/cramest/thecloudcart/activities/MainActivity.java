@@ -22,13 +22,15 @@ import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
+import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener,AggiungiProdottoFragment.OnProdottoAggiuntoListener{
 
     private String username;
     private String userID;
@@ -124,6 +126,18 @@ public class MainActivity extends FragmentActivity
         transaction.commit();
     }
 
+    private void mostraFragmentAggiungiProdotto(int listID){
+        AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
@@ -172,11 +186,6 @@ public class MainActivity extends FragmentActivity
         //Questa funzione viene chiamata invece dal fragment dei prodotti quando uno della lista viene cliccato
     }
 
-    @Override
-    public void OnAggiungiProdotto(int listID) {
-        //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
-    }
-
     private void InizializzaApplicazione(){
         System.out.println("ListsFragment - Recupero le categorie e i prodotti");
         //Con una nuova istanza di dati li scarichiamo tutti per essere accessibili via static
@@ -194,4 +203,15 @@ public class MainActivity extends FragmentActivity
         //Nel caso venga confermata l'aggiunta della lista
     }
 
+    @Override
+    public void OnAggiungiProdotto(int listID) {
+        //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
+        mostraFragmentAggiungiProdotto(listID);
+    }
+
+    @Override
+    public void OnProdottoAggiunto(ProdottoInLista prodotto) {
+        //Nel caso venga confemata l'aggiunta di un nuovo podotto ad una lista
+        finish();
+    }
 }
