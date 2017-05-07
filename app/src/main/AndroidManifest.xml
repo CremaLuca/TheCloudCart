@@ -21,17 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LandActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+            android:name=".activities.LandActivity" />
         <activity
-            android:name=".activities.LoginActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+            android:name=".activities.LoginActivity"/>
         <activity
-            android:name=".activities.AggiungiListaCondividiActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" />
+            android:name=".activities.AggiungiListaCondividiActivity" />
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
             android:label="@string/title_activity_main"></activity>
     </application>
 

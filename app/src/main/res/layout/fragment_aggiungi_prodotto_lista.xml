@@ -27,13 +27,12 @@
 
     <TextView
         android:id="@+id/text_categoria"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
         android:text="Categoria"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView5"
@@ -97,4 +96,33 @@
         android:maxLines="10"
         android:selectAllOnFocus="false"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_crea_prodotto"
+        android:layout_marginTop="20dp"
+        android:text="Prodotto già salvato"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title_aggiungi_prodotto"
+        android:text="Salva nuovo prodotto"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_crea_prodotto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:text="Salva prodotto" />
 </RelativeLayout>

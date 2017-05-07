@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.Categoria;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.Prodotto;
@@ -23,17 +22,14 @@ import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AggiungiProdottoFragment#newInstance} factory method to
+ * Use the {@link CreaProdottoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AggiungiProdottoFragment extends Fragment implements DataHandler{
+public class CreaProdottoFragment extends Fragment implements DataHandler{
 
     private static final String ARG_PARAM1 = "userID";
     private static final String ARG_PARAM2 = "listID";
@@ -46,7 +42,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     private ArrayList<Prodotto> curProdottiByCategoria;
     private Prodotto curProdottoSel;
 
-    public AggiungiProdottoFragment() {
+    public CreaProdottoFragment() {
         // Required empty public constructor
     }
 
@@ -57,8 +53,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
      * @param listID Parameter 1.
      * @return A new instance of fragment AggiungiListaFragment.
      */
-    public static AggiungiProdottoFragment newInstance(String userID,int listID) {
-        AggiungiProdottoFragment fragment = new AggiungiProdottoFragment();
+    public static CreaProdottoFragment newInstance(String userID, int listID) {
+        CreaProdottoFragment fragment = new CreaProdottoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, userID);
         args.putInt(ARG_PARAM2, listID);
@@ -119,7 +115,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             String[] valori = {"addProduct",userID,listID+"",prodotto.getID()+"",quantita+"",descrizione};
             if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                 //Chiediamo al sito le liste
-                Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiLista", parametri, valori);
+                Connettore.getInstance(getActivity()).GetDataFromWebsite(CreaProdottoFragment.this, "aggiungiLista", parametri, valori);
             }else{
                 //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             }
@@ -182,11 +178,6 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             mListener.OnProdottoAggiunto(prodotto);
         }
     }
-    public void onDevoCreareNuovoProdotto(int listID) {
-        if (mListener != null) {
-            mListener.OnDevoCreareNuovoProdotto(listID);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -195,7 +186,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             mListener = (OnAggiungiProdottiListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnAggiungiProdottiListener");
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 

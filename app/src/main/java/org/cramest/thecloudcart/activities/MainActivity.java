@@ -17,7 +17,7 @@ import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener,AggiungiProdottoFragment.OnProdottoAggiuntoListener{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener,AggiungiProdottoFragment.OnAggiungiProdottiListener{
 
     private String username;
     private String userID;
@@ -198,7 +198,14 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void OnProdottoAggiunto(ProdottoInLista prodotto) {
-        //Nel caso venga confemata l'aggiunta di un nuovo podotto ad una lista
+        //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
         finish();
     }
+
+    @Override
+    public void OnDevoCreareNuovoProdotto(int listID) {
+        //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
+        //TODO : mostraFragmentCreaProdotto(listID);
+    }
+    //TODO : OnProdottoCreato(listID,Prodotto){ (nuovo costruttore) mostraFragmentAggiungiProdotto(listID,Prodotto);}
 }
