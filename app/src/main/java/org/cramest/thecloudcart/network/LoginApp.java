@@ -36,7 +36,7 @@ public class LoginApp implements DataHandler {
             if(success){
                 if(nome.equals("loginApp")) {
                     System.out.println("Nome utente e password corretti");
-                    Intent i = new Intent(a, MainActivity.class);
+                    Intent i = new Intent(a, MainFragmentsActivity.class);
                     i.putExtra("username", username);
                     i.putExtra("userID", data);
                     //Salviamo nella memoria i nostri dati

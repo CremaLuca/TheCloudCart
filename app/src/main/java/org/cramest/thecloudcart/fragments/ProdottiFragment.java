@@ -1,7 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -85,7 +84,7 @@ public class ProdottiFragment extends Fragment{
                 }else if(curProdotto.getQuantita() == 0){
                     //TODO : Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
                     //Nuova activity chiederemo i dettagli del prodotto da aggiungere
-                    onAggiungiProdotto();
+                    onAggiungiProdotto(curList.getID());
                 }
             }
         });
@@ -104,9 +103,9 @@ public class ProdottiFragment extends Fragment{
         }
     }
 
-    public void onAggiungiProdotto() {
+    public void onAggiungiProdotto(int listID) {
         if (mListener != null) {
-            mListener.OnAggiungiProdotto();
+            mListener.OnAggiungiProdotto(listID);
         }
     }
 
@@ -135,6 +134,6 @@ public class ProdottiFragment extends Fragment{
 
     public interface OnProdottiFragmentInteractionListener {
         void OnProdottoClicked();
-        void OnAggiungiProdotto();
+        void OnAggiungiProdotto(int listID);
     }
 }

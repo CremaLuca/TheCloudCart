@@ -38,11 +38,16 @@ public class WebsiteDataManager {
             String[] strProdotto = strProdotti[i].split(sepColonne);
             int ID = Integer.parseInt(strProdotto[0]);
             String nome = strProdotto[1];
-            double prezzo = Double.parseDouble(strProdotto[2]);
+            double prezzo = 0;
+            try {
+                prezzo = Double.parseDouble(strProdotto[2]);
+            }catch(Exception e){
+            }
             String marca = strProdotto[3];
             String dimensione = strProdotto[4];
             Categoria categoria = Dati.getCategoriaByID(Integer.parseInt(strProdotto[5]));
             prodotti[i] = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
+            System.out.println("Creato nuovo prodotto : " + prodotti[i]);
         }
         return  prodotti;
     }

@@ -1,10 +1,7 @@
 package org.cramest.thecloudcart.classi;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
-import org.cramest.thecloudcart.adapter.ProdottoAdapter;
-import org.cramest.thecloudcart.fragments.ProdottiFragment;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.WebsiteDataManager;
@@ -48,9 +45,11 @@ public class Dati implements DataHandler{
         Connettore.getInstance(ctx).GetDataFromWebsite(this,"categorie","req","getAllCategorie");
     }
 
-    private void richiediProdotti(Context ctx){
-        //richiediamo i prodotti
-        Connettore.getInstance(ctx).GetDataFromWebsite(this,"prodotti","req","getAllProdotti");
+    private void richiediProdotti(Context ctx,String userID){
+        //richiediamo i prodotti, tutti quelli nostri e anche quelli che non sono nostri ma sono nelle nostre liste, ma comunque non tutti tutti tutti di tutti
+        String[] parametriMie = {"req","userID"};
+        String[] valoriMie = {"getAllUserProdotti",userID};
+        Connettore.getInstance(ctx).GetDataFromWebsite(this,"prodotti",parametriMie,valoriMie);
     }
     private void richiediListeSpesa(Context ctx,String userID){
         //richiediamo le nostre liste
@@ -84,7 +83,7 @@ public class Dati implements DataHandler{
         if(success){
             if(nome.equals("categorie")){
                 categorie = new ArrayList<Categoria>(Arrays.asList(WebsiteDataManager.getCategorie(data)));
-                richiediProdotti(ctx);
+                richiediProdotti(ctx,userID);
             }
             if(nome.equals("prodotti")){
                 prodotti = new ArrayList<Prodotto>(Arrays.asList(WebsiteDataManager.getProdotti(data)));
@@ -183,5 +182,38 @@ public class Dati implements DataHandler{
         if (mListener != null) {
             mListener.OnDatiLoaded();
         }
+    }
+
+    public static ArrayList<Categoria> getCategorie(){
+        return categorie;
+    }
+
+    public static ArrayList<String> getCategorieAsString(){
+        ArrayList<String> stringhe = new ArrayList<String>();
+        for(Categoria c : categorie){
+            stringhe.add(c.getNome());
+        }
+        return stringhe;
+    }
+
+    public static ArrayList<Prodotto> getProdottiByCategoria(int idCategoria){
+        ArrayList<Prodotto> categorizzati = new ArrayList<Prodotto>();
+        for(Prodotto p : prodotti){
+            if(p.getCategoria().getID() == idCategoria){
+                categorizzati.add(p);
+            }
+        }
+        return categorizzati;
+    }
+
+    public static ArrayList<String> prodottiToString(ArrayList<Prodotto> prods){
+        ArrayList<String> stringhe = new ArrayList<String>();
+        for(Prodotto p : prods){
+            stringhe.add(p.getNome());
+        }
+        return stringhe;
+    }
+    public static void aggiungiProdottoInLista(ProdottoInLista prodottoInLista){
+        prodottiInLista.add(prodottoInLista);
     }
 }

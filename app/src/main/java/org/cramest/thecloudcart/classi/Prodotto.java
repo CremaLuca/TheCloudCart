@@ -43,4 +43,9 @@ public class Prodotto {
     public Categoria getCategoria() {
         return categoria;
     }
+
+    @Override
+    public String toString(){
+        return nome + "( marca: " + marca + ", prez: " + prezzo + ", cat: " + categoria.getNome() +")";
+    }
 }

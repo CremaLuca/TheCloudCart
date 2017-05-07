@@ -6,12 +6,15 @@ import android.support.v4.app.FragmentTransaction;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
+import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
-public class MainFragmentsActivity extends FragmentActivity implements ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener{
+public class MainFragmentsActivity extends FragmentActivity implements ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener, AggiungiProdottoFragment.OnProdottoAggiuntoListener
+{
 
     private String username;
     private String userID;
@@ -22,6 +25,7 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Apero MainFragmentsActivity");
         setContentView(R.layout.main_activity_fragments);
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
@@ -87,6 +91,18 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
         transaction.commit();
     }
 
+    private void mostraFragmentAggiungiProdotto(int listID){
+        AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
     @Override
     public void OnListaClicked(int listID) {
         //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
@@ -105,8 +121,9 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
     }
 
     @Override
-    public void OnAggiungiProdotto() {
+    public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
+        mostraFragmentAggiungiProdotto(listID);
     }
 
     private void InizializzaApplicazione(){
@@ -124,5 +141,11 @@ public class MainFragmentsActivity extends FragmentActivity implements ListsFrag
     @Override
     public void onAggiungiLista() {
         //Nel caso venga confermata l'aggiunta della lista
+    }
+
+    @Override
+    public void OnProdottoAggiunto(ProdottoInLista prodotto) {
+        //Nel caso venga confemata l'aggiunta di un nuovo podotto ad una lista
+        finish();
     }
 }

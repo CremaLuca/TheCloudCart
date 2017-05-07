@@ -173,7 +173,7 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public void OnAggiungiProdotto() {
+    public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
     }
 

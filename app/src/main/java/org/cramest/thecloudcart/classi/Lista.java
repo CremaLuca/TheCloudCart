@@ -1,7 +1,5 @@
 package org.cramest.thecloudcart.classi;
 
-import java.util.ArrayList;
-
 /**
  * Created by cremaluca on 11/03/2017.
  */
