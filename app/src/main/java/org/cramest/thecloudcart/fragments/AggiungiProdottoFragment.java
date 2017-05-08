@@ -119,7 +119,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             String[] valori = {"addProduct",userID,listID+"",prodotto.getID()+"",quantita+"",descrizione};
             if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                 //Chiediamo al sito le liste
-                Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiLista", parametri, valori);
+                Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
             }else{
                 //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             }

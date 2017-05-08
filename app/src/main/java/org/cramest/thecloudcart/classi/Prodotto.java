@@ -44,6 +44,10 @@ public class Prodotto {
         return categoria;
     }
 
+    public String getDimensione() {
+        return dimensione;
+    }
+
     @Override
     public String toString(){
         return nome + "( marca: " + marca + ", prez: " + prezzo + ", cat: " + categoria.getNome() +")";

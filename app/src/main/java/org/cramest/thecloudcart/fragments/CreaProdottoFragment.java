@@ -38,6 +38,8 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
     private int listID;
     private String userID;
 
+    private Prodotto tmpProdotto;
+
     private OnCreaProdottiListener mListener;
     private int curCategoriaID;
 
@@ -92,7 +94,7 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
     }
 
     private void generaProdotto(){
-        int ID = 0;
+        int ID = -1;
         //Prima recuperiamo tutti i dati, l'ID dopo
         String nome = ((EditText) getActivity().findViewById(R.id.edit_nome)).getText().toString();
         Double prezzo = Double.parseDouble(((EditText) getActivity().findViewById(R.id.edit_prezzo)).getText().toString());
@@ -100,14 +102,17 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
         String dimensione = ((EditText) getActivity().findViewById(R.id.edit_descrizione)).getText().toString();;
         Categoria categoria = Dati.getCategoriaByID(curCategoriaID);
         //Li mandiamo al sito se possibile
-        //TODO : modifica parametri e valori
-        String[] parametri = {"req","userID"};
-        String[] valori = {"addProduct",userID};
+        String[] parametri = {"req","userID","name","price","brand","dimension","categoryID"};
+        String[] valori = {"addProduct",userID,nome,prezzo+"",marca,dimensione,categoria.getID()+""};
         if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-            //Chiediamo al sito le liste
-            Connettore.getInstance(getActivity()).GetDataFromWebsite(CreaProdottoFragment.this, "aggiungiLista", parametri, valori);
+            //salviamo temporaneamente i dati del prodotto per poi ricrearlo nuovo con l'ID giusto dopo
+            tmpProdotto = new Prodotto(-1,nome,prezzo,marca,dimensione,categoria);
+            //Mandiamo al sito i dati del nuovo prodotto appena creato
+            Connettore.getInstance(getActivity()).GetDataFromWebsite(CreaProdottoFragment.this, "creaProdotto", parametri, valori);
         }else{
             //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
+            ID = (int)(Math.random()*100);
+            onProdottoCreato(new Prodotto(ID,nome,prezzo,marca,dimensione,categoria));
         }
         Prodotto p = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
         onProdottoCreato(p);
@@ -185,7 +190,11 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
     @Override
     public void HandleData(String nome, boolean success, String data) {
         if(success) {
-            Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            //Ricostruiamo il prodotto con il nuovo ID
+            Prodotto prod = new Prodotto(Integer.parseInt(data),tmpProdotto.getNome(),tmpProdotto.getPrezzo(),tmpProdotto.getMarca(),tmpProdotto.getDimensione(),tmpProdotto.getCategoria());
+            Toast.makeText(getContext(),"Prodotto salvato con successo (debug-ID: "+data+")", Toast.LENGTH_SHORT).show();
+            //Notifichiamo la mainActivity che il prodotto è stato creato con successo
+            onProdottoCreato(prod);
         }else{
             Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
         }
