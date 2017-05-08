@@ -134,9 +134,9 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
 
         Spinner spinner = (Spinner)getActivity().findViewById(R.id.categoria_spinner);
         //Recuperiamo i nomi delle categorie
-        ArrayList<String> categorie = Dati.getCategorieAsString();
+        ArrayList<String> stringCategorie = Dati.getCategorieAsString();
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categorie);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, stringCategorie);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();
