@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.Categoria;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.Prodotto;
@@ -23,10 +22,7 @@ import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +33,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
 
     private static final String ARG_PARAM1 = "userID";
     private static final String ARG_PARAM2 = "listID";
+    private static final String ARG_PARAM3 = "productID";
     private int listID;
     private Lista curList;
     private String userID;
@@ -44,7 +41,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     private OnAggiungiProdottiListener mListener;
 
     private ArrayList<Prodotto> curProdottiByCategoria;
-    private Prodotto curProdottoSel;
+    private Prodotto curProdottoSel = null;
+    private Prodotto initialProdotto = null;
 
     public AggiungiProdottoFragment() {
         // Required empty public constructor
@@ -66,12 +64,26 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         return fragment;
     }
 
+    public static AggiungiProdottoFragment newInstance(String userID,int listID,int productID) {
+        AggiungiProdottoFragment fragment = new AggiungiProdottoFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, userID);
+        args.putInt(ARG_PARAM2, listID);
+        args.putInt(ARG_PARAM3, productID);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM1);
             listID = getArguments().getInt(ARG_PARAM2);
+            int productID = getArguments().getInt(ARG_PARAM3);
+            if(productID != 0 && productID>0) {
+                initialProdotto = Dati.getProdottoByID(getArguments().getInt(ARG_PARAM3));
+            }
             curList = Dati.getListaByID(listID);
         }
     }
@@ -91,6 +103,11 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         titolo.setText("Aggiungi a lista : "+curList.getNome());
         setCategorieSpinner();
         updatePodottoSpinner(1);
+        if(initialProdotto != null){
+            Spinner spinnerCategorie = (Spinner)getActivity().findViewById(R.id.categoria_spinner);
+            spinnerCategorie.setSelection(initialProdotto.getCategoria().getID()-1);
+        }
+
         Button aggiungi = (Button)getActivity().findViewById(R.id.aggiungi_prodotto_button);
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,10 +117,10 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         });
 
         Button crea = (Button)getActivity().findViewById(R.id.button_crea_prodotto);
-        aggiungi.setOnClickListener(new View.OnClickListener() {
+        crea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aggiungiProdottoInLista(curProdottoSel);
+                onDevoCreareNuovoProdotto(listID);
             }
         });
     }
@@ -164,6 +181,17 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();
+        if(initialProdotto != null){
+            for(int i=0;i<prodotti.size();i++){
+                if(prodotti.get(i).equals(initialProdotto.getNome())){
+                    //Impostiamo il prodotto selezionato dove è stata trovata corrispondenza
+                    //TODO : Cambiare mettere per ID non per nome
+                    spinner.setSelection(i);
+                }
+            }
+            //Abbiamo già selezionato, adesso non ci serve più e lo eliminiamo
+            initialProdotto = null;
+        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {

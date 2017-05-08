@@ -1,10 +1,12 @@
 package org.cramest.thecloudcart.network;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.activities.MainActivity;
+import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.utils.DataSaver;
 
 /**
@@ -15,16 +17,25 @@ public class LoginApp implements DataHandler {
 
     private String username;
     private String password;
-    Activity a;
+    Context c;
 
-    public LoginApp(Activity a, String username, String password){
+
+    OnLoginAppListener mListener;
+
+    public LoginApp(Context c, String username, String password){
+        if (c instanceof OnLoginAppListener) {
+            mListener = (OnLoginAppListener) c;
+        } else {
+            throw new RuntimeException(c.toString()
+                    + " must implement OnLoginAppListener");
+        }
         String[] parametri = {"req","user","pass"};
         String[] valori = {"login",username,password};
         this.username = username;
         this.password = password;
-        this.a = a;
+        this.c = c;
         System.out.println("LoginApp - Richiedo il login");
-        Connettore.getInstance(a).GetDataFromWebsite(this,"loginApp",parametri,valori);
+        Connettore.getInstance(c).GetDataFromWebsite(this,"loginApp",parametri,valori);
     }
 
     @Override
@@ -35,20 +46,24 @@ public class LoginApp implements DataHandler {
             if(success){
                 if(nome.equals("loginApp")) {
                     System.out.println("Nome utente e password corretti");
-                    Intent i = new Intent(a, MainActivity.class);
-                    i.putExtra("username", username);
-                    i.putExtra("userID", data);
+
                     //Salviamo nella memoria i nostri dati
-                    DataSaver.getInstance().saveDataString(a, "username", username);
-                    DataSaver.getInstance().saveDataString(a, "userID", data);
-                    DataSaver.getInstance().saveDataString(a, "password", password);
-                    //System.out.println("Salvato nome utente e password : " + DataSaver.getInstance().getDataString(c,"username") + " - " + DataSaver.getInstance().getDataString(c,"password"));
-                    a.startActivity(i);
-                    a.finish();
+                    DataSaver.getInstance().saveDataString(c, "username", username);
+                    DataSaver.getInstance().saveDataString(c, "userID", data);
+                    DataSaver.getInstance().saveDataString(c, "password", password);
+                    //Notifichiamo il fragment che siamo riusciti a fare l'accesso il quale chiamera l'activity che ne caricherà un altra
+                    mListener.OnLoginSuccess(username,data);
                 }
             }else{
-                Toast.makeText(a, "Errore : " + data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(c, "Errore : " + data, Toast.LENGTH_SHORT).show();
+                mListener.OnLoginFailed();
+
             }
         }
+    }
+
+    public interface OnLoginAppListener{
+        void OnLoginSuccess(String username, String userID);
+        void OnLoginFailed();
     }
 }

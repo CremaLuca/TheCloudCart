@@ -83,11 +83,11 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         //TODO : Fai qui
+        setCategorieSpinner();
         Button aggiungi = (Button)getActivity().findViewById(R.id.crea_prodotto_button);
         aggiungi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 generaProdotto();
             }
         });
@@ -103,19 +103,21 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
         Categoria categoria = Dati.getCategoriaByID(curCategoriaID);
         //Li mandiamo al sito se possibile
         String[] parametri = {"req","userID","name","price","brand","dimension","categoryID"};
-        String[] valori = {"addProduct",userID,nome,prezzo+"",marca,dimensione,categoria.getID()+""};
+        String[] valori = {"createProduct",userID,nome,prezzo+"",marca,dimensione,categoria.getID()+""};
         if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
             //salviamo temporaneamente i dati del prodotto per poi ricrearlo nuovo con l'ID giusto dopo
             tmpProdotto = new Prodotto(-1,nome,prezzo,marca,dimensione,categoria);
             //Mandiamo al sito i dati del nuovo prodotto appena creato
             Connettore.getInstance(getActivity()).GetDataFromWebsite(CreaProdottoFragment.this, "creaProdotto", parametri, valori);
+            //Ora aspettiamo la risposta dal sito e se è un successo torniamo alla pagina di prima
         }else{
             //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             ID = (int)(Math.random()*100);
-            onProdottoCreato(new Prodotto(ID,nome,prezzo,marca,dimensione,categoria));
+            Prodotto tempProdotto = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
+            //Lo aggiungiamo alla lista, peccato che quando si chiude l'app scompaia TODO : lista aggiornamenti/lista locale
+            Dati.aggiungiProdotto(tempProdotto);
+            onProdottoCreato(listID,ID);
         }
-        Prodotto p = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
-        onProdottoCreato(p);
     }
 
     private void setCategorieSpinner(){
@@ -164,12 +166,17 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
         }
     }
 
-    public void onProdottoCreato(Prodotto prodotto) {
+    public void onProdottoCreato(int listID,int prodottoID) {
         if (mListener != null) {
-            mListener.OnProdottoCreato(prodotto);
+            mListener.OnProdottoCreato(listID,prodottoID);
         }
     }
 
+    public void onProdottoNonCreato(int listID) {
+        if (mListener != null) {
+            mListener.OnProdottoNonCreato(listID);
+        }
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -193,14 +200,18 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
             //Ricostruiamo il prodotto con il nuovo ID
             Prodotto prod = new Prodotto(Integer.parseInt(data),tmpProdotto.getNome(),tmpProdotto.getPrezzo(),tmpProdotto.getMarca(),tmpProdotto.getDimensione(),tmpProdotto.getCategoria());
             Toast.makeText(getContext(),"Prodotto salvato con successo (debug-ID: "+data+")", Toast.LENGTH_SHORT).show();
+            //Aggiungiamo il prodotto anche in locale senza che debba riscaricarli tutti
+            Dati.aggiungiProdotto(prod);
             //Notifichiamo la mainActivity che il prodotto è stato creato con successo
-            onProdottoCreato(prod);
+            onProdottoCreato(listID,prod.getID());
         }else{
             Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            onProdottoNonCreato(listID);
         }
     }
 
     public interface OnCreaProdottiListener {
-        void OnProdottoCreato(Prodotto prodotto);
+        void OnProdottoCreato(int listID,int prodottoID);
+        void OnProdottoNonCreato(int listID);
     }
 }

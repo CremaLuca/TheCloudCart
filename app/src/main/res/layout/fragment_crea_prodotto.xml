@@ -47,12 +47,10 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
         android:id="@+id/edit_marca"
+        android:hint="Marca"
         android:layout_below="@+id/edit_prezzo"
-        android:layout_centerHorizontal="true"
-        android:hint="Marca" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,123 +17,68 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 
+import org.cramest.thecloudcart.fragments.LoginFragment;
 import org.cramest.thecloudcart.network.LoginApp;
 import org.cramest.thecloudcart.R;
 
-public class LoginActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
+public class LoginActivity extends FragmentActivity implements LoginFragment.OnLoginFragmentListener,LoginApp.OnLoginAppListener{
 
 
 
-    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        System.out.println("Ciaone");
+        mostraFragmentLogin();
+    }
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-                .requestEmail()
-                .build();
-        // Build a GoogleApiClient with access to the Google Sign-In API and the
-        // options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this )
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+    private void mostraFragmentLogin(){
+        LoginFragment loginFragment = LoginFragment.newInstance();
 
-        findViewById(R.id.sign_in_button).setOnClickListener(this);
-        findViewById(R.id.loginButton).setOnClickListener(this);
-        findViewById(R.id.registerButton).setOnClickListener(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, loginFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void mostraFragmentRegistraUtente(){
+        LoginFragment loginFragment = LoginFragment.newInstance();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, loginFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void OnLogin(String username, String userID) {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("username", username);
+        i.putExtra("userID", userID);
+        startActivity(i);
+        finish();
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.sign_in_button:
-                signIn();
-                break;
-            case R.id.loginButton:
-                String username = ((EditText)findViewById(R.id.editUsername)).getText().toString();
-                String password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
-                LoginApp l = new LoginApp(this,username,password);
-                finish();
-                break;
-            case R.id.registerButton:
-                loadAppRegister();
-                break;
-        }
-    }
+    public void OnCreateNewUser() {
 
-
-
-    private void loadAppRegister(){
-
-    }
-
-    private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, 5);
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == 5) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-        }
-    }
-
-    private void handleSignInResult(GoogleSignInResult result) {
-        //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        System.out.println("handleSignInResult:" + result.isSuccess() + " status : " + result.getStatus());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            System.out.println("Benvenuto " + acct.getGivenName());
-        } else {
-            System.out.println("Non oke, errore del codice della app, non registrata");
-        }
-        result.getStatus();
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    public void OnLoginSuccess(String username, String userID) {
+        //TODO : Controllo se mListener esiste e il fragmentActivity contiene il listener OnLoginFragmentListener
+        OnLogin(username,userID);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+    public void OnLoginFailed() {
+        //TODO : Cosa succede se il login fallisce? Riprova?
     }
 }

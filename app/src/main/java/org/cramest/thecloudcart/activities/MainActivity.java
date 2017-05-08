@@ -8,16 +8,20 @@ import android.support.v4.widget.DrawerLayout;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
+import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener,AggiungiProdottoFragment.OnAggiungiProdottiListener{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
+        ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener,
+        AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener{
 
     private String username;
     private String userID;
@@ -124,6 +128,29 @@ public class MainActivity extends FragmentActivity
         // Commit the transaction
         transaction.commit();
     }
+    private void mostraFragmentAggiungiProdotto(int listID,int prodottoID){
+        AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID,prodottoID);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void mostraFragmentCreaProdotto(int listID){
+        CreaProdottoFragment creaProdottoFragment = CreaProdottoFragment.newInstance(userID,listID);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, creaProdottoFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -199,13 +226,23 @@ public class MainActivity extends FragmentActivity
     @Override
     public void OnProdottoAggiunto(ProdottoInLista prodotto) {
         //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
-        finish();
+        mostraFragmentProdotti(prodotto.getIdLista());
     }
 
     @Override
     public void OnDevoCreareNuovoProdotto(int listID) {
         //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
-        //TODO : mostraFragmentCreaProdotto(listID);
+        mostraFragmentCreaProdotto(listID);
+    }
+
+    @Override
+    public void OnProdottoCreato(int listID, int prodottoID) {
+        mostraFragmentAggiungiProdotto(listID,prodottoID);
+    }
+
+    @Override
+    public void OnProdottoNonCreato(int listID) {
+
     }
     //TODO : OnProdottoCreato(listID,Prodotto){ (nuovo costruttore) mostraFragmentAggiungiProdotto(listID,Prodotto);}
 }

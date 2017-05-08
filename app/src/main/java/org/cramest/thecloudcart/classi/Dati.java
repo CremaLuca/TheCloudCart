@@ -216,4 +216,8 @@ public class Dati implements DataHandler{
     public static void aggiungiProdottoInLista(ProdottoInLista prodottoInLista){
         prodottiInLista.add(prodottoInLista);
     }
+
+    public static void aggiungiProdotto(Prodotto prod){
+        prodotti.add(prod);
+    }
 }

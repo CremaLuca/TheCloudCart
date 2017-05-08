@@ -2,40 +2,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFF">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="140dp"
+        android:background="@color/colorPrimary"
+        android:padding="15dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/text_view_username"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="The cloud cart"
-            android:id="@+id/textView8"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/image_view_userpic"
+            android:text="Username"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/image_view_userpic"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/the_cloud_cart_320"
-            android:layout_below="@+id/textView8"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="false"
+            android:src="@mipmap/ic_launcher" />
 
     </RelativeLayout>
 
     <ListView
+        android:id="@+id/listView_drawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#eeee"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        tools:context="org.cramest.thecloudcart.fragments.NavigationDrawerFragment"
-        android:id="@+id/listView_drawer"/>
+        tools:context="org.cramest.thecloudcart.fragments.NavigationDrawerFragment" />
 
 
 </LinearLayout>
