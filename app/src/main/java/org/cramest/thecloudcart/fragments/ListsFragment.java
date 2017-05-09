@@ -57,8 +57,10 @@ public class ListsFragment extends Fragment{
         return fragment;
     }
 
-    public void mainBeforeView(){
-        //recuperiamo nome utente e password dai parametri
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //Lo chiamo qui così viene chiamato una volta sola teoricamente
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
             listeMie = Dati.getListeMie();
@@ -67,30 +69,11 @@ public class ListsFragment extends Fragment{
         }
     }
 
-    public void mainAfterView(){
-        if(Dati.getListeMie() == null) {
-            setAdapter(R.id.listViewMie, new ArrayList<Lista>(Arrays.asList(new Lista(0, "Caricamento...", -1))));
-        }else{
-            setAdapter(R.id.listViewMie,listeMie);
-        }
-        if(Dati.getListeCondivise() == null) {
-            setAdapter(R.id.listViewCondivise, new ArrayList<Lista>(Arrays.asList(new Lista(0, "Caricamento...", -1))));
-        }else{
-            setAdapter(R.id.listViewCondivise,listeCondivise);
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Lo chiamo qui così viene chiamato una volta sola teoricamente
-        mainBeforeView();
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        mainAfterView();
+        setAdapter(R.id.listViewMie,listeMie);
+        setAdapter(R.id.listViewCondivise,listeCondivise);
     }
 
     @Override
@@ -120,7 +103,7 @@ public class ListsFragment extends Fragment{
             mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnListFragmentInteractionListener");
         }
     }
 

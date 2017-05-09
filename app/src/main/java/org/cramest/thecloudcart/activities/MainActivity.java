@@ -185,6 +185,7 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void OnListaClicked(int listID) {
+        System.out.println("Premuta la lista con id: " + listID);
         //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
         mostraFragmentProdotti(listID);
     }

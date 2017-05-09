@@ -84,7 +84,7 @@ public class ProdottiFragment extends Fragment{
                 }else if(curProdotto.getQuantita() == 0){
                     //TODO : Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
                     //Nuova activity chiederemo i dettagli del prodotto da aggiungere
-                    onAggiungiProdotto(curList.getID());
+                    onAggiungiProdotto(listID);
                 }
             }
         });
@@ -105,6 +105,7 @@ public class ProdottiFragment extends Fragment{
 
     public void onAggiungiProdotto(int listID) {
         if (mListener != null) {
+            System.out.println("Premuto aggiungi in lista : " +listID);
             mListener.OnAggiungiProdotto(listID);
         }
     }

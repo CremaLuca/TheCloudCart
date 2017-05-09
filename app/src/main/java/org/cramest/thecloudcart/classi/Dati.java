@@ -143,6 +143,11 @@ public class Dati implements DataHandler{
                     return lista;
                 }
             }
+            for(Lista lista : listeCondivise) {
+                if(lista.getID() == ID) {
+                    return lista;
+                }
+            }
         }
         return null;
     }

@@ -34,6 +34,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     private static final String ARG_PARAM1 = "userID";
     private static final String ARG_PARAM2 = "listID";
     private static final String ARG_PARAM3 = "productID";
+
     private int listID;
     private Lista curList;
     private String userID;
@@ -77,14 +78,16 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Recupero i dati");
         if (getArguments() != null) {
+            System.out.println("Recuperando");
             userID = getArguments().getString(ARG_PARAM1);
             listID = getArguments().getInt(ARG_PARAM2);
+            curList = Dati.getListaByID(listID);
             int productID = getArguments().getInt(ARG_PARAM3);
             if(productID != 0 && productID>0) {
                 initialProdotto = Dati.getProdottoByID(getArguments().getInt(ARG_PARAM3));
             }
-            curList = Dati.getListaByID(listID);
         }
     }
 

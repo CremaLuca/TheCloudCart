@@ -11,10 +11,12 @@
         android:id="@+id/textViewNomeLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
-        android:text="Spesa per domani"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+        android:text="Spesa per domani che puzza"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
     <TextView
         android:id="@+id/textViewQtaLista"
@@ -29,9 +31,7 @@
         android:id="@+id/textViewNumProdotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewNomeLista"
-        android:layout_alignBottom="@+id/textViewNomeLista"
-        android:layout_marginEnd="11dp"
-        android:layout_toStartOf="@+id/textViewQtaLista"
-        android:text="Numero prodotti :" />
+        android:text="Numero prodotti :"
+        android:layout_below="@+id/textViewNomeLista"
+        android:layout_toStartOf="@+id/textViewQtaLista" />
 </RelativeLayout>

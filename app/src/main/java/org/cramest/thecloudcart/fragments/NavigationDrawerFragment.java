@@ -88,7 +88,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         listView.setAdapter(new ArrayAdapter<String>(
-                getContext(),
+                getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
