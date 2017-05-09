@@ -18,10 +18,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 
 import org.cramest.thecloudcart.fragments.LoginFragment;
+import org.cramest.thecloudcart.fragments.RegistraUtenteFragment;
 import org.cramest.thecloudcart.network.LoginApp;
 import org.cramest.thecloudcart.R;
 
-public class LoginActivity extends FragmentActivity implements LoginFragment.OnLoginFragmentListener,LoginApp.OnLoginAppListener{
+public class LoginActivity extends FragmentActivity implements LoginFragment.OnLoginFragmentListener,LoginApp.OnLoginAppListener,RegistraUtenteFragment.OnRegistraFragmentListener{
 
 
 
@@ -46,11 +47,11 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.OnL
     }
 
     private void mostraFragmentRegistraUtente(){
-        LoginFragment loginFragment = LoginFragment.newInstance();
+        RegistraUtenteFragment registerFragment = RegistraUtenteFragment.newInstance();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.fragment_container, loginFragment);
+        transaction.replace(R.id.fragment_container, registerFragment);
         transaction.addToBackStack(null);
 
         // Commit the transaction
@@ -68,7 +69,7 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.OnL
 
     @Override
     public void OnCreateNewUser() {
-
+        mostraFragmentRegistraUtente();
     }
 
     @Override
@@ -80,5 +81,15 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.OnL
     @Override
     public void OnLoginFailed() {
         //TODO : Cosa succede se il login fallisce? Riprova?
+    }
+
+    @Override
+    public void OnRegistraSuccess(String username, String userID) {
+        mostraFragmentLogin();
+    }
+
+    @Override
+    public void OnRegistraFailed() {
+
     }
 }
