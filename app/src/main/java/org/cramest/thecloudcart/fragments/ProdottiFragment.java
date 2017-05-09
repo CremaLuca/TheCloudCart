@@ -15,6 +15,7 @@ import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.adapter.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 
 import java.util.ArrayList;
 
@@ -80,7 +81,7 @@ public class ProdottiFragment extends Fragment{
                 ProdottoInLista curProdotto = prodottiInLista.get(position);
                 if(curProdotto.getQuantita() > 0){
                     //TODO : Se e' un prodotto normale apriremo una finestra con i dettagli del prodotto, senza una nuova activity
-                    onProdottoClicked();
+                    onProdottoClicked(curProdotto);
                 }else if(curProdotto.getQuantita() == 0){
                     //TODO : Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
                     //Nuova activity chiederemo i dettagli del prodotto da aggiungere
@@ -97,9 +98,9 @@ public class ProdottiFragment extends Fragment{
         return inflater.inflate(R.layout.fragment_prodotti, container, false);
     }
 
-    public void onProdottoClicked() {
+    public void onProdottoClicked(ProdottoInLista prodottoInLista) {
         if (mListener != null) {
-            mListener.OnProdottoClicked();
+            mListener.OnProdottoClicked(prodottoInLista);
         }
     }
 
@@ -117,7 +118,7 @@ public class ProdottiFragment extends Fragment{
             mListener = (OnProdottiFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnProdottiFragmentInteractionListener");
         }
     }
 
@@ -134,7 +135,7 @@ public class ProdottiFragment extends Fragment{
     }
 
     public interface OnProdottiFragmentInteractionListener {
-        void OnProdottoClicked();
+        void OnProdottoClicked(ProdottoInLista prodottoInLista);
         void OnAggiungiProdotto(int listID);
     }
 }

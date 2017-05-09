@@ -1,6 +1,7 @@
 package org.cramest.thecloudcart.classi;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
@@ -15,7 +16,9 @@ import java.util.Arrays;
 
 public class Dati implements DataHandler{
 
-    private OnDatiLoadedListener mListener;
+    private OnDatiListener mListener;
+
+    public static Dati instance;
 
     private static ArrayList<Lista> listeMie;
     private static ArrayList<Lista> listeCondivise;
@@ -24,19 +27,22 @@ public class Dati implements DataHandler{
     private static ArrayList<ProdottoInLista> prodottiInLista;
 
     private String userID;
-    private Context ctx;
+    private static Context ctx;
+
+    private boolean chiamatoLoaded = false;
 
     public Dati(Context ctx,String userID){
         System.out.println("User id passato : " + userID);
         //Ci salviamo il listener se esiste
-        if (ctx instanceof OnDatiLoadedListener) {
-            mListener = (OnDatiLoadedListener) ctx;
+        if (ctx instanceof OnDatiListener) {
+            mListener = (OnDatiListener) ctx;
         } else {
             throw new RuntimeException(ctx.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDatiListener");
         }
         this.userID = userID;
         this.ctx = ctx;
+        instance = this;
         richiediCategorie(ctx);
     }
 
@@ -110,6 +116,11 @@ public class Dati implements DataHandler{
                     }
                 }
             }
+            if(nome.startsWith("eliminaProdotto")){
+                Toast.makeText(ctx, "Prodotto eliminato con successo", Toast.LENGTH_SHORT).show();
+                int listID = Integer.parseInt(nome.split("=")[1]);
+                OnProdottoInListaEliminato(listID);
+            }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null){
                 LoadedDati();
             }
@@ -179,13 +190,23 @@ public class Dati implements DataHandler{
         return null;
     }
 
-    public interface OnDatiLoadedListener{
+    public interface OnDatiListener{
         void OnDatiLoaded();
+        void OnProdottoInListaEliminato(int listID);
     }
 
     public void LoadedDati() {
         if (mListener != null) {
-            mListener.OnDatiLoaded();
+            if(!chiamatoLoaded) {
+                chiamatoLoaded = true;
+                mListener.OnDatiLoaded();
+            }
+        }
+    }
+
+    public void OnProdottoInListaEliminato(int listID){
+        if (mListener != null) {
+            mListener.OnProdottoInListaEliminato(listID);
         }
     }
 
@@ -224,5 +245,15 @@ public class Dati implements DataHandler{
 
     public static void aggiungiProdotto(Prodotto prod){
         prodotti.add(prod);
+    }
+
+    public void rimuoviProdottoInLista(ProdottoInLista prodottoInLista){
+        String[] pars = {"req", "listID","productID"};
+        String[] vals = {"deleteProductInList", prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
+        Connettore.getInstance(ctx).GetDataFromWebsite(this, "eliminaProdotto="+prodottoInLista.getIdLista(), pars, vals);
+        //Dovrebbe funzionare perche tutti i prodottiInLista escono da Dati
+        //Lo farei dopo ma non so come passare "prodottoInLista" a HandleData
+        prodottiInLista.remove(prodottoInLista);
+
     }
 }

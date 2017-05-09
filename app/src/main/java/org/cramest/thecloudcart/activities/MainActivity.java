@@ -10,6 +10,7 @@ import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
@@ -20,8 +21,9 @@ import org.cramest.thecloudcart.fragments.ProdottiFragment;
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
-        ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiLoadedListener, AggiungiListaFragment.OnAggiungiListaListener,
-        AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener{
+        ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
+        AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
+        ProdottoDialog.OnProdottoDialogInteractionListener{
 
     private String username;
     private String userID;
@@ -197,8 +199,10 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public void OnProdottoClicked() {
+    public void OnProdottoClicked(ProdottoInLista prodottoInLista) {
         //Questa funzione viene chiamata invece dal fragment dei prodotti quando uno della lista viene cliccato
+        ProdottoDialog prodottoDialog = new ProdottoDialog();
+        prodottoDialog.showDialog(this,this,prodottoInLista);
     }
 
     private void InizializzaApplicazione(){
@@ -211,6 +215,11 @@ public class MainActivity extends FragmentActivity
     public void OnDatiLoaded() {
         //Quando la prima volta vengono caricati i dati viene mostrata questa finestra
         mostraFragmentListe();
+    }
+
+    @Override
+    public void OnProdottoInListaEliminato(int listID) {
+        //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
     }
 
     @Override
@@ -245,5 +254,15 @@ public class MainActivity extends FragmentActivity
     public void OnProdottoNonCreato(int listID) {
 
     }
-    //TODO : OnProdottoCreato(listID,Prodotto){ (nuovo costruttore) mostraFragmentAggiungiProdotto(listID,Prodotto);}
+
+    @Override
+    public void OnCompratoProdotto(ProdottoInLista prodotto) {
+        //Se nel dialog il prodotto viene comprato
+    }
+
+    @Override
+    public void OnEliminaProdotto(ProdottoInLista prodotto) {
+        //Se nel dialog si vuole eliminare il prodotto
+        Dati.instance.rimuoviProdottoInLista(prodotto);
+    }
 }
