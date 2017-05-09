@@ -10,7 +10,7 @@ import org.cramest.thecloudcart.network.LoginApp;
 import org.cramest.thecloudcart.R;
 import org.cramest.utils.DataSaver;
 
-public class LandActivity extends Activity {
+public class LandActivity extends Activity implements LoginApp.OnLoginAppListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +34,13 @@ public class LandActivity extends Activity {
         }else{
             //Se manca la connessione ad internet facciamo l'accesso con l'ultimo account, altrimenti notifichiamo che e' necessaria una connessione internet al primo accesso
             String username = DataSaver.getInstance().getDataString(this, "username");
-            String password = DataSaver.getInstance().getDataString(this, "password");
+            String userID = DataSaver.getInstance().getDataString(this, "userID");
 
             if(username != null) {
                 //Passiamo direttamente alla activity in cui mostriamo la lista
                 Intent i = new Intent(this, MainActivity.class);
                 i.putExtra("username", username);
-                i.putExtra("password", password);
+                i.putExtra("userID", userID);
                 startActivity(i);
                 //impediamo di tornare indietro con finish()
                 finish();
@@ -51,32 +51,19 @@ public class LandActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void OnLoginSuccess(String username, String userID) {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("username", username);
+        i.putExtra("userID", userID);
+        startActivity(i);
+        //impediamo di tornare indietro con finish()
+        finish();
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    public void OnLoginFailed() {
+        //Rifacciamogli fare il login
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
     }
 }

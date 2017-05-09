@@ -50,7 +50,7 @@ public class LoginApp implements DataHandler {
                     //Salviamo nella memoria i nostri dati
                     DataSaver.getInstance().saveDataString(c, "username", username);
                     DataSaver.getInstance().saveDataString(c, "userID", data);
-                    DataSaver.getInstance().saveDataString(c, "password", password);
+                    //DataSaver.getInstance().saveDataString(c, "password", password); //Non sono sicuro serva a qualcosa
                     //Notifichiamo il fragment che siamo riusciti a fare l'accesso il quale chiamera l'activity che ne caricherà un altra
                     mListener.OnLoginSuccess(username,data);
                 }
