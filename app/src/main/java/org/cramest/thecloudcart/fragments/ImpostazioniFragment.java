@@ -16,12 +16,15 @@ public class ImpostazioniFragment extends Fragment {
 
     private static final String ARG_PARAM = "userID";
 
+    private String userID;
+
     public ImpostazioniFragment() {
     }
 
-    public static ImpostazioniFragment newInstance() {
+    public static ImpostazioniFragment newInstance(String userID) {
         ImpostazioniFragment fragment = new ImpostazioniFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM,userID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -30,7 +33,7 @@ public class ImpostazioniFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            userID = getArguments().getString(ARG_PARAM);
         }
     }
 
@@ -38,7 +41,7 @@ public class ImpostazioniFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loading, container, false);
+        return inflater.inflate(R.layout.fragment_impostazioni, container, false);
     }
 
     @Override
