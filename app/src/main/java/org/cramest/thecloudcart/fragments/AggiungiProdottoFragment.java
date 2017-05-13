@@ -45,6 +45,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     private Prodotto curProdottoSel = null;
     private Prodotto initialProdotto = null;
 
+    private ProdottoInLista tmpProdottoInLista;
+
     public AggiungiProdottoFragment() {
         // Required empty public constructor
     }
@@ -132,7 +134,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         if(prodotto != null) {
             String descrizione = ((EditText) getActivity().findViewById(R.id.descrizione)).getText().toString();
             int quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString());
-            ProdottoInLista prodottoAggiunto = new ProdottoInLista(listID, prodotto, quantita, descrizione);
+            tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
 
             //Aggiungiamo la lista tramite l'API
             String[] parametri = {"req","userID","listID","productID","quantity","description"};
@@ -144,7 +146,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
                 //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             }
             //Comunque sia alla fine dobbiamo aggiungere il prodotto alla lista
-            Dati.aggiungiProdottoInLista(prodottoAggiunto);
+            Dati.aggiungiProdottoInLista(tmpProdottoInLista);
         }else{
             //TODO : Gestisci il caso nessun prodotto sia selezionato
         }
@@ -240,6 +242,9 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     public void HandleData(String nome, boolean success, String data) {
         if(success) {
             Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            if(tmpProdottoInLista != null) {
+                onProdottoAggiunto(tmpProdottoInLista);
+            }
         }else{
             Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
         }

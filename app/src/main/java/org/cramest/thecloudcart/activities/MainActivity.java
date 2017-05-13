@@ -264,5 +264,6 @@ public class MainActivity extends FragmentActivity
     public void OnEliminaProdotto(ProdottoInLista prodotto) {
         //Se nel dialog si vuole eliminare il prodotto
         Dati.instance.rimuoviProdottoInLista(prodotto);
+        mostraFragmentProdotti(prodotto.getIdLista());
     }
 }
