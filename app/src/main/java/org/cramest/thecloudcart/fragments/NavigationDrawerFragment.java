@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
@@ -98,6 +99,14 @@ public class NavigationDrawerFragment extends Fragment {
                         "Informazioni"
                 }));
         listView.setItemChecked(mCurrentSelectedPosition, true);
+
+        //Impostiamo che quando clicchiamo l'header con il nome utente succede qualcosa
+        v.findViewById(R.id.relative_header).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallbacks.onNavigationHeaderClicked();
+            }
+        });
         return v;
     }
 
@@ -266,9 +275,7 @@ public class NavigationDrawerFragment extends Fragment {
      * Callbacks interface that all activities using this fragment must implement.
      */
     public static interface NavigationDrawerCallbacks {
-        /**
-         * Called when an item in the navigation drawer is selected.
-         */
         void onNavigationDrawerItemSelected(int position);
+        void onNavigationHeaderClicked();
     }
 }

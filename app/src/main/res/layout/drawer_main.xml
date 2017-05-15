@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:background="@color/colorPrimary"
+        android:id="@+id/relative_header"
+        android:background="@color/colorPrimaryDark"
         android:padding="15dp">
 
         <TextView
@@ -37,7 +38,6 @@
         android:id="@+id/listView_drawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eeee"
         android:choiceMode="singleChoice"
         tools:context="org.cramest.thecloudcart.fragments.NavigationDrawerFragment" />
 

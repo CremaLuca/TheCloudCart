@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
@@ -58,6 +59,7 @@ public class MainActivity extends FragmentActivity
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");
+        ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_username)).setText(username);
         InizializzaApplicazione();
         mostraFragmentLoading();
     }
@@ -162,6 +164,11 @@ public class MainActivity extends FragmentActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();*/
+    }
+
+    @Override
+    public void onNavigationHeaderClicked() {
+        //Apriremo la schermata delle impostazioni credo
     }
 
     public void onSectionAttached(int number) {
