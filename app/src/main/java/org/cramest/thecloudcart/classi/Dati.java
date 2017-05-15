@@ -31,6 +31,9 @@ public class Dati implements DataHandler{
 
     private boolean chiamatoLoaded = false;
 
+    private int listeCaricate = 0;
+    private int listeDaCaricare;
+
     public Dati(Context ctx,String userID){
         System.out.println("User id passato : " + userID);
         //Ci salviamo il listener se esiste
@@ -71,6 +74,7 @@ public class Dati implements DataHandler{
     private void richiediProdottiInLista(Context ctx){
         //Se abbiamo sia le nostre liste che le liste degli altri di cui caricare i prodotti
         if(listeMie != null && listeCondivise != null) {
+            listeDaCaricare = listeMie.size() + listeCondivise.size();
             for (Lista lista : listeMie) {
                 String[] pars = {"req", "listID"};
                 String[] vals = {"getProductList", lista.getID() + ""};
@@ -115,13 +119,14 @@ public class Dati implements DataHandler{
                         prodottiInLista.addAll(nuoviProdotti);
                     }
                 }
+                listeCaricate++;
             }
             if(nome.startsWith("eliminaProdotto")){
                 Toast.makeText(ctx, "Prodotto eliminato con successo", Toast.LENGTH_SHORT).show();
                 int listID = Integer.parseInt(nome.split("=")[1]);
                 OnProdottoInListaEliminato(listID);
             }
-            if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null){
+            if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null && listeCaricate >= listeDaCaricare){
                 LoadedDati();
             }
         }

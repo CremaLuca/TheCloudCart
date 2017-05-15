@@ -1,19 +1,19 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentStart="true"
     android:layout_alignParentTop="true"
     android:clipToPadding="false"
-    android:fillViewport="true"
-    tools:context="org.cramest.thecloudcart.fragments.ListsFragment">
+    android:fillViewport="true">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_lists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="10dp"
         android:weightSum="1">
 
         <RelativeLayout
@@ -26,8 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Le tue liste"
-                android:textAlignment="textStart"
-                android:textSize="20sp" />
+                android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         </RelativeLayout>
 
@@ -41,7 +40,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="20dp"
+                android:divider="@android:color/white"
+                android:dividerHeight="10dp"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -56,8 +59,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:text="Condivise con te"
-                android:textAlignment="textStart"
-                android:textSize="20sp" />
+                android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         </RelativeLayout>
 
@@ -75,4 +77,4 @@
         </RelativeLayout>
 
     </LinearLayout>
-</ScrollView>
+</android.support.v7.widget.CardView>
