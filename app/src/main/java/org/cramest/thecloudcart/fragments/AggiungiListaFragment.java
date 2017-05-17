@@ -2,6 +2,7 @@ package org.cramest.thecloudcart.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.activities.AggiungiListaCondividiActivity;
+import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 
@@ -27,6 +29,8 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     private String userID;
 
     private OnAggiungiListaListener mListener;
+
+    private String nomelista;
 
     public AggiungiListaFragment() {
         // Required empty public constructor
@@ -68,12 +72,12 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
         ((Button)getActivity().findViewById(R.id.buttonCreaLista)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nomeLista = ((EditText)getActivity().findViewById(R.id.editTextNomeLista)).getText().toString();
+                nomelista = ((EditText)getActivity().findViewById(R.id.editTextNomeLista)).getText().toString();
                 //Generiamo l'intent
 
                 //Aggiungiamo la lista tramite l'API
                 String[] parametri = {"req","userID","listName"};
-                String[] valori = {"addList",userID,nomeLista};
+                String[] valori = {"addList",userID,nomelista};
                 if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                     //Chiediamo al sito le liste
                     Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiListaFragment.this, "aggiungiLista", parametri, valori);
@@ -85,9 +89,14 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
         });
     }
 
-    public void onListaAggiunta() {
+    public void onListaAggiunta(Lista lista) {
         if (mListener != null) {
-            mListener.onAggiungiLista();
+            mListener.onListaAggiunta(lista);
+        }
+    }
+    public void onListaNonAggiunta() {
+        if (mListener != null) {
+            mListener.onListaNonAggiunta();
         }
     }
 
@@ -111,13 +120,17 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     @Override
     public void HandleData(String nome, boolean success, String data) {
         if(success) {
-            Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Lista creata con successo", Toast.LENGTH_SHORT).show();
+            //data in questo caso sarà l'id della lista
+            onListaAggiunta(new Lista(Integer.parseInt(data),nomelista,0));
         }else{
             Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            onListaNonAggiunta();
         }
     }
 
     public interface OnAggiungiListaListener {
-        void onAggiungiLista(/* TODO : IDLista, così da poter aggiornare la lista senza forzare tutto l'aggiornamento*/);
+        void onListaAggiunta(Lista lista);
+        void onListaNonAggiunta();
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.dialogs.ProdottoDialog;
@@ -227,11 +228,13 @@ public class MainActivity extends FragmentActivity
     @Override
     public void OnProdottoInListaEliminato(int listID) {
         //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
+        mostraFragmentProdotti(listID);
     }
 
     @Override
-    public void onAggiungiLista() {
-        //Nel caso venga confermata l'aggiunta della lista
+    public void OnProdottoComprato(int listID) {
+        //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
+        mostraFragmentProdotti(listID);
     }
 
     @Override
@@ -254,17 +257,19 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void OnProdottoCreato(int listID, int prodottoID) {
+        //Un prodotto viene creato dal nulla e si torna alla pagina aggiungi prodotto con il prodotto appena creato
         mostraFragmentAggiungiProdotto(listID,prodottoID);
     }
 
     @Override
     public void OnProdottoNonCreato(int listID) {
-
+        //TODO : Gestiore il caso un prodotto non venga creato
     }
 
     @Override
-    public void OnCompratoProdotto(ProdottoInLista prodotto) {
+    public void OnCompraProdotto(ProdottoInLista prodotto) {
         //Se nel dialog il prodotto viene comprato
+        Dati.instance.compraProdotto(userID,prodotto);
     }
 
     @Override
@@ -272,5 +277,18 @@ public class MainActivity extends FragmentActivity
         //Se nel dialog si vuole eliminare il prodotto
         Dati.instance.rimuoviProdottoInLista(prodotto);
         mostraFragmentProdotti(prodotto.getIdLista());
+    }
+
+    @Override
+    public void onListaAggiunta(Lista lista) {
+        //Nel caso venga confermata la creazione di una nuova lista
+        Dati.aggiungiLista(lista);
+        mostraFragmentListe();
+    }
+
+    @Override
+    public void onListaNonAggiunta() {
+        //Nel caso non venga aggiunta l'unica soluzione è deprimersi
+        //TODO : Gestire il caso della lista non aggiunta
     }
 }

@@ -14,11 +14,11 @@ import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
 
-    private ArrayList<ProdottoInLista> objects;
+    private ArrayList<ProdottoInLista> prodotti;
 
     public ProdottoAdapter(Context context, int textViewResourceId, ArrayList<ProdottoInLista> objects) {
         super(context, textViewResourceId, objects);
-        this.objects = objects;
+        this.prodotti = objects;
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
@@ -30,7 +30,7 @@ public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
             v = inflater.inflate(R.layout.list_prodotto, null);
         }
 
-        ProdottoInLista i = objects.get(position);
+        ProdottoInLista i = prodotti.get(position);
         if (i != null) {
             TextView nomeProdotto = (TextView) v.findViewById(R.id.textViewNomeProdotto);
             TextView quantita = (TextView) v.findViewById(R.id.textViewQta);

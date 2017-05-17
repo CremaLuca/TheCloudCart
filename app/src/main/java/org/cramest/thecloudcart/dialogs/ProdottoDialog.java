@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 /**
@@ -17,6 +18,9 @@ import org.cramest.thecloudcart.classi.ProdottoInLista;
  */
 
 public class ProdottoDialog{
+
+    public static ProdottoDialog instance;
+    public Dialog dialog;
 
     public void showDialog(Activity activity,final OnProdottoDialogInteractionListener listener, final ProdottoInLista prodotto) {
 
@@ -38,7 +42,7 @@ public class ProdottoDialog{
         compraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.OnCompratoProdotto(prodotto);
+                listener.OnCompraProdotto(prodotto);
                 dialog.dismiss();
             }
         });
@@ -52,13 +56,15 @@ public class ProdottoDialog{
             }
         });
 
-        //TODO : cose modificabili
+        //TODO : informazioni prodotto modificabili
 
+        instance = this;
+        this.dialog = dialog;
         dialog.show();
     }
 
     public interface OnProdottoDialogInteractionListener{
-        void OnCompratoProdotto(ProdottoInLista prodotto);
+        void OnCompraProdotto(ProdottoInLista prodotto);
         void OnEliminaProdotto(ProdottoInLista prodotto);
     }
 }

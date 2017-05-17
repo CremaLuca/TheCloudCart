@@ -144,7 +144,7 @@ public class Connettore {
                 if(risultati.length > 1) {
                     boolean success = false;
                     success = risultati[0].equals("OK");
-                    System.out.println("res " + risultati[0] + " quindi success: " + success + ", per la richiesta " + nome);
+                    System.out.println("res " + risultati[0] + " quindi success: " + success + ", per la richiesta " + nome + " con dati: "+risultati[1]);
                     handler.HandleData(nome, success, risultati[1]);
                     super.onPostExecute(result);
                 }else{

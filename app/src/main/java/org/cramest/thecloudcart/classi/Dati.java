@@ -126,6 +126,11 @@ public class Dati implements DataHandler{
                 int listID = Integer.parseInt(nome.split("=")[1]);
                 OnProdottoInListaEliminato(listID);
             }
+            if(nome.startsWith("compraProdotto")) {
+                int listID = Integer.parseInt(nome.split("=")[1]);
+                Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
+                mListener.OnProdottoComprato(listID);
+            }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null && listeCaricate >= listeDaCaricare){
                 LoadedDati();
             }
@@ -198,6 +203,7 @@ public class Dati implements DataHandler{
     public interface OnDatiListener{
         void OnDatiLoaded();
         void OnProdottoInListaEliminato(int listID);
+        void OnProdottoComprato(int listID);
     }
 
     public void LoadedDati() {
@@ -252,6 +258,10 @@ public class Dati implements DataHandler{
         prodotti.add(prod);
     }
 
+    public static void aggiungiLista(Lista lista){
+        listeMie.add(lista);
+    }
+
     public void rimuoviProdottoInLista(ProdottoInLista prodottoInLista){
         String[] pars = {"req", "listID","productID"};
         String[] vals = {"deleteProductInList", prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
@@ -260,5 +270,13 @@ public class Dati implements DataHandler{
         //Lo farei dopo ma non so come passare "prodottoInLista" a HandleData
         prodottiInLista.remove(prodottoInLista);
 
+    }
+
+    public void compraProdotto(String userID,ProdottoInLista prodottoInLista){
+        String[] pars = {"req","userID", "listID","productID"};
+        String[] vals = {"buyProduct",userID, prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
+        Connettore.getInstance(ctx).GetDataFromWebsite(this, "compraProdotto="+prodottoInLista.getIdLista(), pars, vals);
+        //Dovrebbe funzionare perche tutti i prodottiInLista escono da Dati
+        prodottiInLista.remove(prodottoInLista);
     }
 }
