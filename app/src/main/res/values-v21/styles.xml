@@ -12,4 +12,8 @@
     <style name="MyActionBar" parent="@android:style/Theme.Material.Light.DarkActionBar">
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+    <style name="ListView" parent="@android:style/Widget.ListView">
+        <item name="android:divider">@color/colorBackground</item>
+        <item name="android:dividerHeight">5dp</item>
+    </style>
 </resources>

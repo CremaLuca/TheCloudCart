@@ -17,7 +17,7 @@
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="5dp"
+            style="@style/ListView"
             android:id="@+id/listProdotti" />
 
     </LinearLayout>
