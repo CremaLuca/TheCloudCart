@@ -134,5 +134,10 @@ public class ListsFragment extends Fragment{
                 }
             }
         });
+        int totalHeight = listViewadapter.getView(0,null,lv).getMeasuredHeight() * lista.size();
+        ViewGroup.LayoutParams params = lv.getLayoutParams();
+        params.height = totalHeight + (lv.getDividerHeight() * (lv.getCount() - 1));
+        lv.setLayoutParams(params);
+        lv.requestLayout();
     }
 }
