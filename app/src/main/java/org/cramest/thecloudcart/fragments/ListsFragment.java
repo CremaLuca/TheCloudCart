@@ -63,7 +63,7 @@ public class ListsFragment extends Fragment{
         //Lo chiamo qui così viene chiamato una volta sola teoricamente
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
-            listeMie = Dati.getListeMie();
+            listeMie = new ArrayList<Lista>(Dati.getListeMie());
             listeMie.add(new Lista(-1,"Aggiungi nuova lista",-1));
             listeCondivise = Dati.getListeCondivise();
         }
@@ -134,10 +134,5 @@ public class ListsFragment extends Fragment{
                 }
             }
         });
-        int totalHeight = listViewadapter.getView(0,null,lv).getMeasuredHeight() * lista.size();
-        ViewGroup.LayoutParams params = lv.getLayoutParams();
-        params.height = totalHeight + (lv.getDividerHeight() * (lv.getCount() - 1));
-        lv.setLayoutParams(params);
-        lv.requestLayout();
     }
 }

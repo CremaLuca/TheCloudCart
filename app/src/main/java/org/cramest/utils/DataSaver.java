@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 
 public class DataSaver {
 
-    public static DataSaver instance;
+    private static DataSaver instance;
 
     public static DataSaver getInstance(){
         if(instance == null){
@@ -48,5 +48,12 @@ public class DataSaver {
     public int getDataInt(Context c,String tag){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
         return sharedPref.getInt(tag, 0);
+    }
+
+    public void clearData(Context c){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.commit();
     }
 }

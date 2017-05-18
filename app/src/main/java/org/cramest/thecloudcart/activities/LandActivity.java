@@ -23,6 +23,8 @@ public class LandActivity extends Activity implements LoginApp.OnLoginAppListene
                 //Mandiamolo alla schermata del login in cui può inserire le credenziali
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
+                //impediamo di tornare indietro con finish()
+                finish();
             } else {
                 //Abbiamo già nome utente e password
                 setContentView(R.layout.activity_land);
@@ -30,6 +32,7 @@ public class LandActivity extends Activity implements LoginApp.OnLoginAppListene
                 String username = DataSaver.getInstance().getDataString(this, "username");
                 String password = DataSaver.getInstance().getDataString(this, "password");
                 new LoginApp(this, username, password);
+
             }
         }else{
             //Se manca la connessione ad internet facciamo l'accesso con l'ultimo account, altrimenti notifichiamo che e' necessaria una connessione internet al primo accesso

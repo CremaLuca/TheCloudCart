@@ -16,6 +16,7 @@
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
         android:text="Spesa per domani che puzza"
+        android:textColor="@color/textColorPrimary"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:maxLines="1"
         android:ellipsize="end" />
@@ -27,6 +28,7 @@
         android:layout_alignBaseline="@+id/textViewNumProdotto"
         android:layout_alignBottom="@+id/textViewNumProdotto"
         android:layout_alignParentEnd="true"
+        android:textColor="@color/textColorPrimary"
         android:text="11" />
 
     <TextView
@@ -36,5 +38,6 @@
         android:layout_below="@+id/textViewNomeLista"
         android:layout_marginTop="10dp"
         android:layout_toStartOf="@+id/textViewQtaLista"
+        android:textColor="@color/textColorPrimary"
         android:text="Numero prodotti : " />
 </RelativeLayout>

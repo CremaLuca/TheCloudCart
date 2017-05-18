@@ -1,6 +1,7 @@
 package org.cramest.thecloudcart.activities;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,7 @@ import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
+import org.cramest.utils.DataSaver;
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
@@ -160,7 +162,26 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-
+        System.out.println("Chiamato drawerselected ---- "+position);
+        switch (position) {
+            case 0:
+                //Le mie liste
+                mostraFragmentListe();
+                break;
+            case 1:
+                //Impostazioni
+                break;
+            case 2:
+                //Disconnetti
+                DataSaver.getInstance().clearData(this);
+                Intent i = new Intent(getApplicationContext(), LandActivity.class);
+                startActivity(i);
+                finish();
+                break;
+            case 3:
+                //Informazioni
+                break;
+        }
     }
 
     @Override

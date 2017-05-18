@@ -7,13 +7,19 @@
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name='android:colorPrimaryDark'>@color/colorPrimaryDark</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:buttonStyle">@style/styledButton</item>
+        <item name="android:textViewStyle">@android:style/TextAppearance.Material.Medium</item>
     </style>
-
     <style name="MyActionBar" parent="@android:style/Theme.Material.Light.DarkActionBar">
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
     <style name="ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">@color/colorBackground</item>
         <item name="android:dividerHeight">5dp</item>
+    </style>
+    <style name="styledButton" parent="android:Widget.Button">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:padding">12dp</item>
     </style>
 </resources>

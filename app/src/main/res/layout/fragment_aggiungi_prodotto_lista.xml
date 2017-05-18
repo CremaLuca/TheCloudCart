@@ -34,7 +34,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView6"
-        android:text="Salva prodotto" />
+        android:text="Salva prodotto"
+        style="@style/styledButton"/>
 
     <Spinner
         android:id="@+id/prodotto_spinner"
@@ -77,7 +78,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Aggiungi" />
+        android:text="Aggiungi"
+        style="@style/styledButton"/>
 
 
 
