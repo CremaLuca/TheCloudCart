@@ -2,10 +2,7 @@
     android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:fillViewport="true"
-    android:isScrollContainer="false"
-    android:keepScreenOn="false">
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/activity_lists"
@@ -14,7 +11,7 @@
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:weightSum="1">
 
         <TextView
@@ -31,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:divider="@android:color/white"
+            android:divider="@color/colorBackground"
             android:dividerHeight="5dp" />
 
         <TextView
@@ -51,7 +48,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="20dp"
-            android:divider="@android:color/white"
+            android:divider="@color/colorBackground"
             android:dividerHeight="5dp" />
 
     </LinearLayout>

@@ -23,6 +23,7 @@ public class NonScrollableListView extends ListView {
     }
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        //Non ho idea di cosa faccia, so che l'ho copiato da internet e funziona
         int heightMeasureSpec_custom = View.MeasureSpec.makeMeasureSpec(
                 Integer.MAX_VALUE >> 2, View.MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec_custom);
