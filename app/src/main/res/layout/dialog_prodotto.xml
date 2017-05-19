@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Melanzane"
+        android:text=""
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/nome_prodotto"
-        android:text="Prezzo"
+        android:text="@string/price"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView9"
         android:layout_marginTop="50dp"
-        android:text="Marca"
+        android:text="@string/brand"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView10"
         android:layout_marginTop="50dp"
-        android:text="Dimensione"
+        android:text="@string/dimension"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView11"
         android:layout_marginTop="50dp"
-        android:text="Quantità"
+        android:text="@string/quantity"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <TextView
@@ -60,7 +60,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView12"
         android:layout_marginTop="50dp"
-        android:text="Descrizione"
+        android:text="@string/description"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <EditText
@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@color/textColorPrimary"
-        android:text="Comprato"
+        android:text="@string/bought"
         android:layout_below="@+id/edit_descrizione"
         android:layout_alignParentStart="true"
         android:layout_marginTop="13dp" />
@@ -154,7 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_light"
-        android:text="Elimina"
+        android:text="@string/delete"
         android:layout_below="@+id/button_comprato"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />

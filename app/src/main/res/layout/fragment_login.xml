@@ -16,11 +16,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Login"
+        android:text="@string/login"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <TextView
-        android:text="Esegui il login con google (non ancora funzionante)"
+        android:text="@string/login_with_google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewGoogleLogin"
@@ -38,7 +38,7 @@
         android:layout_alignParentEnd="true"/>
 
     <Button
-        android:text="Login"
+        android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -58,7 +58,7 @@
         android:layout_below="@+id/editUsername"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:hint="Password" />
+        android:hint="@string/password" />
 
     <TextView
         android:id="@+id/textViewAppLogin"
@@ -67,7 +67,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textViewGoogleLogin"
         android:layout_marginTop="63dp"
-        android:text="Esegui il login con l'account dell'app"
+        android:text="@string/login_app_account"
         android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
     <TextView
@@ -77,11 +77,11 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/loginButton"
         android:layout_marginTop="19dp"
-        android:text="Non hai un account? Registrati"
+        android:text="@string/no_account_register"
         android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
     <Button
-        android:text="Registrati"
+        android:text="@string/register_yoruself"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
@@ -98,7 +98,7 @@
         android:ems="10"
         android:layout_marginTop="21dp"
         android:id="@+id/editUsername"
-        android:hint="Nome utente"
+        android:hint="@string/username"
         android:layout_below="@+id/textViewAppLogin"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />

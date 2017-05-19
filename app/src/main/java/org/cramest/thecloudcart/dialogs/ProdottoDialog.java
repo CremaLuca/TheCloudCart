@@ -10,14 +10,10 @@ import android.widget.TextView;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 
-/**
- * Created by User on 09/05/2017.
- */
 
 public class ProdottoDialog{
 
     public static ProdottoDialog instance;
-    public Dialog dialog;
 
     public void showDialog(Activity activity,final OnProdottoDialogInteractionListener listener, final ProdottoInLista prodotto) {
 
@@ -28,9 +24,9 @@ public class ProdottoDialog{
 
         ((TextView) dialog.findViewById(R.id.nome_prodotto)).setText(prodotto.getProdotto().getNome());
         ((TextView) dialog.findViewById(R.id.edit_marca)).setText(prodotto.getProdotto().getMarca());
-        ((TextView) dialog.findViewById(R.id.edit_prezzo)).setText(prodotto.getProdotto().getPrezzo()+"");
+        ((TextView) dialog.findViewById(R.id.edit_prezzo)).setText(String.valueOf(prodotto.getProdotto().getPrezzo()));
         ((TextView) dialog.findViewById(R.id.edit_dimensione)).setText(prodotto.getProdotto().getDimensione());
-        ((TextView) dialog.findViewById(R.id.edit_quantita)).setText(prodotto.getQuantita()+"");
+        ((TextView) dialog.findViewById(R.id.edit_quantita)).setText(String.valueOf(prodotto.getQuantita()));
         ((TextView) dialog.findViewById(R.id.edit_descrizione)).setText(prodotto.getDescrizione());
 
 
@@ -56,7 +52,6 @@ public class ProdottoDialog{
         //TODO : informazioni prodotto modificabili
 
         instance = this;
-        this.dialog = dialog;
         dialog.show();
     }
 

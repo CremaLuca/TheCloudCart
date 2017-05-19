@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Salva" />
+        android:text="@string/save" />
 
     <TextView
         android:id="@+id/textView7"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Salva prodotto"
+        android:text="@string/save_product"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <EditText
@@ -33,7 +33,7 @@
         android:layout_alignParentStart="false"
         android:layout_below="@+id/textView7"
         android:layout_marginTop="15dp"
-        android:hint="Nome"
+        android:hint="@string/name"
         android:maxLines="1" />
 
     <EditText
@@ -44,7 +44,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:ems="10"
-        android:hint="Prezzo"
+        android:hint="@string/price"
         android:inputType="numberDecimal"
         android:maxLines="1" />
 
@@ -55,7 +55,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/edit_prezzo"
         android:layout_marginTop="15dp"
-        android:hint="Marca"
+        android:hint="@string/brand"
         android:maxLines="1" />
 
     <EditText
@@ -65,7 +65,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/edit_marca"
         android:layout_marginTop="15dp"
-        android:hint="Dimensione (es. 1kg)"
+        android:hint="@string/dimension_es_1kg"
         android:maxLines="1" />
 
     <Spinner

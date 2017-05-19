@@ -13,7 +13,7 @@
         android:id="@+id/title_aggiungi_prodotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aggiungi a lista :"
+        android:text="@string/add_to_list_duepunti"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -22,7 +22,7 @@
         android:id="@+id/textViewAggiungiProdotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salva nuovo prodotto"
+        android:text="@string/save_new_product"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:textStyle="bold"
         android:layout_below="@+id/title_aggiungi_prodotto"
@@ -33,7 +33,7 @@
         android:id="@+id/button_crea_prodotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salva prodotto"
+        android:text="@string/save_product"
         style="@style/styledButton"
         android:layout_below="@+id/textViewAggiungiProdotto"
         android:layout_alignParentStart="true"
@@ -60,7 +60,7 @@
         android:id="@+id/text_categoria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Categoria"
+        android:text="@string/category"
         android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true" />
 
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        android:text="Prodotto"
+        android:text="@string/product"
         android:layout_below="@+id/categoria_spinner"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Aggiungi"
+        android:text="@string/add"
         style="@style/styledButton"/>
 
 
@@ -100,7 +100,7 @@
         android:id="@+id/text_quantita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantità"
+        android:text="@string/quantity"
         android:layout_below="@+id/prodotto_spinner"
         android:layout_alignParentStart="true"
         android:layout_marginTop="13dp" />
@@ -113,7 +113,7 @@
         android:layout_below="@+id/quantita"
         android:layout_marginTop="13dp"
         android:ems="10"
-        android:hint="Descrizione"
+        android:hint="@string/description"
         android:inputType="textMultiLine"
         android:maxLines="10"
         android:selectAllOnFocus="false"
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        android:text="Prodotto già salvato"
+        android:text="@string/already_saved_product"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:textStyle="bold"
         android:layout_below="@+id/button_crea_prodotto"

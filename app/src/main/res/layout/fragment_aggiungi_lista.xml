@@ -17,13 +17,13 @@ tools:context="org.cramest.thecloudcart.fragments.AggiungiListaFragment">
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:hint="Nome lista"
+        android:hint="@string/list_name"
         android:maxLines="1" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crea lista"
+        android:text="@string/create_list"
         android:id="@+id/buttonCreaLista"
         android:layout_below="@+id/editTextNomeLista"
         android:layout_marginTop="28dp"

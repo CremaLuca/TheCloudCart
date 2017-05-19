@@ -18,34 +18,27 @@
             android:id="@+id/textTueListe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Le tue liste della spesa"
+            android:text="@string/your_shopping_lists"
             android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewMie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             style="@style/ListView"/>
 
         <TextView
             android:id="@+id/textAltreListe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Le liste condivise con te"
+            android:text="@string/shared_with_you_lists"
             android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewCondivise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginBottom="20dp"
             style="@style/ListView"/>
 
