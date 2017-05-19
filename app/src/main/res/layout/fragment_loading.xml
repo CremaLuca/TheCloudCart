@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     tools:context="org.cramest.thecloudcart.fragments.LoadingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ProgressBar
         android:id="@+id/progressBar2"
         style="@android:style/Widget.DeviceDefault.ProgressBar.Large"

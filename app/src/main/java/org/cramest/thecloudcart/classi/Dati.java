@@ -25,6 +25,7 @@ public class Dati implements DataHandler{
     private static ArrayList<Categoria> categorie;
     private static ArrayList<Prodotto> prodotti;
     private static ArrayList<ProdottoInLista> prodottiInLista;
+    private static ArrayList<Utente> utentiCollegati;
 
     private String userID;
     private static Context ctx;
@@ -88,6 +89,16 @@ public class Dati implements DataHandler{
         }
     }
 
+    private void richiediUtenti(Context ctx){
+        if(listeMie != null) {
+            for (Lista lista : listeMie) {
+                String[] pars = {"req", "listID"};
+                String[] vals = {"getSharedUsers", lista.getID() + ""};
+                Connettore.getInstance(ctx).GetDataFromWebsite(this, "UtentiLista="+lista.getID(), pars, vals);
+            }
+        }
+    }
+
     @Override
     public void HandleData(String nome, boolean success, String data) {
         if(success){
@@ -101,11 +112,21 @@ public class Dati implements DataHandler{
             }
             if(nome.equals("listeSpesa")){
                 listeMie = new ArrayList<Lista>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
+                richiediUtenti(ctx); //Richiediamo anche gli utenti visualizzatori
                 richiediProdottiInLista(ctx);
             }
             if(nome.equals("listeSpesaCondivise")){
                 listeCondivise = new ArrayList<Lista>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
                 richiediProdottiInLista(ctx);
+            }
+            if(nome.startsWith("UtentiLista")){
+                //Se almeno la lista è condivisa con qualcuno
+                if(data != "" && data != null) {
+                    int listID = Integer.parseInt(nome.split("=")[1]);
+                    Lista curLista = getListaByID(listID);
+                    ArrayList<Utente> visualizzanti = new ArrayList<Utente>(Arrays.asList(WebsiteDataManager.getUtenti(data)));
+                    curLista.setVistaDa(visualizzanti);
+                }
             }
             if(nome.startsWith("ProdottiLista")){
                 //Recuperiamo l'id della lista dal nome della richiesta

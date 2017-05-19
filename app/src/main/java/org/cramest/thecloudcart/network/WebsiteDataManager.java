@@ -79,4 +79,24 @@ public class WebsiteDataManager {
         return null;
     }
 
+    public static Utente[] getUtenti(String data){
+        if(data!=null){
+            String[] strUtenti = data.split(sepRighe);
+            if(strUtenti.length > 0){
+                Utente[] utenti = new Utente[strUtenti.length];
+                for (int i = 0; i < strUtenti.length; i++) {
+                    String[] strUtente = strUtenti[i].split(sepColonne);
+
+                    int userID = Integer.parseInt(strUtente[0]);
+                    String username = strUtente[1];
+                    String nome = strUtente[2];
+
+                    utenti[i] = new Utente(userID,username,nome);
+                }
+                return utenti;
+            }
+        }
+        return null;
+    }
+
 }
