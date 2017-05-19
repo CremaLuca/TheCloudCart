@@ -2,15 +2,12 @@ package org.cramest.thecloudcart.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 /**
@@ -27,7 +24,7 @@ public class ProdottoDialog{
          final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.prodotto_dialog);
+        dialog.setContentView(R.layout.dialog_prodotto);
 
         ((TextView) dialog.findViewById(R.id.nome_prodotto)).setText(prodotto.getProdotto().getNome());
         ((TextView) dialog.findViewById(R.id.edit_marca)).setText(prodotto.getProdotto().getMarca());

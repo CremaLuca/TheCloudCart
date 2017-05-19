@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nuovo utente"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <EditText
         android:id="@+id/username_edit_text"
@@ -9,7 +18,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Username"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/password_edit_text"
@@ -17,7 +27,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/repeat_password_edit_text"
@@ -25,12 +36,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Ripeti password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_marginTop="20dp" />
 
     <EditText
         android:id="@+id/email_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress" />
@@ -39,6 +52,7 @@
         android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Registrati" />
 
 </LinearLayout>

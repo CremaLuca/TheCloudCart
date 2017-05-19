@@ -11,13 +11,22 @@
     tools:context=".activities.LoginActivity">
 
     <TextView
-        android:text="Esegui il login con google"
+        android:id="@+id/textViewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Login"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+    <TextView
+        android:text="Esegui il login con google (non ancora funzionante)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewGoogleLogin"
-        android:layout_marginBottom="51dp"
-        android:layout_alignBottom="@+id/sign_in_button"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textViewLogin"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
@@ -52,22 +61,24 @@
         android:hint="Password" />
 
     <TextView
-        android:text="Esegui il login con l'account dell'app"
+        android:id="@+id/textViewAppLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewAppLogin"
-        android:layout_marginTop="27dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textViewGoogleLogin"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="63dp"
+        android:text="Esegui il login con l'account dell'app"
+        android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
     <TextView
-        android:text="Non hai un account? Registrati"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginButton"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/loginButton"
         android:layout_marginTop="19dp"
-        android:id="@+id/textView" />
+        android:text="Non hai un account? Registrati"
+        android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
     <Button
         android:text="Registrati"
@@ -85,11 +96,13 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="21dp"
         android:id="@+id/editUsername"
         android:hint="Nome utente"
         android:layout_below="@+id/textViewAppLogin"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
+
+
 
 </RelativeLayout>

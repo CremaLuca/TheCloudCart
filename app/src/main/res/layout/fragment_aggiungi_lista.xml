@@ -10,21 +10,15 @@ android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="org.cramest.thecloudcart.fragments.AggiungiListaFragment">
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/editTextNomeLista"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:id="@+id/textView4"
+        style="@android:style/Widget.DeviceDefault.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Nome nuova lista"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+        android:hint="Nome lista"
+        android:maxLines="1" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,7 +28,6 @@ tools:context="org.cramest.thecloudcart.fragments.AggiungiListaFragment">
         android:layout_below="@+id/editTextNomeLista"
         android:layout_marginTop="28dp"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView4"
         android:layout_alignParentStart="true"
         style="@style/styledButton"/>
 </RelativeLayout>

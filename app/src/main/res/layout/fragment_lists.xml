@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="Le tue liste della spesa"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewMie"
@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="Le liste condivise con te"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewCondivise"

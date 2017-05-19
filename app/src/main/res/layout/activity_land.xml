@@ -14,10 +14,11 @@
         android:layout_height="30dp"
         android:layout_above="@+id/progressBar"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="17dp"
+        android:fontFamily="sans-serif"
         android:text="Login in corso..."
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textStyle="bold|italic"
         tools:ignore="HardcodedText" />
 
     <ProgressBar
