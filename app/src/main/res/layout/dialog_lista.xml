@@ -5,42 +5,48 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <EditText
-        android:id="@+id/editText_nome_lista"
+        android:id="@+id/edit_nome_lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Nome lista"
         android:inputType="text"
-        android:layout_below="@+id/textView8"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/text_view_nome_lista"
+        android:layout_alignParentStart="true"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:editable="false" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/text_view_condivisa_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_nome_lista"
+        android:layout_below="@+id/edit_nome_lista"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="Condivisa con"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/text_view_nome_lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        android:text="TextView"
+        android:text="Nome lista"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <org.cramest.thecloudcart.adapter.NonScrollableListView
-        style="@style/ListView"
+        android:id="@+id/list_condivisa_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="27dp" />
+        android:layout_below="@+id/text_view_condivisa_con"
+        android:layout_marginTop="27dp"
+        style="@style/ListView" />
 
 </RelativeLayout>

@@ -10,12 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.adapter.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.adapter.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
-import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 
 import java.util.ArrayList;
 
@@ -73,18 +72,15 @@ public class ProdottiFragment extends Fragment{
 
     private void setListAdapter(){
         ListView lv = (ListView)getView().findViewById(R.id.listProdotti);
-        ProdottoAdapter listViewadapter = new ProdottoAdapter(getActivity(), R.layout.list_prodotto, prodottiInLista);
+        ProdottoAdapter listViewadapter = new ProdottoAdapter(getActivity(), R.layout.adapter_prodotto, prodottiInLista);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProdottoInLista curProdotto = prodottiInLista.get(position);
                 if(curProdotto.getQuantita() > 0){
-                    //TODO : Se e' un prodotto normale apriremo una finestra con i dettagli del prodotto, senza una nuova activity
                     onProdottoClicked(curProdotto);
                 }else if(curProdotto.getQuantita() == 0){
-                    //TODO : Se dobbiamo invece aggiungere un prodotto creeremo una nuova activity alla quale passiamo l'id della lista e sulla
-                    //Nuova activity chiederemo i dettagli del prodotto da aggiungere
                     onAggiungiProdotto(listID);
                 }
             }

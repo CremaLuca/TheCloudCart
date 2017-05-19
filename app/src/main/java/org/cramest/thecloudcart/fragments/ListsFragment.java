@@ -1,7 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.adapter.ListaAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.adapter.ListaAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,10 +114,12 @@ public class ListsFragment extends Fragment{
     public interface OnListFragmentInteractionListener {
         void OnListaClicked(int listID);
         void OnAggiungiLista();
+
+        void OnListaLongClicked(Lista lista);
     }
 
     private void setAdapter(int viewID, final ArrayList<Lista> lista){
-        ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.list_lista_prodotti, lista);
+        ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, lista);
         ListView lv = (ListView)getView().findViewById(viewID);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,6 +132,14 @@ public class ListsFragment extends Fragment{
                     //Nuovo intent per aggiungere una nuova lista
                     aggiungiLista();
                 }
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO : Qualche controllo, tipo se esiste la lista e il listener
+                mListener.OnListaLongClicked(lista.get(position));
+                return true;
             }
         });
     }

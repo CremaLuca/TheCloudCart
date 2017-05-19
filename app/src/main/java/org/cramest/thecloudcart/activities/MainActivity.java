@@ -11,8 +11,8 @@ import android.widget.TextView;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.dialogs.ListaDialog;
 import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
@@ -27,7 +27,7 @@ public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ProdottoDialog.OnProdottoDialogInteractionListener{
+        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener {
 
     private String username;
     private String userID;
@@ -210,6 +210,13 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
+    public void OnListaLongClicked(Lista lista) {
+        //Quando teniamo premuto su una lista
+        ListaDialog listaDialog = new ListaDialog();
+        listaDialog.showDialog(this, this, lista);
+    }
+
+    @Override
     public void OnProdottoClicked(ProdottoInLista prodottoInLista) {
         //Questa funzione viene chiamata invece dal fragment dei prodotti quando uno della lista viene cliccato
         ProdottoDialog prodottoDialog = new ProdottoDialog();
@@ -293,5 +300,10 @@ public class MainActivity extends FragmentActivity
     public void onListaNonAggiunta() {
         //Nel caso non venga aggiunta l'unica soluzione è deprimersi
         //TODO : Gestire il caso della lista non aggiunta
+    }
+
+    @Override
+    public void OnCondividiLista(int userID, Lista lista) {
+
     }
 }

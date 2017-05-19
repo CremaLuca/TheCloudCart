@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
@@ -23,11 +24,11 @@ public class ProdottoDialog{
         dialog.setContentView(R.layout.dialog_prodotto);
 
         ((TextView) dialog.findViewById(R.id.nome_prodotto)).setText(prodotto.getProdotto().getNome());
-        ((TextView) dialog.findViewById(R.id.edit_marca)).setText(prodotto.getProdotto().getMarca());
-        ((TextView) dialog.findViewById(R.id.edit_prezzo)).setText(String.valueOf(prodotto.getProdotto().getPrezzo()));
-        ((TextView) dialog.findViewById(R.id.edit_dimensione)).setText(prodotto.getProdotto().getDimensione());
-        ((TextView) dialog.findViewById(R.id.edit_quantita)).setText(String.valueOf(prodotto.getQuantita()));
-        ((TextView) dialog.findViewById(R.id.edit_descrizione)).setText(prodotto.getDescrizione());
+        ((EditText) dialog.findViewById(R.id.edit_marca)).setText(prodotto.getProdotto().getMarca());
+        ((EditText) dialog.findViewById(R.id.edit_prezzo)).setText(String.valueOf(prodotto.getProdotto().getPrezzo()));
+        ((EditText) dialog.findViewById(R.id.edit_dimensione)).setText(prodotto.getProdotto().getDimensione());
+        ((EditText) dialog.findViewById(R.id.edit_quantita)).setText(String.valueOf(prodotto.getQuantita()));
+        ((EditText) dialog.findViewById(R.id.edit_descrizione)).setText(prodotto.getDescrizione());
 
 
         //Impostiamo cosa deve fare il bottone compra

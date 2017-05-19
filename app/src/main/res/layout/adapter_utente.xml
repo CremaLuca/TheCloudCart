@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="15dp">
+
+    <TextView
+        android:id="@+id/text_view_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cremaluca"
+        android:textAppearance="@android:style/TextAppearance.Material.Title"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/text_view_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/text_view_username"
+        android:text="Luca"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+</RelativeLayout>

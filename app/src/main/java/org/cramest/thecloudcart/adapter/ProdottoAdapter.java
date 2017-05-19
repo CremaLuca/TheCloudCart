@@ -1,7 +1,5 @@
 package org.cramest.thecloudcart.adapter;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,8 @@ import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
+
+import java.util.ArrayList;
 
 public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
 
@@ -27,13 +27,13 @@ public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.list_prodotto, null);
+            v = inflater.inflate(R.layout.adapter_prodotto, null);
         }
 
         ProdottoInLista i = prodotti.get(position);
         if (i != null) {
             TextView nomeProdotto = (TextView) v.findViewById(R.id.textViewNomeProdotto);
-            TextView quantita = (TextView) v.findViewById(R.id.textViewQta);
+            TextView quantita = (TextView) v.findViewById(R.id.text_view_username);
             TextView descrizione = (TextView) v.findViewById(R.id.textViewDescrizioneProdotto);
             nomeProdotto.setText(i.getProdotto().getNome());
             if(i.getQuantita() > 0) {

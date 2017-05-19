@@ -1,7 +1,5 @@
 package org.cramest.thecloudcart.classi;
 
-import java.util.ArrayList;
-
 /**
  * Created by User on 19/05/2017.
  */
@@ -24,5 +22,9 @@ public class Utente {
 
     public int getUserID() {
         return userID;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

@@ -9,7 +9,7 @@
     android:background="@drawable/sfondo_ombreggiato">
 
     <TextView
-        android:id="@+id/textViewQta"
+        android:id="@+id/text_view_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="@string/quantita_duepunti"
         android:layout_below="@+id/textViewNomeProdotto"
-        android:layout_toStartOf="@+id/textViewQta"
+        android:layout_toStartOf="@+id/text_view_username"
         android:textColor="@color/textColorPrimary"/>
 
     <TextView
@@ -46,7 +46,7 @@
         android:text="@string/descrizione"
         android:maxLines="2"
         android:nestedScrollingEnabled="false"
-        android:layout_below="@+id/textViewQta"
+        android:layout_below="@+id/text_view_username"
         android:layout_alignParentStart="true"
         android:textColor="@color/textColorPrimary"/>
 </RelativeLayout>

@@ -28,7 +28,7 @@ public class ListaAdapter extends ArrayAdapter<Lista> {
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.list_lista_prodotti, null);
+            v = inflater.inflate(R.layout.adapter_lista_prodotti, null);
         }
 
         Lista i = objects.get(position);
