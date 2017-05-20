@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
@@ -43,16 +44,26 @@ public class ListaDialog {
         //Solo se è condivisa con quacluno impostiamo l'adapter
         if (lista.getVistaDa() != null) {
             //Impostiamo la lista utenti nella listview
-            //TODO : aggiungere il tasto codividi con qualcun'altro
             setAdapter(dialog, lista.getVistaDa());
         }
+        ListView lv = (ListView) dialog.findViewById(R.id.list_condivisa_con);
+        final Button btnShare = new Button(activity);
+        btnShare.setText("Condividi con qualcuno");
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.OnCondividiLista(lista);
+            }
+        });
+        //Alla fine della lista aggiungiamo questo
+        lv.addFooterView(btnShare);
 
         instance = this;
         dialog.show();
     }
 
     public interface OnListaDialogInteractionListener {
-        void OnCondividiLista(int userID, Lista lista);
+        void OnCondividiLista(Lista lista);
     }
 
     private void setAdapter(Dialog dialog, final ArrayList<Utente> utenti) {

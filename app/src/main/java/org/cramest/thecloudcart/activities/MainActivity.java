@@ -302,8 +302,9 @@ public class MainActivity extends FragmentActivity
         //TODO : Gestire il caso della lista non aggiunta
     }
 
-    @Override
-    public void OnCondividiLista(int userID, Lista lista) {
 
+    @Override
+    public void OnCondividiLista(Lista lista) {
+        //TODO : Mostra fragment o dialog condividi lista
     }
 }
