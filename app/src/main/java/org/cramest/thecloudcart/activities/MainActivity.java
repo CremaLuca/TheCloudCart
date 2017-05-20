@@ -87,12 +87,7 @@ public class MainActivity extends FragmentActivity
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
-
-            if(listFragment == null) {
-                System.out.println("Genero il fragment della lista");
-                //Questo costruttore statico permette di passare i parametri direttamente
-                listFragment = ListsFragment.newInstance(userID);
-            }
+            listFragment = ListsFragment.newInstance(userID);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, listFragment);
             transaction.addToBackStack(null);
