@@ -8,7 +8,7 @@
         android:id="@+id/edit_nome_lista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="27dp"
         android:ems="10"
         android:hint="Nome lista"
         android:inputType="text"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_nome_lista"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="27dp"
         android:text="Condivisa con"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
@@ -42,11 +42,21 @@
 
     <org.cramest.thecloudcart.adapter.NonScrollableListView
         android:id="@+id/list_condivisa_con"
+        style="@style/ListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/text_view_condivisa_con"
+        android:layout_marginTop="27dp" />
+
+    <Button
+        android:id="@+id/button_elimina_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_condivisa_con"
+        android:background="@android:color/holo_red_light"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        style="@style/ListView" />
+        android:text="Elimina lista" />
 
 </RelativeLayout>

@@ -213,7 +213,7 @@ public class MainActivity extends FragmentActivity
     public void OnListaLongClicked(Lista lista) {
         //Quando teniamo premuto su una lista
         ListaDialog listaDialog = new ListaDialog();
-        listaDialog.showDialog(this, this, lista);
+        listaDialog.showDialog(this, this, lista,userID);
     }
 
     @Override
@@ -245,6 +245,11 @@ public class MainActivity extends FragmentActivity
     public void OnProdottoComprato(int listID) {
         //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
         mostraFragmentProdotti(listID);
+    }
+
+    @Override
+    public void OnListaEliminata() {
+        mostraFragmentListe();
     }
 
     @Override

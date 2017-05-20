@@ -2,12 +2,15 @@ package org.cramest.thecloudcart.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
+import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.Utente;
 
@@ -21,7 +24,7 @@ public class ListaDialog {
 
     public static ListaDialog instance;
 
-    public void showDialog(Activity activity, final OnListaDialogInteractionListener listener, final Lista lista) {
+    public void showDialog(Activity activity, final OnListaDialogInteractionListener listener, final Lista lista,final String userID) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -30,6 +33,13 @@ public class ListaDialog {
 
         ((EditText) dialog.findViewById(R.id.edit_nome_lista)).setText(lista.getNome());
 
+        ((Button)dialog.findViewById(R.id.button_elimina_lista)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dati.eliminaLista(lista.getID(),userID);
+                dialog.dismiss();
+            }
+        });
         //Solo se è condivisa con quacluno impostiamo l'adapter
         if (lista.getVistaDa() != null) {
             //Impostiamo la lista utenti nella listview

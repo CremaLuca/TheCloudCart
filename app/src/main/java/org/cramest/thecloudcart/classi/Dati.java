@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class Dati implements DataHandler{
 
-    private OnDatiListener mListener;
+    private static OnDatiListener mListener;
 
     public static Dati instance;
 
@@ -142,15 +142,8 @@ public class Dati implements DataHandler{
                 }
                 listeCaricate++;
             }
-            if(nome.startsWith("eliminaProdotto")){
-                Toast.makeText(ctx, "Prodotto eliminato con successo", Toast.LENGTH_SHORT).show();
-                int listID = Integer.parseInt(nome.split("=")[1]);
-                OnProdottoInListaEliminato(listID);
-            }
             if(nome.startsWith("compraProdotto")) {
-                int listID = Integer.parseInt(nome.split("=")[1]);
-                Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
-                mListener.OnProdottoComprato(listID);
+
             }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null && listeCaricate >= listeDaCaricare){
                 LoadedDati();
@@ -225,6 +218,7 @@ public class Dati implements DataHandler{
         void OnDatiLoaded();
         void OnProdottoInListaEliminato(int listID);
         void OnProdottoComprato(int listID);
+        void OnListaEliminata();
     }
 
     public void LoadedDati() {
@@ -283,21 +277,57 @@ public class Dati implements DataHandler{
         listeMie.add(lista);
     }
 
-    public void rimuoviProdottoInLista(ProdottoInLista prodottoInLista){
+    public void rimuoviProdottoInLista(final ProdottoInLista prodottoInLista){
         String[] pars = {"req", "listID","productID"};
         String[] vals = {"deleteProductInList", prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
-        Connettore.getInstance(ctx).GetDataFromWebsite(this, "eliminaProdotto="+prodottoInLista.getIdLista(), pars, vals);
-        //Dovrebbe funzionare perche tutti i prodottiInLista escono da Dati
-        //Lo farei dopo ma non so come passare "prodottoInLista" a HandleData
-        prodottiInLista.remove(prodottoInLista);
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nome, boolean success, String data) {
+                Toast.makeText(ctx, "Prodotto eliminato con successo", Toast.LENGTH_SHORT).show();
+                int listID = Integer.parseInt(nome.split("=")[1]);
+                prodottiInLista.remove(prodottoInLista);
+                OnProdottoInListaEliminato(listID);
+
+            }
+        }, "eliminaProdotto=" + prodottoInLista.getIdLista(), pars, vals);
+
 
     }
 
-    public void compraProdotto(String userID,ProdottoInLista prodottoInLista){
+    public static void compraProdotto(String userID,final ProdottoInLista prodottoInLista){
         String[] pars = {"req","userID", "listID","productID"};
         String[] vals = {"buyProduct",userID, prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
-        Connettore.getInstance(ctx).GetDataFromWebsite(this, "compraProdotto="+prodottoInLista.getIdLista(), pars, vals);
-        //Dovrebbe funzionare perche tutti i prodottiInLista escono da Dati
-        prodottiInLista.remove(prodottoInLista);
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nome, boolean success, String data) {
+                if(success) {
+                    mListener.OnProdottoComprato(prodottoInLista.getIdLista());
+                    Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, "compraProdotto=" + prodottoInLista.getIdLista(), pars, vals);
+    }
+
+    //Elimina la lista solo se mia
+    public static void eliminaLista(final int listID,final String userID){
+        String[] pars = {"req","listID","userID"};
+        String[] vals = {"deleteList",listID+"",userID};
+        System.out.println("Elimino la lista "+listID);
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nome, boolean success, String data) {
+                System.out.println("Risposta");
+                if(success) {
+                    listeMie.remove(getListaByID(listID));
+                    Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
+                    mListener.OnListaEliminata();
+                }else{
+                    Toast.makeText(ctx, data,Toast.LENGTH_SHORT);
+                }
+            }
+        }, "eliminaLista", pars, vals);
+
     }
 }
