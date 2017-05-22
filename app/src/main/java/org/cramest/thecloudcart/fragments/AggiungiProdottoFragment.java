@@ -107,7 +107,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         TextView titolo =(TextView)getActivity().findViewById(R.id.title_aggiungi_prodotto);
         titolo.setText("Aggiungi a lista : "+curList.getNome());
         setCategorieSpinner();
-        updatePodottoSpinner(1);
+        updatePodottoSpinner(0);
         if(initialProdotto != null){
             Spinner spinnerCategorie = (Spinner)getActivity().findViewById(R.id.categoria_spinner);
             spinnerCategorie.setSelection(initialProdotto.getCategoria().getID()-1);
@@ -157,7 +157,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         Spinner spinner = (Spinner)getActivity().findViewById(R.id.categoria_spinner);
         //Recuperiamo i nomi delle categorie
         ArrayList<String> stringCategorie = Dati.getCategorieAsString();
-
+        //Questo sposta di uno la posizione delle categorie
+        stringCategorie.add(0,"Consigliati");
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, stringCategorie);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
@@ -166,7 +167,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                updatePodottoSpinner(position+1);
+                //La categoria sarà posizione+1 ma -1 perchè la 0 è consigliati
+                updatePodottoSpinner(position);
             }
 
             @Override
@@ -186,6 +188,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();
+
         if(initialProdotto != null){
             for(int i=0;i<prodotti.size();i++){
                 if(prodotti.get(i).equals(initialProdotto.getNome())){

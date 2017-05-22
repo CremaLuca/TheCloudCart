@@ -25,7 +25,7 @@ public class Dati implements DataHandler{
     private static ArrayList<Categoria> categorie;
     private static ArrayList<Prodotto> prodotti;
     private static ArrayList<ProdottoInLista> prodottiInLista;
-    private static ArrayList<Utente> utentiCollegati;
+    private static ArrayList<Prodotto> prodottiDaComprare;
 
     private String userID;
     private static Context ctx;
@@ -97,6 +97,21 @@ public class Dati implements DataHandler{
                 Connettore.getInstance(ctx).GetDataFromWebsite(this, "UtentiLista="+lista.getID(), pars, vals);
             }
         }
+    }
+
+    private void richiediProdottiDaComprareLista(int listID){
+        String[] pars = {"req", "listID"};
+        String[] vals = {"getShouldBuy", listID+""};
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nome, boolean success, String data) {
+                if(success){
+                    if(data != null && data != ""){
+
+                    }
+                }
+            }
+        }, "GetShouldBuy", pars, vals);
     }
 
     @Override
@@ -250,9 +265,16 @@ public class Dati implements DataHandler{
 
     public static ArrayList<Prodotto> getProdottiByCategoria(int idCategoria){
         ArrayList<Prodotto> categorizzati = new ArrayList<Prodotto>();
-        for(Prodotto p : prodotti){
-            if(p.getCategoria().getID() == idCategoria){
-                categorizzati.add(p);
+        if(idCategoria != 0) {
+            for (Prodotto p : prodotti) {
+                if (p.getCategoria().getID() == idCategoria) {
+                    categorizzati.add(p);
+                }
+            }
+        }else{
+            //Se la categoria è 0 sono i prodotti consigliati
+            for(Prodotto p : prodotti){
+
             }
         }
         return categorizzati;
