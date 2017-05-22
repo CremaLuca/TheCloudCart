@@ -264,7 +264,7 @@ public class Dati implements DataHandler{
         return stringhe;
     }
 
-    public static ArrayList<Prodotto> getProdottiByCategoria(int idCategoria){
+    public static ArrayList<Prodotto> getProdottiByCategoria(int idCategoria, int idLista) {
         ArrayList<Prodotto> categorizzati = new ArrayList<Prodotto>();
         if(idCategoria != 0) {
             for (Prodotto p : prodotti) {
@@ -275,7 +275,16 @@ public class Dati implements DataHandler{
         }else{
             //Se la categoria è 0 sono i prodotti consigliati
             for(ProdottoConsigliato pc : prodottiConsigliati){
-                categorizzati.add(pc.getProdotto());
+                if (pc.getLista().getID() == idLista) {
+                    categorizzati.add(pc.getProdotto());
+                }
+            }
+            //Se la lista dei consigliati è vuota riempiamola con qualcosa a caso tipo
+            if (categorizzati.size() == 0) {
+                System.out.println("Non ci sono prodotti da consigliare");
+                if (prodotti.size() > 0) {
+                    categorizzati.add(prodotti.get((int) (Math.random() * prodotti.size())));
+                }
             }
         }
         return categorizzati;

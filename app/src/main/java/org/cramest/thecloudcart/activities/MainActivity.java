@@ -164,16 +164,19 @@ public class MainActivity extends FragmentActivity
                 mostraFragmentListe();
                 break;
             case 1:
-                //Impostazioni
+                //I miei prodotti
                 break;
             case 2:
+                //Impostazioni
+                break;
+            case 3:
                 //Disconnetti
                 DataSaver.getInstance().clearData(this);
                 Intent i = new Intent(getApplicationContext(), LandActivity.class);
                 startActivity(i);
                 finish();
                 break;
-            case 3:
+            case 4:
                 //Informazioni
                 break;
         }
@@ -221,7 +224,7 @@ public class MainActivity extends FragmentActivity
     private void InizializzaApplicazione(){
         System.out.println("ListsFragment - Recupero le categorie e i prodotti");
         //Con una nuova istanza di dati li scarichiamo tutti per essere accessibili via static
-        Dati dati = new Dati(this,userID);
+        new Dati(this, userID);
     }
 
     @Override
