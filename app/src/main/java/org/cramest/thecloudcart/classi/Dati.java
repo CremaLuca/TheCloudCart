@@ -25,7 +25,7 @@ public class Dati implements DataHandler{
     private static ArrayList<Categoria> categorie;
     private static ArrayList<Prodotto> prodotti;
     private static ArrayList<ProdottoInLista> prodottiInLista;
-    private static ArrayList<Prodotto> prodottiDaComprare;
+    private static ArrayList<ProdottoConsigliato> prodottiConsigliati;
 
     private String userID;
     private static Context ctx;
@@ -99,15 +99,15 @@ public class Dati implements DataHandler{
         }
     }
 
-    private void richiediProdottiDaComprareLista(int listID){
-        String[] pars = {"req", "listID"};
-        String[] vals = {"getShouldBuy", listID+""};
+    private void richiediProdottiConsigliati(){
+        String[] pars = {"req", "userID"};
+        String[] vals = {"getShouldBuy", userID+""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
             @Override
             public void HandleData(String nome, boolean success, String data) {
                 if(success){
                     if(data != null && data != ""){
-
+                        prodottiConsigliati = new ArrayList<ProdottoConsigliato>(Arrays.asList(WebsiteDataManager.getProdottiConsigliati(data)));
                     }
                 }
             }
@@ -133,6 +133,7 @@ public class Dati implements DataHandler{
             if(nome.equals("listeSpesaCondivise")){
                 listeCondivise = new ArrayList<Lista>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
                 richiediProdottiInLista(ctx);
+                richiediProdottiConsigliati();
             }
             if(nome.startsWith("UtentiLista")){
                 //Se almeno la lista è condivisa con qualcuno
@@ -273,8 +274,8 @@ public class Dati implements DataHandler{
             }
         }else{
             //Se la categoria è 0 sono i prodotti consigliati
-            for(Prodotto p : prodotti){
-
+            for(ProdottoConsigliato pc : prodottiConsigliati){
+                categorizzati.add(pc.getProdotto());
             }
         }
         return categorizzati;

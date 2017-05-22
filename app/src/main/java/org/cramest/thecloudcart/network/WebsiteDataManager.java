@@ -99,4 +99,26 @@ public class WebsiteDataManager {
         return null;
     }
 
+    public static ProdottoConsigliato[] getProdottiConsigliati(String data){
+        if(data!=null){
+            String[] strProdotti = data.split(sepRighe);
+            if(strProdotti.length > 0){
+                ProdottoConsigliato[] prodotti = new ProdottoConsigliato[strProdotti.length];
+                for (int i = 0; i < strProdotti.length; i++) {
+                    String[] strProdotto = strProdotti[i].split(sepColonne);
+
+                    int productID = Integer.parseInt(strProdotto[0]);
+                    Prodotto p = Dati.getProdottoByID(productID);
+                    int listID = Integer.parseInt(strProdotto[1]);
+                    Lista l = Dati.getListaByID(listID);
+                    int giorni = Integer.parseInt(strProdotto[2]);
+
+                    prodotti[i] = new ProdottoConsigliato(p,l,giorni);
+                }
+                return prodotti;
+            }
+        }
+        return null;
+    }
+
 }
