@@ -54,12 +54,24 @@ public class Dati implements DataHandler{
     }
 
     private void svuotaListe(){
-        listeMie.clear();
-        listeCondivise.clear();
-        categorie.clear();
-        prodotti.clear();
-        prodottiInLista.clear();
-        prodottiConsigliati.clear();
+        if(listeMie != null) {
+            listeMie.clear();
+        }
+        if(listeCondivise != null) {
+            listeCondivise.clear();
+        }
+        if(categorie != null) {
+            categorie.clear();
+        }
+        if(prodotti != null) {
+            prodotti.clear();
+        }
+        if(prodottiInLista != null) {
+            prodottiInLista.clear();
+        }
+        if(prodottiConsigliati != null) {
+            prodottiConsigliati.clear();
+        }
     }
 
     private void richiediCategorie(Context ctx){
