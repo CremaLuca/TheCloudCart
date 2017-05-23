@@ -9,25 +9,32 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="org.cramest.thecloudcart.fragments.AggiungiListaFragment">
 
-    <EditText
-        android:id="@+id/editTextNomeLista"
-        style="@android:style/Widget.DeviceDefault.EditText"
-        android:layout_width="wrap_content"
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:hint="@string/list_name"
-        android:maxLines="1" />
+        android:id="@+id/textInputLayout">
+
+        <EditText
+            android:id="@+id/editTextNomeLista"
+            style="@android:style/Widget.DeviceDefault.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:hint="@string/list_name"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonCreaLista"
+        style="@style/styledButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_list"
-        android:id="@+id/buttonCreaLista"
-        android:layout_below="@+id/editTextNomeLista"
-        android:layout_marginTop="28dp"
-        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textInputLayout"
         android:layout_alignParentStart="true"
-        style="@style/styledButton"/>
+        android:layout_marginTop="23dp" />
 </RelativeLayout>
