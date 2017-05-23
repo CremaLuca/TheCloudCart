@@ -62,27 +62,22 @@ public class MainActivity extends FragmentActivity
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");
-        ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_username)).setText(username);
+        ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_quantita)).setText(username);
         restoreActionBar();
         InizializzaApplicazione();
         mostraFragmentLoading();
     }
 
     private void mostraFragmentLoading(){
-        System.out.println("Mostro loading fragment");
+        System.out.println("MainActivity - Mostro loading fragment");
         loadingFragment = LoadingFragment.newInstance();
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, loadingFragment);
 
         transaction.commit();
     }
 
     private void mostraFragmentListe(){
-        // Check that the activity is using the layout version with
-        // the fragment_container FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
             listFragment = ListsFragment.newInstance(userID);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -204,20 +199,22 @@ public class MainActivity extends FragmentActivity
     }
 
     private void InizializzaApplicazione(){
-        System.out.println("ListsFragment - Recupero le categorie e i prodotti");
         //Con una nuova istanza di dati li scarichiamo tutti per essere accessibili via static
+        System.out.println("MainActivity - Recupero tutti i dati dell'utente");
         new Dati(this, userID);
     }
 
     @Override
     public void OnDatiLoaded() {
         //Quando la prima volta vengono caricati i dati viene mostrata questa finestra
+        System.out.println("MainActivity - Dati caricati, mostro il fragment liste");
         mostraFragmentListe();
     }
 
     @Override
     public void OnProdottoInListaEliminato(int listID) {
         //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
+        System.out.println("MainActivity - Eliminato prodotto in lista("+listID+")");
         mostraFragmentProdotti(listID);
     }
 

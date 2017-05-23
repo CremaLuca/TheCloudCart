@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import org.cramest.thecloudcart.R;
@@ -66,8 +67,14 @@ public class ProdottiFragment extends Fragment{
 
     private void main(){
         prodottiInLista = Dati.getProdottoInListaByListID(listID);
-        prodottiInLista.add(new ProdottoInLista(0,new Prodotto("Aggiungi"),0,""));
         setListAdapter();
+        Button buttonAggiungi = (Button)getView().findViewById(R.id.btn_aggiungi_prodotto);
+        buttonAggiungi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAggiungiProdotto(listID);
+            }
+        });
     }
 
     private void setListAdapter(){

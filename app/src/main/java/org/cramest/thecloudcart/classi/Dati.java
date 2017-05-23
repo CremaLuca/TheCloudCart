@@ -36,7 +36,7 @@ public class Dati implements DataHandler{
     private int listeDaCaricare;
 
     public Dati(Context ctx,String userID){
-        System.out.println("User id passato : " + userID);
+        System.out.println("Dati - User id : " + userID);
         //Ci salviamo il listener se esiste
         if (ctx instanceof OnDatiListener) {
             mListener = (OnDatiListener) ctx;
@@ -54,24 +54,12 @@ public class Dati implements DataHandler{
     }
 
     private void svuotaListe(){
-        if(listeMie != null) {
-            listeMie.clear();
-        }
-        if(listeCondivise != null) {
-            listeCondivise.clear();
-        }
-        if(categorie != null) {
-            categorie.clear();
-        }
-        if(prodotti != null) {
-            prodotti.clear();
-        }
-        if(prodottiInLista != null) {
-            prodottiInLista.clear();
-        }
-        if(prodottiConsigliati != null) {
-            prodottiConsigliati.clear();
-        }
+            listeMie = null;
+            listeCondivise = null;
+            categorie = null;
+            prodotti = null;
+            prodottiInLista = null;
+            prodottiConsigliati = null;
     }
 
     private void richiediCategorie(Context ctx){
@@ -181,9 +169,6 @@ public class Dati implements DataHandler{
                     }
                 }
                 listeCaricate++;
-            }
-            if(nome.startsWith("compraProdotto")) {
-
             }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null && listeCaricate >= listeDaCaricare){
                 LoadedDati();
@@ -305,7 +290,7 @@ public class Dati implements DataHandler{
             }
             //Se la lista dei consigliati è vuota riempiamola con qualcosa a caso tipo
             if (categorizzati.size() == 0) {
-                System.out.println("Non ci sono prodotti da consigliare");
+                System.out.println("Dati - Non ci sono prodotti da consigliare");
                 if (prodotti.size() > 0) {
                     categorizzati.add(prodotti.get((int) (Math.random() * prodotti.size())));
                 }

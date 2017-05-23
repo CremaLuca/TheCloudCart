@@ -30,20 +30,17 @@ public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
             v = inflater.inflate(R.layout.adapter_prodotto, null);
         }
 
-        ProdottoInLista i = prodotti.get(position);
-        if (i != null) {
+        ProdottoInLista prodottoInLista = prodotti.get(position);
+        if (prodottoInLista != null) {
             TextView nomeProdotto = (TextView) v.findViewById(R.id.textViewNomeProdotto);
-            TextView quantita = (TextView) v.findViewById(R.id.text_view_username);
+            TextView quantita = (TextView) v.findViewById(R.id.text_view_quantita);
             TextView descrizione = (TextView) v.findViewById(R.id.textViewDescrizioneProdotto);
-            nomeProdotto.setText(i.getProdotto().getNome());
-            if(i.getQuantita() > 0) {
-                quantita.setText(i.getQuantita() + "");
-            }else{
-                ((TextView) v.findViewById(R.id.textViewNumProdotto)).setText("");
-                quantita.setText("");
-            }
-            if(i.getDescrizione() != null || !i.getDescrizione().equals("")){
-                descrizione.setText(i.getDescrizione());
+
+            nomeProdotto.setText(prodottoInLista.getProdotto().getNome());
+            quantita.setText(prodottoInLista.getQuantita() + "");
+
+            if(prodottoInLista.getDescrizione() != null || !prodottoInLista.getDescrizione().equals("")){
+                descrizione.setText(prodottoInLista.getDescrizione());
             }else{
                 //descrizione.setVisibility(View.GONE);
                 descrizione.setHeight(0);

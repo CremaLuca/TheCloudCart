@@ -35,4 +35,8 @@ public class Lista {
     public ArrayList<Utente> getVistaDa() {
         return vistaDa;
     }
+
+    public int aggiungiQuantita(){
+        return quantita++;
+    }
 }

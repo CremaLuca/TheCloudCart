@@ -24,14 +24,14 @@
         android:id="@+id/textViewQtaLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewNumProdotto"
-        android:layout_alignBottom="@+id/textViewNumProdotto"
-        android:layout_alignParentEnd="true"
         android:textColor="@color/textColorPrimary"
-        android:text="11" />
+        android:text="11"
+        android:layout_alignBaseline="@+id/text_view_numero_prodotti"
+        android:layout_alignBottom="@+id/text_view_numero_prodotti"
+        android:layout_alignParentEnd="true" />
 
     <TextView
-        android:id="@+id/textViewNumProdotto"
+        android:id="@+id/text_view_numero_prodotti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewNomeLista"

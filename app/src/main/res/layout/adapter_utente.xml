@@ -8,7 +8,7 @@
     android:paddingTop="15dp">
 
     <TextView
-        android:id="@+id/text_view_username"
+        android:id="@+id/text_view_quantita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="cremaluca"
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/text_view_username"
+        android:layout_alignTop="@+id/text_view_quantita"
         android:text="Luca"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 </RelativeLayout>

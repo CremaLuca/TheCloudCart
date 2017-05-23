@@ -31,16 +31,17 @@ public class ListaAdapter extends ArrayAdapter<Lista> {
             v = inflater.inflate(R.layout.adapter_lista_prodotti, null);
         }
 
-        Lista i = objects.get(position);
-        if (i != null) {
+        Lista lista = objects.get(position);
+        if (lista != null) {
             TextView nomeProdotto = (TextView) v.findViewById(R.id.textViewNomeLista);
             TextView quantita = (TextView) v.findViewById(R.id.textViewQtaLista);
-            TextView numProdotti = (TextView) v.findViewById(R.id.textViewNumProdotto);
-            nomeProdotto.setText(i.getNome());
-            if(i.getQuantita() >= 0) {
+            TextView numProdotti = (TextView) v.findViewById(R.id.text_view_numero_prodotti);
+
+            nomeProdotto.setText(lista.getNome());
+            if(lista.getQuantita() >= 0) {
                 quantita.setVisibility(View.VISIBLE);
                 numProdotti.setVisibility(View.VISIBLE);
-                quantita.setText(i.getQuantita() + "");
+                quantita.setText(lista.getQuantita() + "");
             }else{
                 quantita.setVisibility(View.GONE);
                 numProdotti.setVisibility(View.GONE);
