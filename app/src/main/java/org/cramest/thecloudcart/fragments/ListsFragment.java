@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.ListaAdapter;
@@ -62,7 +64,6 @@ public class ListsFragment extends Fragment{
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
             listeMie = new ArrayList<Lista>(Dati.getListeMie());
-            listeMie.add(new Lista(-1,"Aggiungi nuova lista",-1));
             listeCondivise = Dati.getListeCondivise();
         }
     }
@@ -70,8 +71,24 @@ public class ListsFragment extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        setAdapter(R.id.listViewMie,listeMie);
-        setAdapter(R.id.listViewCondivise,listeCondivise);
+        //Setup delle listview
+        setAdapter((ListView)getView().findViewById(R.id.listViewMie),listeMie);
+        aggiungiBottoneCreaLista((ListView)getView().findViewById(R.id.listViewMie));
+        setAdapter((ListView)getView().findViewById(R.id.listViewCondivise),listeCondivise);
+    }
+
+    private void aggiungiBottoneCreaLista(ListView lv){
+        //Aggiungiamo alla fine della lista il bottone
+        final Button btnCrea = new Button(getActivity());
+        btnCrea.setText("Crea nuova lista");
+        btnCrea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAggiungiLista();
+            }
+        });
+        //Alla fine della lista aggiungiamo questo
+        lv.addFooterView(btnCrea);
     }
 
     @Override
@@ -88,9 +105,15 @@ public class ListsFragment extends Fragment{
         }
     }
 
-    public void aggiungiLista() {
+    public void onAggiungiLista() {
         if (mListener != null) {
             mListener.OnAggiungiLista();
+        }
+    }
+
+    public void onListaLongClicked(Lista lista){
+        if (mListener != null) {
+            mListener.OnListaLongClicked(lista);
         }
     }
 
@@ -118,29 +141,29 @@ public class ListsFragment extends Fragment{
         void OnListaLongClicked(Lista lista);
     }
 
-    private void setAdapter(int viewID, final ArrayList<Lista> lista){
+    private void setAdapter(ListView lv, final ArrayList<Lista> lista){
         ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, lista);
-        ListView lv = (ListView)getView().findViewById(viewID);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int idLista = lista.get(position).getID();
-                if(idLista != -1) {
+                if(idLista > 0) {
                     apriLista(idLista);
                 }else{
-                    //Nuovo intent per aggiungere una nuova lista
-                    aggiungiLista();
+                    Toast.makeText(getContext(), "Errore, lista con id errato : "+idLista, Toast.LENGTH_SHORT).show();
                 }
             }
         });
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO : Qualche controllo, tipo se esiste la lista e il listener
-                mListener.OnListaLongClicked(lista.get(position));
+                if(mListener != null) {
+                    onListaLongClicked(lista.get(position));
+                }
                 return true;
             }
         });
+
     }
 }
