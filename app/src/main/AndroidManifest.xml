@@ -25,8 +25,6 @@
         <activity
             android:name=".activities.LoginActivity"/>
         <activity
-            android:name=".activities.AggiungiListaCondividiActivity" />
-        <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"></activity>
     </application>

@@ -2,7 +2,6 @@ package org.cramest.thecloudcart.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.activities.AggiungiListaCondividiActivity;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
