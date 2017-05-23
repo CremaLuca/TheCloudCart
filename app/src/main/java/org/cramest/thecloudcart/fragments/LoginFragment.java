@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -76,7 +77,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        //TODO : Fai qui
         //Quando abbiamo almeno una view gli diciamo cosa fare
         getActivity().findViewById(R.id.sign_in_button).setOnClickListener(this);
         getActivity().findViewById(R.id.loginButton).setOnClickListener(this);
@@ -107,10 +107,17 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 signIn();
                 break;
             case R.id.loginButton:
+                System.out.println("LoginFragment - Bottone login premuto");
                 //recuperiamo nome utente e password dalle caselle e li diamo in pasto alla LoginApp che si arrangerà con le connessioni
                 String username = ((EditText)getActivity().findViewById(R.id.editUsername)).getText().toString();
                 String password = ((EditText)getActivity().findViewById(R.id.editPassword)).getText().toString();
-                LoginApp l = new LoginApp(getContext(),username,password);
+                if(!username.equals("") && !password.equals("")) {
+                    System.out.println("LoginFragment - Chiamo loginApp("+username+","+password+")");
+                    LoginApp l = new LoginApp(getContext(), username, password);
+                }else{
+                    System.out.println("LoginFragment - Nessun nome utente o password inseriti");
+                    Toast.makeText(getContext(),"Mancano i dati di accesso",Toast.LENGTH_SHORT).show();
+                }
                 //Da qui in poi si arrangia con i listener
                 break;
             case R.id.registerButton:

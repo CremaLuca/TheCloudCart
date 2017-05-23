@@ -73,13 +73,10 @@ public class MainActivity extends FragmentActivity
         loadingFragment = LoadingFragment.newInstance();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.fragment_container, loadingFragment);
-        transaction.addToBackStack(null);
 
-        // Commit the transaction
         transaction.commit();
     }
 
@@ -90,7 +87,7 @@ public class MainActivity extends FragmentActivity
             listFragment = ListsFragment.newInstance(userID);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, listFragment);
-            transaction.addToBackStack(null);
+
             transaction.commit();
         }
     }
@@ -100,11 +97,8 @@ public class MainActivity extends FragmentActivity
         ProdottiFragment prodottiFragment = ProdottiFragment.newInstance(listID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, prodottiFragment);
         transaction.addToBackStack(null);
-
-        // Commit the transaction
         transaction.commit();
     }
 
@@ -112,11 +106,8 @@ public class MainActivity extends FragmentActivity
         AggiungiListaFragment aggiungiListaFragment = AggiungiListaFragment.newInstance(userID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, aggiungiListaFragment);
         transaction.addToBackStack(null);
-
-        // Commit the transaction
         transaction.commit();
     }
 
@@ -124,22 +115,16 @@ public class MainActivity extends FragmentActivity
         AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
         transaction.addToBackStack(null);
-
-        // Commit the transaction
         transaction.commit();
     }
     private void mostraFragmentAggiungiProdotto(int listID,int prodottoID){
         AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID,prodottoID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
         transaction.addToBackStack(null);
-
-        // Commit the transaction
         transaction.commit();
     }
 
@@ -147,11 +132,8 @@ public class MainActivity extends FragmentActivity
         CreaProdottoFragment creaProdottoFragment = CreaProdottoFragment.newInstance(userID,listID);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.fragment_container, creaProdottoFragment);
         transaction.addToBackStack(null);
-
-        // Commit the transaction
         transaction.commit();
     }
 

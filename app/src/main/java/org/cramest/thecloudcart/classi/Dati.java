@@ -47,7 +47,19 @@ public class Dati implements DataHandler{
         this.userID = userID;
         this.ctx = ctx;
         instance = this;
+        //Svuotiamo le liste nel caso contengano qualcosa
+        svuotaListe();
+
         richiediCategorie(ctx);
+    }
+
+    private void svuotaListe(){
+        listeMie.clear();
+        listeCondivise.clear();
+        categorie.clear();
+        prodotti.clear();
+        prodottiInLista.clear();
+        prodottiConsigliati.clear();
     }
 
     private void richiediCategorie(Context ctx){

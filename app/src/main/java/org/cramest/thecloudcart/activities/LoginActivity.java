@@ -40,7 +40,6 @@ public class LoginActivity extends FragmentActivity implements LoginFragment.OnL
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fragment_container, loginFragment);
-        transaction.addToBackStack(null);
 
         // Commit the transaction
         transaction.commit();
