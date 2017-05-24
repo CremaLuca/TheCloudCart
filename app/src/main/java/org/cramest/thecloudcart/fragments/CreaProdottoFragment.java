@@ -114,7 +114,8 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
             //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             ID = (int)(Math.random()*100);
             Prodotto tempProdotto = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
-            //Lo aggiungiamo alla lista, peccato che quando si chiude l'app scompaia TODO : lista aggiornamenti/lista locale
+            //Lo aggiungiamo alla lista, peccato che quando si chiude l'app scompaia
+            // TODO : lista aggiornamenti/lista locale
             Dati.aggiungiProdotto(tempProdotto);
             onProdottoCreato(listID,ID);
         }

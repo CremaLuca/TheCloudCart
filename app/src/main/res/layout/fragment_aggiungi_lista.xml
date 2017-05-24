@@ -14,7 +14,7 @@ tools:context="org.cramest.thecloudcart.fragments.AggiungiListaFragment">
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textInputLayout">
+        android:id="@+id/textInputLayoutNomeLista">
 
         <EditText
             android:id="@+id/editTextNomeLista"
@@ -34,7 +34,7 @@ tools:context="org.cramest.thecloudcart.fragments.AggiungiListaFragment">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_list"
-        android:layout_below="@+id/textInputLayout"
+        android:layout_below="@+id/textInputLayoutNomeLista"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp" />
+        android:layout_marginTop="22dp" />
 </RelativeLayout>
