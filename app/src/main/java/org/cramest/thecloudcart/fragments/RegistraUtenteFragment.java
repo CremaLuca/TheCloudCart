@@ -71,7 +71,7 @@ public class RegistraUtenteFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         Button registra = (Button)getActivity().findViewById(R.id.register_button);
         final String[] parametri = {"req","username","password","email"};
-        final String[] valori = {"register",};
+        final String[] valori = {"register",""};
         registra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
