@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -21,6 +23,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.network.Connettore;
+import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.LoginApp;
 
 /**
@@ -65,12 +69,32 @@ public class RegistraUtenteFragment extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        //TODO : Fai qui
         Button registra = (Button)getActivity().findViewById(R.id.register_button);
+        final String[] parametri = {"req","username","password","email"};
+        final String[] valori = {"register",};
         registra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final String username = ((TextView)getActivity().findViewById(R.id.username_edit_text)).getText().toString();
+                final String password = ((TextView)getActivity().findViewById(R.id.password_edit_text)).getText().toString();
+                String ripetiPassword = ((TextView)getActivity().findViewById(R.id.repeat_password_edit_text)).getText().toString();
+                String email = ((TextView)getActivity().findViewById(R.id.email_edit_text)).getText().toString();
+                if(password.equals(ripetiPassword)) {
+                    Connettore.getInstance(getContext()).GetDataFromWebsite(new DataHandler() {
+                        @Override
+                        public void HandleData(String nome, boolean success, String data) {
+                            if(success){
+                                Toast.makeText(getContext(),"Registazione effettuata con successo",Toast.LENGTH_SHORT).show();
+                                OnRegistraSuccess(username,data,password);
+                            }else{
+                                Toast.makeText(getContext(),data,Toast.LENGTH_SHORT).show();
+                                OnRegistraFailed();
+                            }
+                        }
+                    }, "registrazione", parametri, valori);
+                }else{
+                    Toast.makeText(getContext(),"Le due password non coincidono",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -92,13 +116,23 @@ public class RegistraUtenteFragment extends Fragment{
         mListener = null;
     }
 
-    public void OnRegistraSuccess(String username, String userID) {
-        //TODO : Controllo se mListener esiste e il fragmentActivity contiene il listener OnLoginFragmentListener
-        mListener.OnRegistraSuccess(username,userID);
+    public void OnRegistraSuccess(String username, String userID,String password) {
+        if(mListener != null) {
+            mListener.OnRegistraSuccess(username, userID,password);
+        }else{
+            throw new RuntimeException("missing OnRegistraFragmentListener");
+        }
+    }
+    public void OnRegistraFailed(){
+        if(mListener != null) {
+            mListener.OnRegistraFailed();
+        }else{
+            throw new RuntimeException("missing OnRegistraFragmentListener");
+        }
     }
 
     public interface OnRegistraFragmentListener {
-        void OnRegistraSuccess(String username, String userID);
+        void OnRegistraSuccess(String username, String userID,String password);
         void OnRegistraFailed();
     }
 

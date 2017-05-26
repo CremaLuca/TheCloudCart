@@ -48,9 +48,7 @@ public class LoginApp implements DataHandler {
                     System.out.println("Nome utente e password corretti");
 
                     //Salviamo nella memoria i nostri dati
-                    DataSaver.getInstance().saveDataString(c, "username", username);
-                    DataSaver.getInstance().saveDataString(c, "userID", data);
-                    DataSaver.getInstance().saveDataString(c, "password", password); //Serve per rifare l'accesso
+                    SaveLoginData(c,username,data,password);
                     //Notifichiamo il fragment che siamo riusciti a fare l'accesso il quale chiamera l'activity che ne caricherà un altra
                     mListener.OnLoginSuccess(username,data);
                 }
@@ -60,6 +58,12 @@ public class LoginApp implements DataHandler {
 
             }
         }
+    }
+
+    public static void SaveLoginData(Context c,String username,String userID,String password){
+        DataSaver.getInstance().saveDataString(c, "username", username);
+        DataSaver.getInstance().saveDataString(c, "userID", userID);
+        DataSaver.getInstance().saveDataString(c, "password", password);//Serve per rifare l'accesso
     }
 
     public interface OnLoginAppListener{

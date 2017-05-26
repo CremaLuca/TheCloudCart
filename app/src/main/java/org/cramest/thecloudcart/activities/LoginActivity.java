@@ -71,8 +71,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     }
 
     @Override
-    public void OnRegistraSuccess(String username, String userID) {
-        mostraFragmentLogin();
+    public void OnRegistraSuccess(String username, String userID,String password) {
+        //mostraFragmentLogin(); Non mostriamo la pagina di login ma facciamo direttamente l'accesso
+        //Salviamo i dati di accesso così non li chiede più la prossima volta
+        LoginApp.SaveLoginData(this,username,userID,password);
+        OnLogin(username,userID);
     }
 
     @Override
