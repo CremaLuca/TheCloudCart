@@ -56,14 +56,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-                .requestEmail()
-                .build();
+                .requestIdToken(getResources().getString(R.string.sign_in_id))
+                .requestEmail().build();
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this )
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .enableAutoManage(getActivity(), this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
                 .build();
     }
 
@@ -127,6 +126,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     private void signIn() {
+        System.out.println("Richiedo il signin con google");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, 5);
     }
@@ -149,9 +149,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             GoogleSignInAccount acct = result.getSignInAccount();
             System.out.println("Benvenuto " + acct.getGivenName());
         } else {
-            System.out.println("Non oke, errore del codice della app, non registrata");
+            System.out.println("Non oke, errore del codice della app, non registrata :" + result.getStatus().getStatusMessage());
         }
-        result.getStatus();
     }
 
     @Override

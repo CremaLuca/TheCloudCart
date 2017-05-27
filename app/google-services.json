@@ -1,0 +1,102 @@
+{
+  "project_info": {
+    "project_number": "339385394250",
+    "firebase_url": "https://fir-thecloudcart.firebaseio.com",
+    "project_id": "firebase-thecloudcart",
+    "storage_bucket": "firebase-thecloudcart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339385394250:android:010cfd6f230ab0e6",
+        "android_client_info": {
+          "package_name": "cramest.altervista.org.thecloudcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339385394250-0cg2n1igfgcoh0ubvlvoh1gu1r35lqp6.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "339385394250-j2ro4jhtb8908ujq7971nk1m0hl6qq3b.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "339385394250-j2e0e3vmt0lm28l7tb0al0lihvn31svd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwyfTotmmyKEWXD2v-xqjatVQFaBCQesI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339385394250:android:69c6a85d426d61d0",
+        "android_client_info": {
+          "package_name": "org.cramest.thecloudcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339385394250-0cg2n1igfgcoh0ubvlvoh1gu1r35lqp6.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "339385394250-j2ro4jhtb8908ujq7971nk1m0hl6qq3b.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "339385394250-rtnoafci7dnmqal12mh6p970me10ot63.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.cramest.thecloudcart",
+            "certificate_hash": "b9b9f7eb5f6266a0ba3e3eae4cc2ae2577091388"
+          }
+        },
+        {
+          "client_id": "339385394250-j2e0e3vmt0lm28l7tb0al0lihvn31svd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwyfTotmmyKEWXD2v-xqjatVQFaBCQesI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339385394250-0cg2n1igfgcoh0ubvlvoh1gu1r35lqp6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
