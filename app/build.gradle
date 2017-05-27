@@ -2,6 +2,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'Acerkacke'
+            keyPassword 'Crema01'
+            storeFile file('C:/Users/cremaluca/Desktop/TheCloudCart/CramestKeystore.jks')
+            storePassword 'Crema01'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '25.0.3'
     defaultConfig {
