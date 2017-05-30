@@ -10,18 +10,18 @@ import android.view.View;
 
 public class LoadingOverlayHandler {
 
-    private View loadinOverlay;
+    private View loadingOverlay;
 
     public LoadingOverlayHandler(View loadingOverlay){
-        this.loadinOverlay = loadinOverlay;
+        this.loadingOverlay = loadingOverlay;
     }
 
     public void mostraLoading(){
-        animateView(loadinOverlay, View.VISIBLE, 0.4f, 200);
+        animateView(loadingOverlay, View.VISIBLE, 0.4f, 200);
     }
 
     public void nascondiLoading(){
-        animateView(loadinOverlay, View.GONE, 0, 200);
+        animateView(loadingOverlay, View.GONE, 0, 200);
     }
 
     /**

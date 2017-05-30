@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 
@@ -27,7 +28,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     private String userID;
 
     private OnAggiungiListaListener mListener;
-    View loadingOverlay;
+    LoadingOverlayHandler loadingOverlayHandler;
     private String nomelista;
 
     public AggiungiListaFragment() {
@@ -67,7 +68,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        loadingOverlay = getActivity().findViewById(R.id.progress_overlay);
+        loadingOverlayHandler = new LoadingOverlayHandler(getActivity().findViewById(R.id.progress_overlay));
         ((Button)getActivity().findViewById(R.id.buttonCreaLista)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +81,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
                 if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                     //Chiediamo al sito le liste
                     Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiListaFragment.this, "aggiungiLista", parametri, valori);
+                    loadingOverlayHandler.mostraLoading();
                     //TODO : Aprire la activity condividi per condividere la lista con gli amici
                 }else{
                     //TODO : Aggiunta liste in locale e aggiunta alla lista di cose da aggiornare
@@ -118,6 +120,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
 
     @Override
     public void HandleData(String nome, boolean success, String data) {
+        loadingOverlayHandler.nascondiLoading();
         if(success) {
             Toast.makeText(getContext(),"Lista creata con successo", Toast.LENGTH_SHORT).show();
             //data in questo caso sarà l'id della lista
