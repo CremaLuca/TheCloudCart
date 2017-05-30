@@ -1,4 +1,4 @@
-package org.cremaluca.thecloudcart;
+package org.cramest.thecloudcart;
 
 import org.junit.Test;
 

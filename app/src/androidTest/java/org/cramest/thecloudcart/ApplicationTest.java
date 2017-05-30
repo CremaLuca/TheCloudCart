@@ -1,4 +1,4 @@
-package org.cremaluca.thecloudcart;
+package org.cramest.thecloudcart;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
