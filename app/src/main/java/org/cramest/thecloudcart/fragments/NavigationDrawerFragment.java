@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -46,6 +46,7 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private  ListView mDrawerListView;
 
     public NavigationDrawerFragment() {
     }
@@ -76,18 +77,18 @@ public class NavigationDrawerFragment extends Fragment {
 
     @SuppressLint("NewApi")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.drawer_main, container, false);
-        ListView listView = (ListView) v.findViewById(R.id.listView_drawer);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        View v = inflater.inflate(R.layout.drawer_main, container, false);
+        mDrawerListView = (ListView) v.findViewById(R.id.listView_drawer);
+
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
         });
-        listView.setAdapter(new ArrayAdapter<String>(
+        mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
@@ -98,7 +99,7 @@ public class NavigationDrawerFragment extends Fragment {
                         "Disconnetti",
                         "Informazioni"
                 }));
-        listView.setItemChecked(mCurrentSelectedPosition, true);
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 
         //Impostiamo che quando clicchiamo l'header con il nome utente succede qualcosa
         v.findViewById(R.id.relative_header).setOnClickListener(new View.OnClickListener() {
@@ -139,7 +140,6 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer_2,             /* nav drawer image to replace 'Up' caret */
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {
@@ -186,14 +186,14 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
     }
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
-        /*if (mDrawerListView != null) {
+        if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
-        }*/
+        }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
@@ -235,9 +235,6 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater.inflate(R.menu.global, menu);
-        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -247,10 +244,10 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+        /*if (item.getItemId() == R.id.action_example) {
+
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
