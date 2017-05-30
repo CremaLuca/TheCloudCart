@@ -27,7 +27,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     private String userID;
 
     private OnAggiungiListaListener mListener;
-
+    View loadingOverlay;
     private String nomelista;
 
     public AggiungiListaFragment() {
@@ -67,6 +67,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        loadingOverlay = getActivity().findViewById(R.id.progress_overlay);
         ((Button)getActivity().findViewById(R.id.buttonCreaLista)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
