@@ -23,6 +23,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.LoginApp;
@@ -70,19 +71,25 @@ public class RegistraUtenteFragment extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         Button registra = (Button)getActivity().findViewById(R.id.register_button);
-        final String[] parametri = {"req","username","password","email"};
-        final String[] valori = {"register",""};
+
         registra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String username = ((TextView)getActivity().findViewById(R.id.username_edit_text)).getText().toString();
+                final String nome = ((TextView)getActivity().findViewById(R.id.name_edit_text)).getText().toString();
                 final String password = ((TextView)getActivity().findViewById(R.id.password_edit_text)).getText().toString();
                 String ripetiPassword = ((TextView)getActivity().findViewById(R.id.repeat_password_edit_text)).getText().toString();
                 String email = ((TextView)getActivity().findViewById(R.id.email_edit_text)).getText().toString();
+
+                final String[] parametri = {"req","username","name","password","email"};
+                final String[] valori = {"register",username,nome,password,email};
+
                 if(password.equals(ripetiPassword)) {
+                    LoadingOverlayHandler.mostraLoading(getActivity());
                     Connettore.getInstance(getContext()).GetDataFromWebsite(new DataHandler() {
                         @Override
                         public void HandleData(String nome, boolean success, String data) {
+                            LoadingOverlayHandler.nascondiLoading(getActivity());
                             if(success){
                                 Toast.makeText(getContext(),"Registazione effettuata con successo",Toast.LENGTH_SHORT).show();
                                 OnRegistraSuccess(username,data,password);

@@ -16,19 +16,28 @@
         android:id="@+id/username_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="@string/username"
-        android:inputType="textPersonName"
-        android:layout_marginTop="20dp"/>
+        android:hint="@string/usernameRequired"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:layout_marginTop="20dp" />
+        android:hint="@string/passwordRequired"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/repeat_password_edit_text"
