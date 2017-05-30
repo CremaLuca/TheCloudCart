@@ -17,6 +17,7 @@ import android.widget.Toast;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.network.Connettore;
@@ -140,7 +141,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             String[] parametri = {"req","userID","listID","productID","quantity","description"};
             String[] valori = {"addProduct",userID,listID+"",prodotto.getID()+"",quantita+"",descrizione};
             if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-                //Chiediamo al sito le liste
+                LoadingOverlayHandler.mostraLoading(getActivity());
+                //Chiediamo al sito di creare il prodotto
                 Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
             }else{
                 //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti

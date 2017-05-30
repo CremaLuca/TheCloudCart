@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.dialogs.ListaDialog;
 import org.cramest.thecloudcart.dialogs.ProdottoDialog;
@@ -34,6 +35,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
     private ListsFragment listFragment;
     private LoadingFragment loadingFragment;
+
+    private LoadingOverlayHandler loadingOverlayHandler;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -215,17 +218,20 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnProdottoInListaEliminato(int listID) {
         //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
         System.out.println("MainActivity - Eliminato prodotto in lista("+listID+")");
+        LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentProdotti(listID);
     }
 
     @Override
     public void OnProdottoComprato(int listID) {
         //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
+        LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentProdotti(listID);
     }
 
     @Override
     public void OnListaEliminata() {
+        LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentListe();
     }
 
@@ -238,6 +244,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnProdottoAggiunto(ProdottoInLista prodotto) {
         //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
+        LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentProdotti(prodotto.getIdLista());
     }
 
@@ -261,14 +268,15 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnCompraProdotto(ProdottoInLista prodotto) {
         //Se nel dialog il prodotto viene comprato
+        LoadingOverlayHandler.mostraLoading(this);
         Dati.instance.compraProdotto(userID,prodotto);
     }
 
     @Override
     public void OnEliminaProdotto(ProdottoInLista prodotto) {
-        //Se nel dialog si vuole eliminare il prodotto
+        //Se nel dialog si vuole eliminare il prodotto in lista
+        LoadingOverlayHandler.mostraLoading(this);
         Dati.instance.rimuoviProdottoInLista(prodotto);
-        mostraFragmentProdotti(prodotto.getIdLista());
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 
@@ -16,7 +17,7 @@ public class ProdottoDialog{
 
     public static ProdottoDialog instance;
 
-    public void showDialog(Activity activity,final OnProdottoDialogInteractionListener listener, final ProdottoInLista prodotto) {
+    public void showDialog(final Activity activity, final OnProdottoDialogInteractionListener listener, final ProdottoInLista prodotto) {
 
          final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

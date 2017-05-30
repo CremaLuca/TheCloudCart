@@ -13,6 +13,7 @@ import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.Utente;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ListaDialog {
 
     public static ListaDialog instance;
 
-    public void showDialog(Activity activity, final OnListaDialogInteractionListener listener, final Lista lista,final String userID) {
+    public void showDialog(final Activity activity, final OnListaDialogInteractionListener listener, final Lista lista, final String userID) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -38,6 +39,7 @@ public class ListaDialog {
             @Override
             public void onClick(View view) {
                 Dati.eliminaLista(lista.getID(),userID);
+                LoadingOverlayHandler.mostraLoading(activity);
                 dialog.dismiss();
             }
         });
