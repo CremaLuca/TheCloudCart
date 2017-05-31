@@ -195,6 +195,7 @@ public class Dati implements DataHandler{
             }
             if(nome.startsWith("ProdottiLista")){
                prodottiInLista = new ArrayList<ProdottoInLista>();
+                prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
             }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null){
                 LoadedDati();

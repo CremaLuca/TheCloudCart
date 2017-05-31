@@ -2,7 +2,7 @@ package org.cramest.thecloudcart.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import org.cramest.thecloudcart.fragments.LoginFragment;
@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     private void mostraFragmentLogin(){
         LoginFragment loginFragment = LoginFragment.newInstance();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fragment_container, loginFragment);
 
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.On
     private void mostraFragmentRegistraUtente(){
         RegistraUtenteFragment registerFragment = RegistraUtenteFragment.newInstance();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fragment_container, registerFragment);
         transaction.addToBackStack(null);

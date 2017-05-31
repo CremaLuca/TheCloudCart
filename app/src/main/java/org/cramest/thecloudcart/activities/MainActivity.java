@@ -1,5 +1,6 @@
 package org.cramest.thecloudcart.activities;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -10,19 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.Dati;
-import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
-import org.cramest.thecloudcart.classi.ProdottoInLista;
-import org.cramest.thecloudcart.dialogs.ListaDialog;
-import org.cramest.thecloudcart.dialogs.ProdottoDialog;
-import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
-import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
-import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
-import org.cramest.thecloudcart.fragments.ListsFragment;
-import org.cramest.thecloudcart.fragments.LoadingFragment;
-import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
-import org.cramest.thecloudcart.fragments.ProdottiFragment;
+import org.cramest.thecloudcart.classi.*;
+import org.cramest.thecloudcart.dialogs.*;
+import org.cramest.thecloudcart.fragments.*;
 import org.cramest.utils.DataSaver;
 
 public class MainActivity extends AppCompatActivity
@@ -35,13 +26,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private String userID;
 
     private ListsFragment listFragment;
-    private LoadingFragment loadingFragment;
 
-    private LoadingOverlayHandler loadingOverlayHandler;
-
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     /**
@@ -69,80 +54,27 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_quantita)).setText(username);
         restoreActionBar();
         InizializzaApplicazione();
-        mostraFragmentLoading();
+        mostraFragmentSenzaBackStack(LoadingFragment.newInstance());
     }
 
-    private void mostraFragmentLoading(){
-        System.out.println("MainActivity - Mostro loading fragment");
-        loadingFragment = LoadingFragment.newInstance();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, loadingFragment);
-
-        transaction.commit();
-    }
-
-    private void mostraFragmentListe(){
+    private void mostraFragmentConBackStack(Fragment fragment){
         if (findViewById(R.id.fragment_container) != null) {
-            listFragment = ListsFragment.newInstance(userID);
-
-
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-            transaction.replace(R.id.fragment_container, listFragment);
-
+            FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+            transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
+        }else{
+            System.out.println("Manca il fragment container");
         }
     }
 
-    private void mostraFragmentProdotti(int listID){
-        System.out.println("Genero il fragment dei prodotti");
-        ProdottiFragment prodottiFragment = ProdottiFragment.newInstance(listID);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-
-        transaction.replace(R.id.fragment_container, prodottiFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void mostraFragmentAggiungiLista(){
-        AggiungiListaFragment aggiungiListaFragment = AggiungiListaFragment.newInstance(userID);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        transaction.replace(R.id.fragment_container, aggiungiListaFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void mostraFragmentAggiungiProdotto(int listID){
-        AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-    private void mostraFragmentAggiungiProdotto(int listID,int prodottoID){
-        AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID,prodottoID);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void mostraFragmentCreaProdotto(int listID){
-        CreaProdottoFragment creaProdottoFragment = CreaProdottoFragment.newInstance(userID,listID);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-        transaction.replace(R.id.fragment_container, creaProdottoFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    private void mostraFragmentSenzaBackStack(Fragment fragment){
+        if (findViewById(R.id.fragment_container) != null) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.commit();
+        }else{
+            System.out.println("Manca il fragment container");
+        }
     }
 
     @Override
@@ -151,7 +83,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         switch (position) {
             case 0:
                 //Le mie liste
-                mostraFragmentListe();
+                mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
                 break;
             case 1:
                 //I miei prodotti
@@ -188,13 +120,13 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnListaClicked(int listID) {
         System.out.println("Premuta la lista con id: " + listID);
         //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
-        mostraFragmentProdotti(listID);
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
     }
 
     @Override
     public void OnAggiungiLista() {
         //Viene chiamata quando si preme il pulsante "Aggiungi lista"
-        mostraFragmentAggiungiLista();
+        mostraFragmentConBackStack(AggiungiListaFragment.newInstance(userID));
     }
 
     @Override
@@ -221,7 +153,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnDatiLoaded() {
         //Quando la prima volta vengono caricati i dati viene mostrata questa finestra
         System.out.println("MainActivity - Dati caricati, mostro il fragment liste");
-        mostraFragmentListe();
+        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
     }
 
     @Override
@@ -229,45 +161,45 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
         System.out.println("MainActivity - Eliminato prodotto in lista("+listID+")");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentProdotti(listID);
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
     }
 
     @Override
     public void OnProdottoComprato(int listID) {
         //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentProdotti(listID);
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
     }
 
     @Override
     public void OnListaEliminata() {
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentListe();
+        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
     }
 
     @Override
     public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
-        mostraFragmentAggiungiProdotto(listID);
+        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID));
     }
 
     @Override
     public void OnProdottoAggiunto(ProdottoInLista prodotto) {
         //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentProdotti(prodotto.getIdLista());
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(prodotto.getIdLista()));
     }
 
     @Override
     public void OnDevoCreareNuovoProdotto(int listID) {
         //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
-        mostraFragmentCreaProdotto(listID);
+        mostraFragmentConBackStack(CreaProdottoFragment.newInstance(userID,listID));
     }
 
     @Override
     public void OnProdottoCreato(int listID, int prodottoID) {
         //Un prodotto viene creato dal nulla e si torna alla pagina aggiungi prodotto con il prodotto appena creato
-        mostraFragmentAggiungiProdotto(listID,prodottoID);
+        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID,prodottoID));
     }
 
     @Override
@@ -293,7 +225,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void onListaAggiunta(Lista lista) {
         //Nel caso venga confermata la creazione di una nuova lista
         Dati.aggiungiLista(lista);
-        mostraFragmentListe();
+        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
     }
 
     @Override
@@ -306,5 +238,15 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnCondividiLista(Lista lista) {
         //TODO : Mostra fragment o dialog condividi lista
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
