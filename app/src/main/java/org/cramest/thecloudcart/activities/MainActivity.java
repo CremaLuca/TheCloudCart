@@ -128,7 +128,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnAggiungiLista() {
         //Viene chiamata quando si preme il pulsante "Aggiungi lista"
-        mostraFragmentConBackStack(AggiungiListaFragment.newInstance(userID));
+        mostraFragmentSenzaBackStack(AggiungiListaFragment.newInstance(userID));
     }
 
     @Override
@@ -195,13 +195,13 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnDevoCreareNuovoProdotto(int listID) {
         //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
-        mostraFragmentConBackStack(CreaProdottoFragment.newInstance(userID,listID));
+        mostraFragmentSenzaBackStack(CreaProdottoFragment.newInstance(userID,listID));
     }
 
     @Override
     public void OnProdottoCreato(int listID, int prodottoID) {
         //Un prodotto viene creato dal nulla e si torna alla pagina aggiungi prodotto con il prodotto appena creato
-        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID,prodottoID));
+        mostraFragmentSenzaBackStack(AggiungiProdottoFragment.newInstance(userID,listID,prodottoID));
     }
 
     @Override

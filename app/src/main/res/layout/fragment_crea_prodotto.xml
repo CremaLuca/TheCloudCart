@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/save_product"
+        android:text="Nuovo prodotto"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <android.support.design.widget.TextInputLayout

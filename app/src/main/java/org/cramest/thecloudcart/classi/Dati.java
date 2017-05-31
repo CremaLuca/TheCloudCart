@@ -1,6 +1,7 @@
 package org.cramest.thecloudcart.classi;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import org.cramest.thecloudcart.network.*;
@@ -192,10 +193,15 @@ public class Dati implements DataHandler{
                 richiediProdottiInLista(ctx);
             }
             if(nome.startsWith("ProdottiLista")){
-               prodottiInLista = new ArrayList<ProdottoInLista>();
-                prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
+
             }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null){
+                if(prodottiInLista == null){
+                    prodottiInLista = new ArrayList<ProdottoInLista>();
+                }
+                if(prodottiConsigliati == null){
+                    prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
+                }
                 LoadedDati();
             }
         }
@@ -394,6 +400,5 @@ public class Dati implements DataHandler{
                 }
             }
         }, "eliminaLista", pars, vals);
-
     }
 }

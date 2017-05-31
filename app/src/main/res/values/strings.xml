@@ -54,4 +54,6 @@
     <string name="bought">Comprato</string>
     <string name="icon">Icona, boh</string>
     <string name="add_to_list_duepunti">Aggiungi a lista :</string>
+    <string name="Crea_nuovo_prodotto">Crea nuovo prodotto</string>
+    <string name="Crea_prodotto">Crea prodotto</string>
 </resources>
