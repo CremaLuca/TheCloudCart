@@ -2,7 +2,8 @@ package org.cramest.thecloudcart.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -74,7 +75,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentLoading(){
         System.out.println("MainActivity - Mostro loading fragment");
         loadingFragment = LoadingFragment.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, loadingFragment);
 
         transaction.commit();
@@ -83,7 +84,10 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentListe(){
         if (findViewById(R.id.fragment_container) != null) {
             listFragment = ListsFragment.newInstance(userID);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
             transaction.replace(R.id.fragment_container, listFragment);
 
             transaction.commit();
@@ -94,7 +98,9 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         System.out.println("Genero il fragment dei prodotti");
         ProdottiFragment prodottiFragment = ProdottiFragment.newInstance(listID);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+
         transaction.replace(R.id.fragment_container, prodottiFragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -103,7 +109,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentAggiungiLista(){
         AggiungiListaFragment aggiungiListaFragment = AggiungiListaFragment.newInstance(userID);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(R.id.fragment_container, aggiungiListaFragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -112,7 +119,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentAggiungiProdotto(int listID){
         AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -120,7 +128,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentAggiungiProdotto(int listID,int prodottoID){
         AggiungiProdottoFragment aggiungiProdottoFragment = AggiungiProdottoFragment.newInstance(userID,listID,prodottoID);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(R.id.fragment_container, aggiungiProdottoFragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -129,7 +138,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentCreaProdotto(int listID){
         CreaProdottoFragment creaProdottoFragment = CreaProdottoFragment.newInstance(userID,listID);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(R.id.fragment_container, creaProdottoFragment);
         transaction.addToBackStack(null);
         transaction.commit();

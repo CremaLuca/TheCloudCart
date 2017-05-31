@@ -2,7 +2,7 @@ package org.cramest.thecloudcart.fragments;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -60,10 +60,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 .requestEmail().build();
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+        /*mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .enableAutoManage(getActivity(), this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                .build();
+                .build();*/
     }
 
     @Override
@@ -112,10 +112,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 String password = ((EditText)getActivity().findViewById(R.id.editPassword)).getText().toString();
                 if(!username.equals("") && !password.equals("")) {
                     System.out.println("LoginFragment - Chiamo loginApp("+username+","+password+")");
-                    LoginApp l = new LoginApp(getContext(), username, password);
+                    LoginApp l = new LoginApp(getActivity(), username, password);
                 }else{
                     System.out.println("LoginFragment - Nessun nome utente o password inseriti");
-                    Toast.makeText(getContext(),"Mancano i dati di accesso",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Mancano i dati di accesso",Toast.LENGTH_SHORT).show();
                 }
                 //Da qui in poi si arrangia con i listener
                 break;

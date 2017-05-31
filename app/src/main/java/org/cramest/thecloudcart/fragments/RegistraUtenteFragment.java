@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
-import org.cramest.thecloudcart.network.LoginApp;
 
 /**
  * Created by User on 08/05/2017.
@@ -86,21 +78,21 @@ public class RegistraUtenteFragment extends Fragment{
 
                 if(password.equals(ripetiPassword)) {
                     LoadingOverlayHandler.mostraLoading(getActivity());
-                    Connettore.getInstance(getContext()).GetDataFromWebsite(new DataHandler() {
+                    Connettore.getInstance(getActivity()).GetDataFromWebsite(new DataHandler() {
                         @Override
                         public void HandleData(String nome, boolean success, String data) {
                             LoadingOverlayHandler.nascondiLoading(getActivity());
                             if(success){
-                                Toast.makeText(getContext(),"Registazione effettuata con successo",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),"Registazione effettuata con successo",Toast.LENGTH_SHORT).show();
                                 OnRegistraSuccess(username,data,password);
                             }else{
-                                Toast.makeText(getContext(),data,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(),data,Toast.LENGTH_SHORT).show();
                                 OnRegistraFailed();
                             }
                         }
                     }, "registrazione", parametri, valori);
                 }else{
-                    Toast.makeText(getContext(),"Le due password non coincidono",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Le due password non coincidono",Toast.LENGTH_SHORT).show();
                 }
             }
         });
