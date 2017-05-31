@@ -12,44 +12,53 @@ public class WebsiteDataManager {
     final static String sepColonne = "♦";
 
     public static Lista[] getListeUtente(String data){
-        String[] strListe = data.split(sepRighe);
-        Lista[] liste = new Lista[strListe.length];
-        for(int i=0;i<strListe.length;i++){
-            String[] pezziLista = strListe[i].split(sepColonne);
-            liste[i] = new Lista(Integer.parseInt(pezziLista[0]),pezziLista[1],Integer.parseInt(pezziLista[2]));
+        if(data != null) {
+            String[] strListe = data.split(sepRighe);
+            Lista[] liste = new Lista[strListe.length];
+            for (int i = 0; i < strListe.length; i++) {
+                String[] pezziLista = strListe[i].split(sepColonne);
+                liste[i] = new Lista(Integer.parseInt(pezziLista[0]), pezziLista[1], Integer.parseInt(pezziLista[2]));
+            }
+            return liste;
         }
-        return  liste;
+        return null;
     }
 
     public static Categoria[] getCategorie(String data){
-        String[] strCategorie = data.split(sepRighe);
-        Categoria[] categorie = new Categoria[strCategorie.length];
-        for(int i=0;i<strCategorie.length;i++){
-            String[] pezziCategoria = strCategorie[i].split(sepColonne);
-            categorie[i] = new Categoria(Integer.parseInt(pezziCategoria[0]),pezziCategoria[1]);
+        if(data != null) {
+            String[] strCategorie = data.split(sepRighe);
+            Categoria[] categorie = new Categoria[strCategorie.length];
+            for (int i = 0; i < strCategorie.length; i++) {
+                String[] pezziCategoria = strCategorie[i].split(sepColonne);
+                categorie[i] = new Categoria(Integer.parseInt(pezziCategoria[0]), pezziCategoria[1]);
+            }
+            return categorie;
         }
-        return  categorie;
+        return null;
     }
 
     public static Prodotto[] getProdotti(String data){
-        String[] strProdotti = data.split(sepRighe);
-        Prodotto[] prodotti = new Prodotto[strProdotti.length];
-        for(int i=0;i<strProdotti.length;i++){
-            String[] strProdotto = strProdotti[i].split(sepColonne);
-            int ID = Integer.parseInt(strProdotto[0]);
-            String nome = strProdotto[1];
-            double prezzo = 0;
-            try {
-                prezzo = Double.parseDouble(strProdotto[2]);
-            }catch(Exception e){
+        if(data != null) {
+            String[] strProdotti = data.split(sepRighe);
+            Prodotto[] prodotti = new Prodotto[strProdotti.length];
+            for (int i = 0; i < strProdotti.length; i++) {
+                String[] strProdotto = strProdotti[i].split(sepColonne);
+                int ID = Integer.parseInt(strProdotto[0]);
+                String nome = strProdotto[1];
+                double prezzo = 0;
+                try {
+                    prezzo = Double.parseDouble(strProdotto[2]);
+                } catch (Exception e) {
+                }
+                String marca = strProdotto[3];
+                String dimensione = strProdotto[4];
+                Categoria categoria = Dati.getCategoriaByID(Integer.parseInt(strProdotto[5]));
+                prodotti[i] = new Prodotto(ID, nome, prezzo, marca, dimensione, categoria);
+                System.out.println("Creato nuovo prodotto : " + prodotti[i]);
             }
-            String marca = strProdotto[3];
-            String dimensione = strProdotto[4];
-            Categoria categoria = Dati.getCategoriaByID(Integer.parseInt(strProdotto[5]));
-            prodotti[i] = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
-            System.out.println("Creato nuovo prodotto : " + prodotti[i]);
+            return prodotti;
         }
-        return  prodotti;
+        return null;
     }
 
     public static ProdottoInLista[] getProdottiInLista(String data,int listID){

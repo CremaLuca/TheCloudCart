@@ -134,13 +134,19 @@ public class Dati implements DataHandler{
                 richiediProdotti(ctx,userID);
             }
             if(nome.equals("prodotti")){
-                prodotti = new ArrayList<Prodotto>(Arrays.asList(WebsiteDataManager.getProdotti(data)));
+                Prodotto[] arrayProdotti = WebsiteDataManager.getProdotti(data);
+                if(arrayProdotti != null) {
+                    prodotti = new ArrayList<Prodotto>(Arrays.asList(arrayProdotti));
+                }
                 richiediListeSpesa(ctx,userID);
             }
             if(nome.equals("listeSpesa")){
-                listeMie = new ArrayList<Lista>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
-                richiediUtenti(ctx); //Richiediamo anche gli utenti visualizzatori
-                richiediProdottiInLista(ctx);
+                Lista[] arrayListeMie = WebsiteDataManager.getListeUtente(data);
+                if(arrayListeMie != null) {
+                    listeMie = new ArrayList<Lista>(Arrays.asList(arrayListeMie));
+                    richiediUtenti(ctx); //Richiediamo anche gli utenti visualizzatori
+                    richiediProdottiInLista(ctx);
+                }
             }
             if(nome.equals("listeSpesaCondivise")){
                 listeCondivise = new ArrayList<Lista>(Arrays.asList(WebsiteDataManager.getListeUtente(data)));
@@ -171,6 +177,26 @@ public class Dati implements DataHandler{
                 listeCaricate++;
             }
             if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null && listeCaricate >= listeDaCaricare){
+                LoadedDati();
+            }
+        }else{
+            if(nome.equals("prodotti")){
+                System.out.println("Non ci sono prodotti");
+                prodotti = new ArrayList<Prodotto>();
+                richiediListeSpesa(ctx,userID);
+            }
+            if(nome.equals("listeSpesa")){
+                System.out.println("Non ci sono liste della spesa");
+                listeMie = new ArrayList<Lista>();
+            }
+            if(nome.equals("listeSpesaCondivise")){
+                listeCondivise = new ArrayList<Lista>();
+                richiediProdottiInLista(ctx);
+            }
+            if(nome.startsWith("ProdottiLista")){
+               prodottiInLista = new ArrayList<ProdottoInLista>();
+            }
+            if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null){
                 LoadedDati();
             }
         }
