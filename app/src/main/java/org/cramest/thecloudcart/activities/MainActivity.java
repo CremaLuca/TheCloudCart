@@ -60,6 +60,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentConBackStack(Fragment fragment){
         if (findViewById(R.id.fragment_container) != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right,R.animator.slide_in_right,R.animator.slide_out_left);
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
         }else{
@@ -70,6 +71,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     private void mostraFragmentSenzaBackStack(Fragment fragment){
         if (findViewById(R.id.fragment_container) != null) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right,R.animator.slide_in_right,R.animator.slide_out_left);
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
         }else{

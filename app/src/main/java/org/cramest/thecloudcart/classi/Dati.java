@@ -3,9 +3,7 @@ package org.cramest.thecloudcart.classi;
 import android.content.Context;
 import android.widget.Toast;
 
-import org.cramest.thecloudcart.network.Connettore;
-import org.cramest.thecloudcart.network.DataHandler;
-import org.cramest.thecloudcart.network.WebsiteDataManager;
+import org.cramest.thecloudcart.network.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
