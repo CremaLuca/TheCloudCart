@@ -24,10 +24,10 @@
             android:name=".activities.LandActivity" />
         <activity
             android:name=".activities.LoginActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.MainActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_main"></activity>
     </application>
 

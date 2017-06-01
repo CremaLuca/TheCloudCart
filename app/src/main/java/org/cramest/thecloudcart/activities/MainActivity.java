@@ -129,7 +129,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnAggiungiLista() {
         //Viene chiamata quando si preme il pulsante "Aggiungi lista"
         System.out.println("MainActivity - Premuto il bottone 'aggiungi lista'");
-        mostraFragmentSenzaBackStack(AggiungiListaFragment.newInstance(userID));
+        mostraFragmentConBackStack(AggiungiListaFragment.newInstance(userID));
     }
 
     @Override
@@ -237,7 +237,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void onListaAggiunta(Lista lista) {
         //Nel caso venga confermata la creazione di una nuova lista
-        System.out.println("MainActivity - Lista creata con successo");
+        System.out.println("MainActivity - Lista "+lista.getNome()+" creata con successo");
         Dati.aggiungiLista(lista);
         mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
     }
