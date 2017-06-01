@@ -104,7 +104,6 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        //TODO : Fai qui
         TextView titolo =(TextView)getActivity().findViewById(R.id.title_aggiungi_prodotto);
         titolo.setText("Aggiungi a lista : "+curList.getNome());
         setCategorieSpinner();
@@ -133,24 +132,31 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
 
     private void aggiungiProdottoInLista(Prodotto prodotto){
         if(prodotto != null) {
-            String descrizione = ((EditText) getActivity().findViewById(R.id.descrizione)).getText().toString();
-            int quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString());
-            tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
+            if(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString() != "") {
+                String descrizione = ((EditText) getActivity().findViewById(R.id.descrizione)).getText().toString();
+                int quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString());
+                tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
 
-            //Aggiungiamo la lista tramite l'API
-            String[] parametri = {"req","userID","listID","productID","quantity","description"};
-            String[] valori = {"addProduct",userID,listID+"",prodotto.getID()+"",quantita+"",descrizione};
-            if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-                LoadingOverlayHandler.mostraLoading(getActivity());
-                //Chiediamo al sito di creare il prodotto
-                Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
+                //Aggiungiamo la lista tramite l'API
+                String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
+                String[] valori = {"addProduct", userID, listID + "", prodotto.getID() + "", quantita + "", descrizione};
+                if (Connettore.getInstance(getActivity()).isNetworkAvailable()) {
+                    LoadingOverlayHandler.mostraLoading(getActivity());
+                    //Chiediamo al sito di creare il prodotto
+                    Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
+                } else {
+                    //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
+                }
+                //Comunque sia alla fine dobbiamo aggiungere il prodotto alla lista
+                Dati.aggiungiProdottoInLista(tmpProdottoInLista);
             }else{
-                //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
+                //Nel caso quantità sia ''
+                System.out.println("AggiungiProdottoFragment - Qauntità non inserita");
+                Toast.makeText(getActivity(), "Non hai inserito una quantità", Toast.LENGTH_SHORT).show();
             }
-            //Comunque sia alla fine dobbiamo aggiungere il prodotto alla lista
-            Dati.aggiungiProdottoInLista(tmpProdottoInLista);
         }else{
-            //TODO : Gestisci il caso nessun prodotto sia selezionato
+            System.out.println("AggiungiProdottoFragment - Nessun prodotto selezionato");
+            Toast.makeText(getActivity(), "Nessun prodotto selezionato", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -195,7 +201,6 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             for(int i=0;i<prodotti.size();i++){
                 if(prodotti.get(i).equals(initialProdotto.getNome())){
                     //Impostiamo il prodotto selezionato dove è stata trovata corrispondenza
-                    //TODO : Cambiare mettere per ID non per nome
                     spinner.setSelection(i);
                 }
             }
@@ -246,12 +251,12 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     @Override
     public void HandleData(String nome, boolean success, String data) {
         if(success) {
-            Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),data, Toast.LENGTH_SHORT).show();
             if(tmpProdottoInLista != null) {
                 onProdottoAggiunto(tmpProdottoInLista);
             }
         }else{
-            Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),data, Toast.LENGTH_SHORT).show();
         }
     }
 

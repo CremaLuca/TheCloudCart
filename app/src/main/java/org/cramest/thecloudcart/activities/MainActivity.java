@@ -169,12 +169,15 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnProdottoComprato(int listID) {
         //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
+        System.out.println("MainActivity - Prodotto comprato");
         LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
     }
 
     @Override
     public void OnListaEliminata() {
+        //Quando torna la risposta dal server che la lista è stata eliminata
+        System.out.println("MainActivity - Lista eliminata con successo");
         LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
     }
@@ -182,12 +185,14 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
+        System.out.println("MainActivity - Premuto bottone 'aggiungi prodotto'");
         mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID));
     }
 
     @Override
     public void OnProdottoAggiunto(ProdottoInLista prodotto) {
         //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
+        System.out.println("MainActivity - Prodotto in lista aggiunto alla lista id:"+prodotto.getIdLista());
         LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentConBackStack(ProdottiFragment.newInstance(prodotto.getIdLista()));
     }
@@ -195,17 +200,20 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnDevoCreareNuovoProdotto(int listID) {
         //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
+        System.out.println("MainActivity - Premuto bottone 'crea prodotto'");
         mostraFragmentSenzaBackStack(CreaProdottoFragment.newInstance(userID,listID));
     }
 
     @Override
     public void OnProdottoCreato(int listID, int prodottoID) {
         //Un prodotto viene creato dal nulla e si torna alla pagina aggiungi prodotto con il prodotto appena creato
+        System.out.println("MainActivity - Nuovo prodotto creato");
         mostraFragmentSenzaBackStack(AggiungiProdottoFragment.newInstance(userID,listID,prodottoID));
     }
 
     @Override
     public void OnProdottoNonCreato(int listID) {
+        System.out.println("MainActivity - Prodotto non creato");
         //TODO : Gestiore il caso un prodotto non venga creato
     }
 
@@ -219,6 +227,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnEliminaProdotto(ProdottoInLista prodotto) {
         //Se nel dialog si vuole eliminare il prodotto in lista
+        System.out.println("MainActivity - Prodotto in lista eliminato");
         LoadingOverlayHandler.mostraLoading(this);
         Dati.instance.rimuoviProdottoInLista(prodotto);
     }
@@ -226,6 +235,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void onListaAggiunta(Lista lista) {
         //Nel caso venga confermata la creazione di una nuova lista
+        System.out.println("MainActivity - Lista creata con successo");
         Dati.aggiungiLista(lista);
         mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
     }
@@ -233,6 +243,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void onListaNonAggiunta() {
         //Nel caso non venga aggiunta l'unica soluzione è deprimersi
+        System.out.println("MainActivity - Lista non creata");
         //TODO : Gestire il caso della lista non aggiunta
     }
 

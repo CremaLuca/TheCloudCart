@@ -1,103 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.cramest.thecloudcart.fragments.AggiungiProdottoFragment">
+    android:fillViewport="false">
 
-
-    <TextView
-        android:id="@+id/textViewSalvaProdotto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Nuovo prodotto"
-        android:textAppearance="@android:style/TextAppearance.Material.Title" />
-
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textInputLayoutNome"
-        android:layout_below="@+id/textViewSalvaProdotto"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="22dp">
-        <EditText
-            android:id="@+id/edit_nome"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="org.cramest.thecloudcart.fragments.CreaProdottoFragment">
+
+        <TextView
+            android:id="@+id/textViewSalvaProdotto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Nuovo prodotto"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/name"
-            android:maxLines="1"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewSalvaProdotto"
+            android:layout_marginTop="18dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textInputLayoutPrezzo"
-        android:layout_marginTop="22dp"
-        android:layout_below="@+id/textInputLayoutNome"
-        android:layout_alignParentStart="true">
+            <EditText
+                android:id="@+id/edit_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edit_prezzo"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutPrezzo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/price"
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutNome"
+            android:layout_marginTop="18dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:id="@+id/textInputLayoutMarca"
-        android:layout_below="@+id/textInputLayoutPrezzo"
-        android:layout_alignParentStart="true">
-        <EditText
-            android:id="@+id/edit_marca"
+            <EditText
+                android:id="@+id/edit_prezzo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/price"
+                android:inputType="numberDecimal"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutMarca"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/brand"
-            android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutPrezzo"
+            android:layout_marginTop="18dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textInputLayoutDimensione"
-        android:layout_below="@+id/textInputLayoutMarca"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp">
-        <EditText
-            android:id="@+id/edit_descrizione"
+            <EditText
+                android:id="@+id/edit_marca"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/brand"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutDimensione"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_marca"
-            android:hint="@string/dimension_es_1kg"
-            android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutMarca"
+            android:layout_marginTop="18dp">
 
-    <Spinner
-        android:id="@+id/categoria_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/textInputLayoutDimensione"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp" />
+            <EditText
+                android:id="@+id/edit_descrizione"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_marca"
+                android:hint="@string/dimension_es_1kg"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/crea_prodotto_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/save" />
+        <Spinner
+            android:id="@+id/categoria_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutDimensione"
+            android:layout_marginTop="18dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutQuantita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutMarca"
+            android:layout_marginTop="18dp">
+
+            <EditText
+                android:id="@+id/edit_quantita_crea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_marca"
+                android:hint="@string/quantity"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutDescrizione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutMarca"
+            android:layout_marginTop="18dp">
+
+            <EditText
+                android:id="@+id/edit_descrizione_crea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_marca"
+                android:hint="@string/description"
+                android:maxLines="2" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/crea_prodotto_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp"
+            android:text="@string/salva_e_aggiungi_alla_lista" />
 
 
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

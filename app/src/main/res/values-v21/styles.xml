@@ -18,7 +18,7 @@
     </style>
     <style name="styledButton" parent="android:Widget.Button">
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
         <item name="android:padding">12dp</item>
     </style>
 </resources>
