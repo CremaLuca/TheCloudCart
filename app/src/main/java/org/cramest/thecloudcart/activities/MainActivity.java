@@ -81,7 +81,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        System.out.println("Chiamato drawerselected ---- "+position);
+        System.out.println("MainActibity - Chiamato drawerselected - "+position);
         switch (position) {
             case 0:
                 //Le mie liste
@@ -128,6 +128,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnAggiungiLista() {
         //Viene chiamata quando si preme il pulsante "Aggiungi lista"
+        System.out.println("MainActivity - Premuto il bottone 'aggiungi lista'");
         mostraFragmentSenzaBackStack(AggiungiListaFragment.newInstance(userID));
     }
 
@@ -220,6 +221,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnCompraProdotto(ProdottoInLista prodotto) {
         //Se nel dialog il prodotto viene comprato
+        System.out.println("MainActivity - Premuto il bottone 'compra prodotto'");
         LoadingOverlayHandler.mostraLoading(this);
         Dati.instance.compraProdotto(userID,prodotto);
     }
@@ -227,7 +229,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnEliminaProdotto(ProdottoInLista prodotto) {
         //Se nel dialog si vuole eliminare il prodotto in lista
-        System.out.println("MainActivity - Prodotto in lista eliminato");
+        System.out.println("MainActivity - Prodotto in lista da eliminare");
         LoadingOverlayHandler.mostraLoading(this);
         Dati.instance.rimuoviProdottoInLista(prodotto);
     }
