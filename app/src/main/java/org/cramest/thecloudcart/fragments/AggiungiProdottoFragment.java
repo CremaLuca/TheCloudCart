@@ -1,8 +1,8 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,9 +81,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Recupero i dati");
         if (getArguments() != null) {
-            System.out.println("Recuperando");
             userID = getArguments().getString(ARG_PARAM1);
             listID = getArguments().getInt(ARG_PARAM2);
             curList = Dati.getListaByID(listID);
@@ -132,30 +130,29 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
 
     private void aggiungiProdottoInLista(Prodotto prodotto){
         if(prodotto != null) {
-            if(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString() != "") {
-                String descrizione = ((EditText) getActivity().findViewById(R.id.descrizione)).getText().toString();
-                int quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString());
-                tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
-
-                //TODO : Delegare il tutto alla main activity e alla classe dati
-
-                //Aggiungiamo la lista tramite l'API
-                String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
-                String[] valori = {"addProduct", userID, listID + "", prodotto.getID() + "", quantita + "", descrizione};
-                if (Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-                    LoadingOverlayHandler.mostraLoading(getActivity());
-                    //Chiediamo al sito di creare il prodotto
-                    Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
-                } else {
-                    //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
-                }
-                //Comunque sia alla fine dobbiamo aggiungere il prodotto alla lista
-                Dati.aggiungiProdottoInLista(tmpProdottoInLista);
-            }else{
-                //Nel caso quantità sia ''
-                System.out.println("AggiungiProdottoFragment - Qauntità non inserita");
-                Toast.makeText(getActivity(), "Non hai inserito una quantità", Toast.LENGTH_SHORT).show();
+            String descrizione = ((EditText) getActivity().findViewById(R.id.descrizione)).getText().toString();
+            int quantita = 1;
+            try {
+                quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString());
+            } catch (Exception e) {
+                System.out.println("AggiungiProdottoFragment - Manca la quantità, non importa");
             }
+            tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
+
+            //TODO : Delegare il tutto alla main activity e alla classe dati
+
+            //Aggiungiamo la lista tramite l'API
+            String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
+            String[] valori = {"addProduct", userID, listID + "", prodotto.getID() + "", quantita + "", descrizione};
+            if (Connettore.getInstance(getActivity()).isNetworkAvailable()) {
+                LoadingOverlayHandler.mostraLoading(getActivity());
+                //Chiediamo al sito di creare il prodotto
+                Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
+            } else {
+                //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
+            }
+            //Comunque sia alla fine dobbiamo aggiungere il prodotto alla lista
+            Dati.aggiungiProdottoInLista(tmpProdottoInLista);
         }else{
             System.out.println("AggiungiProdottoFragment - Nessun prodotto selezionato");
             Toast.makeText(getActivity(), "Nessun prodotto selezionato", Toast.LENGTH_SHORT).show();

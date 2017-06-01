@@ -1,8 +1,8 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Categoria;
 import org.cramest.thecloudcart.classi.Dati;
-import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.Prodotto;
-import org.cramest.thecloudcart.classi.ProdottoInLista;
-import org.cramest.thecloudcart.network.Connettore;
-import org.cramest.thecloudcart.network.DataHandler;
 
 import java.util.ArrayList;
 
@@ -37,8 +30,6 @@ public class CreaProdottoFragment extends Fragment{
 
     private int listID;
     private String userID;
-
-    private Prodotto tmpProdotto;
 
     private OnCreaProdottiListener mListener;
     private int curCategoriaID;
@@ -94,14 +85,29 @@ public class CreaProdottoFragment extends Fragment{
     }
 
     private void generaProdotto(){
-        //Prima recuperiamo tutti i dati, l'ID dopo
-        String nome = ((EditText) getActivity().findViewById(R.id.edit_nome)).getText().toString();
-        Double prezzo = Double.parseDouble(((EditText) getActivity().findViewById(R.id.edit_prezzo)).getText().toString());
-        String marca = ((EditText) getActivity().findViewById(R.id.edit_marca)).getText().toString();;
-        String dimensione = ((EditText) getActivity().findViewById(R.id.edit_descrizione)).getText().toString();;
+
+        EditText editNome = (EditText) getActivity().findViewById(R.id.edit_nome);
+        EditText editPrezzo = (EditText) getActivity().findViewById(R.id.edit_prezzo);
+        EditText editMarca = (EditText) getActivity().findViewById(R.id.edit_marca);
+        EditText editDimensione = (EditText) getActivity().findViewById(R.id.edit_descrizione);
+        EditText editQuantita = (EditText) getActivity().findViewById(R.id.edit_quantita_crea);
+        EditText editDescrizione = (EditText) getActivity().findViewById(R.id.edit_descrizione_crea);
+
+        Double prezzo = 0.0;
+        int quantita = 1;
+
+        //Prima recuperiamo tutti i dati
+        String nome = editNome.getText().toString();
+        String marca = editMarca.getText().toString();
+        String dimensione = editDimensione.getText().toString();
         Categoria categoria = Dati.getCategoriaByID(curCategoriaID);
-        int quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.edit_quantita_crea)).getText().toString());
-        String descrizione = ((EditText) getActivity().findViewById(R.id.edit_descrizione_crea)).getText().toString();
+        String descrizione = editDescrizione.getText().toString();
+        try {
+            prezzo = Double.parseDouble(editPrezzo.getText().toString());
+            quantita = Integer.parseInt(editQuantita.getText().toString());
+        } catch (Exception e) {
+            System.out.println("Manca prezzo o quantita, ma non importa");
+        }
         //TODO : Controlli sui dati inseriti
         mListener.OnDevoCreareProdotto(nome,prezzo,marca,dimensione,categoria,quantita,descrizione,listID);
 

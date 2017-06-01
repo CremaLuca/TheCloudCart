@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'Acerkacke'
             keyPassword 'Crema01'
-            storeFile file('C:/Users/cremaluca/Desktop/TheCloudCart/CramestKeystore.jks')
+            storeFile file('E:/Lavori local/Programmazione/Android/TheCloudCart/CramestKeystore.jks')
             storePassword 'Crema01'
         }
     }

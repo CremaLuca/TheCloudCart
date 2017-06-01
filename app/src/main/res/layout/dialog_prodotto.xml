@@ -142,8 +142,6 @@
         android:id="@+id/button_comprato"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/textColorPrimary"
         android:text="@string/bought"
         android:layout_below="@+id/edit_descrizione"
         android:layout_alignParentStart="true"

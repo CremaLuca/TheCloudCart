@@ -1,19 +1,30 @@
 package org.cramest.thecloudcart.activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.*;
-import org.cramest.thecloudcart.dialogs.*;
-import org.cramest.thecloudcart.fragments.*;
+import org.cramest.thecloudcart.classi.Categoria;
+import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
+import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.dialogs.ListaDialog;
+import org.cramest.thecloudcart.dialogs.ProdottoDialog;
+import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
+import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
+import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
+import org.cramest.thecloudcart.fragments.ListsFragment;
+import org.cramest.thecloudcart.fragments.LoadingFragment;
+import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
+import org.cramest.thecloudcart.fragments.ProdottiFragment;
 import org.cramest.utils.DataSaver;
 
 public class MainActivity extends AppCompatActivity
@@ -187,6 +198,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnProdottoInListaCreato(ProdottoInLista prodottoInLista) {
         //Un prodotto viene aggiunto ad una lista, torniamo alla visualizzazione della lista
         System.out.println("MainActivity - Nuovo prodotto creato");
+        LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentSenzaBackStack(ProdottiFragment.newInstance(prodottoInLista.getIdLista()));
     }
 
@@ -262,6 +274,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnDevoCreareProdotto(String nome, Double prezzo, String marca, String dimensione, Categoria categoria, int quantita, String descrizione,int idLista) {
         //Quando nella schermata crea prodotto viene premuto il pulsante 'Crea prodotto'
+        LoadingOverlayHandler.mostraLoading(this);
         Dati.creaProdottoEAggiungiloALista(userID,nome,prezzo,marca,dimensione,categoria,quantita,descrizione,idLista);
     }
 }
