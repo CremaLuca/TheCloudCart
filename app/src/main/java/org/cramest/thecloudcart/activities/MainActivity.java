@@ -184,6 +184,13 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
+    public void OnProdottoInListaCreato(ProdottoInLista prodottoInLista) {
+        //Un prodotto viene aggiunto ad una lista, torniamo alla visualizzazione della lista
+        System.out.println("MainActivity - Nuovo prodotto creato");
+        mostraFragmentSenzaBackStack(ProdottiFragment.newInstance(prodottoInLista.getIdLista()));
+    }
+
+    @Override
     public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
         System.out.println("MainActivity - Premuto bottone 'aggiungi prodotto'");
@@ -202,20 +209,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnDevoCreareNuovoProdotto(int listID) {
         //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
         System.out.println("MainActivity - Premuto bottone 'crea prodotto'");
-        mostraFragmentSenzaBackStack(CreaProdottoFragment.newInstance(userID,listID));
-    }
-
-    @Override
-    public void OnProdottoCreato(int listID, int prodottoID) {
-        //Un prodotto viene creato dal nulla e si torna alla pagina aggiungi prodotto con il prodotto appena creato
-        System.out.println("MainActivity - Nuovo prodotto creato");
-        mostraFragmentSenzaBackStack(AggiungiProdottoFragment.newInstance(userID,listID,prodottoID));
-    }
-
-    @Override
-    public void OnProdottoNonCreato(int listID) {
-        System.out.println("MainActivity - Prodotto non creato");
-        //TODO : Gestiore il caso un prodotto non venga creato
+        mostraFragmentConBackStack(CreaProdottoFragment.newInstance(userID,listID),"CreaProdotto");
     }
 
     @Override
@@ -259,9 +253,15 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            fm.popBackStack();
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void OnDevoCreareProdotto(String nome, Double prezzo, String marca, String dimensione, Categoria categoria, int quantita, String descrizione,int idLista) {
+        //Quando nella schermata crea prodotto viene premuto il pulsante 'Crea prodotto'
+        Dati.creaProdottoEAggiungiloALista(userID,nome,prezzo,marca,dimensione,categoria,quantita,descrizione,idLista);
     }
 }

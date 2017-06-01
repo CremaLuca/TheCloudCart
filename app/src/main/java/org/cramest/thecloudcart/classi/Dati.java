@@ -275,6 +275,7 @@ public class Dati implements DataHandler{
         void OnProdottoInListaEliminato(int listID);
         void OnProdottoComprato(int listID);
         void OnListaEliminata();
+        void OnProdottoInListaCreato(ProdottoInLista prodottoInLista);
     }
 
     public void LoadedDati() {
@@ -362,8 +363,6 @@ public class Dati implements DataHandler{
 
             }
         }, "eliminaProdotto=" + prodottoInLista.getIdLista(), pars, vals);
-
-
     }
 
     public static void compraProdotto(String userID,final ProdottoInLista prodottoInLista){
@@ -400,5 +399,47 @@ public class Dati implements DataHandler{
                 }
             }
         }, "eliminaLista", pars, vals);
+    }
+
+    public static void creaProdottoEAggiungiloALista(final String userID,final String nome,final Double prezzo,final String marca,final String dimensione,final Categoria categoria,final int quantita,final String descrizione,final int listID){
+        String[] parametri = {"req","userID","name","price","brand","dimension","categoryID"};
+        String[] valori = {"createProduct",userID,nome,prezzo+"",marca,dimensione,categoria.getID()+""};
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nome, boolean success, String data) {
+                if(success) {
+                    //Ricostruiamo il prodotto con il nuovo ID
+                    int ID = Integer.parseInt(data);
+                    final Prodotto prod = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
+
+                    //Toast.makeText(ctx,"Prodotto salvato con successo (debug-ID: "+data+")", Toast.LENGTH_SHORT).show();
+
+                    //Aggiungiamo il prodotto anche in locale senza che debba riscaricarli tutti
+                    /*Dati.*/aggiungiProdotto(prod);
+
+                    String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
+                    String[] valori = {"addProduct",userID,listID+"",prod.getID()+"",quantita+"",descrizione};
+                    Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+                        @Override
+                        public void HandleData(String nome, boolean success, String data) {
+                            if(success) {
+                                ProdottoInLista tmpProdottoInLista = new ProdottoInLista(listID, prod, quantita, descrizione);
+                            /*Dati.*/
+                                aggiungiProdottoInLista(tmpProdottoInLista);
+
+                                //Notifichiamo la mainActivity che il prodotto è stato creato con successo
+                                mListener.OnProdottoInListaCreato(tmpProdottoInLista);
+                            }else{
+                                //TODO : GESTIRE TUTTI GLI ERRORI DI AGGIUNTA DEL PRODOTTO
+                            }
+                        }
+                    },"Aggiungi a lista",parametri,valori);
+
+                }else{
+                    Toast.makeText(ctx,data, Toast.LENGTH_SHORT).show();
+                    /*mListener.onProdottoNonCreato(listID);*/
+                }
+            }
+        }, "creaProdotto", parametri, valori);
     }
 }
