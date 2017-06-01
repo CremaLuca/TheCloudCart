@@ -137,6 +137,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
                 int quantita = Integer.parseInt(((EditText) getActivity().findViewById(R.id.quantita)).getText().toString());
                 tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
 
+                //TODO : Delegare il tutto alla main activity e alla classe dati
+
                 //Aggiungiamo la lista tramite l'API
                 String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
                 String[] valori = {"addProduct", userID, listID + "", prodotto.getID() + "", quantita + "", descrizione};

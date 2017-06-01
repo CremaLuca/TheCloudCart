@@ -101,6 +101,8 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
         String marca = ((EditText) getActivity().findViewById(R.id.edit_marca)).getText().toString();;
         String dimensione = ((EditText) getActivity().findViewById(R.id.edit_descrizione)).getText().toString();;
         Categoria categoria = Dati.getCategoriaByID(curCategoriaID);
+        //TODO : Controlli sui dati inseriti
+        //TODO : Delegare il tutto a mainactivity e poi a dati
         //Li mandiamo al sito se possibile
         String[] parametri = {"req","userID","name","price","brand","dimension","categoryID"};
         String[] valori = {"createProduct",userID,nome,prezzo+"",marca,dimensione,categoria.getID()+""};
@@ -115,7 +117,6 @@ public class CreaProdottoFragment extends Fragment implements DataHandler{
             ID = (int)(Math.random()*100);
             Prodotto tempProdotto = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
             //Lo aggiungiamo alla lista, peccato che quando si chiude l'app scompaia
-            // TODO : lista aggiornamenti/lista locale
             Dati.aggiungiProdotto(tempProdotto);
             onProdottoCreato(listID,ID);
         }
