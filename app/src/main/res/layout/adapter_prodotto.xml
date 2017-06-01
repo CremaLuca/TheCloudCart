@@ -2,11 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="15dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="15dp"
-    android:background="@drawable/sfondo_ombreggiato">
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/textViewNomeProdotto"
@@ -14,31 +13,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text=""
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/textColorPrimary"/>
+        android:text="Nome prodotto"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:layout_toStartOf="@+id/text_view_quantita_duepunti" />
 
     <TextView
         android:id="@+id/text_view_quantita_duepunti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/quantita_duepunti"
+        android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
-        android:textColor="@color/textColorPrimary"
-        android:layout_below="@+id/textViewNomeProdotto"
-        android:layout_toStartOf="@+id/text_view_quantita" />
+        android:layout_toStartOf="@+id/text_view_quantita"
+        android:text="@string/quantita_duepunti" />
 
     <TextView
         android:id="@+id/text_view_quantita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textViewDescrizioneProdotto"
-        android:layout_alignTop="@+id/text_view_quantita_duepunti"
-        android:text="0"
+        android:text="100"
         android:textAlignment="center"
-        android:textColor="@color/textColorPrimary" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/textViewDescrizioneProdotto"
@@ -47,7 +44,6 @@
         android:text="@string/descrizione"
         android:maxLines="2"
         android:nestedScrollingEnabled="false"
-        android:layout_below="@+id/text_view_quantita"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/textColorPrimary"/>
+        android:layout_below="@+id/textViewNomeProdotto"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
