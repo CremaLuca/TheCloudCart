@@ -57,9 +57,9 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         mostraFragmentSenzaBackStack(LoadingFragment.newInstance());
     }
 
-    private void mostraFragmentConBackStack(Fragment fragment){
+    private void mostraFragmentConBackStack(Fragment fragment,String fragmentName){
         if (findViewById(R.id.fragment_container) != null) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(null);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(fragmentName);
             transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right,R.animator.slide_in_right,R.animator.slide_out_left);
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
@@ -122,14 +122,14 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnListaClicked(int listID) {
         System.out.println("Premuta la lista con id: " + listID);
         //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
-        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }
 
     @Override
     public void OnAggiungiLista() {
         //Viene chiamata quando si preme il pulsante "Aggiungi lista"
         System.out.println("MainActivity - Premuto il bottone 'aggiungi lista'");
-        mostraFragmentConBackStack(AggiungiListaFragment.newInstance(userID));
+        mostraFragmentConBackStack(AggiungiListaFragment.newInstance(userID),"AggiungiListaFragment");
     }
 
     @Override
@@ -164,7 +164,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
         System.out.println("MainActivity - Eliminato prodotto in lista("+listID+")");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }
 
     @Override
@@ -172,7 +172,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
         System.out.println("MainActivity - Prodotto comprato");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID));
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }
 
     @Override
@@ -187,7 +187,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
         System.out.println("MainActivity - Premuto bottone 'aggiungi prodotto'");
-        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID));
+        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID),"AggiungiProdottoFragment");
     }
 
     @Override
@@ -195,7 +195,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
         System.out.println("MainActivity - Prodotto in lista aggiunto alla lista id:"+prodotto.getIdLista());
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentConBackStack(ProdottiFragment.newInstance(prodotto.getIdLista()));
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(prodotto.getIdLista()),"ProdottiFragment");
     }
 
     @Override
@@ -259,7 +259,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
+            fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else {
             super.onBackPressed();
         }
