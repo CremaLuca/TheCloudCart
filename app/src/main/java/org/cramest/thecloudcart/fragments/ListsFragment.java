@@ -141,7 +141,7 @@ public class ListsFragment extends Fragment{
         void OnListaLongClicked(Lista lista);
     }
 
-    private void setAdapter(ListView lv, final ArrayList<Lista> lista){
+    private void setAdapter(final ListView lv, final ArrayList<Lista> lista){
         ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, lista);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -151,8 +151,10 @@ public class ListsFragment extends Fragment{
                 if(idLista > 0) {
                     apriLista(idLista);
                 }else{
-                    Toast.makeText(getContext(), "Errore, lista con id errato : "+idLista, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Errore, lista con id errato : "+idLista, Toast.LENGTH_SHORT).show();
                 }
+                lv.setItemChecked(-1,true);
+                lv.setSelection(-1);
             }
         });
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -161,6 +163,8 @@ public class ListsFragment extends Fragment{
                 if(mListener != null) {
                     onListaLongClicked(lista.get(position));
                 }
+                lv.setItemChecked(-1,true);
+                lv.setSelection(-1);
                 return true;
             }
         });

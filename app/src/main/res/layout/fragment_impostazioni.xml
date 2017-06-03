@@ -12,23 +12,22 @@
         android:text="@string/settings"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
-    <EditText
-        android:id="@+id/edit_nome"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutNomeLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/text_nome"
-        android:inputType="text" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/whats_your_name"
-        android:id="@+id/text_nome"
         android:layout_below="@+id/textViewImpostazioni"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="14dp">
+
+        <EditText
+            android:id="@+id/edit_nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:hint="Come ti chiami?"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
 
 
 </RelativeLayout>

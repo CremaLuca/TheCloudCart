@@ -21,6 +21,7 @@ import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
+import org.cramest.thecloudcart.fragments.ImpostazioniFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
@@ -103,6 +104,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
                 break;
             case 2:
                 //Impostazioni
+                mostraFragmentConBackStack(ImpostazioniFragment.newInstance(userID),"ImpostazioniFragment");
                 break;
             case 3:
                 //Disconnetti
