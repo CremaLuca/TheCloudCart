@@ -141,13 +141,13 @@ public class ListsFragment extends Fragment{
         void OnListaLongClicked(Lista lista);
     }
 
-    private void setAdapter(final ListView lv, final ArrayList<Lista> lista){
-        ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, lista);
+    private void setAdapter(final ListView lv, final ArrayList<Lista> liste){
+        ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, liste);
         lv.setAdapter(listViewadapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int idLista = lista.get(position).getID();
+                int idLista = liste.get(position).getID();
                 if(idLista > 0) {
                     apriLista(idLista);
                 }else{
@@ -161,7 +161,7 @@ public class ListsFragment extends Fragment{
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if(mListener != null) {
-                    onListaLongClicked(lista.get(position));
+                    onListaLongClicked(liste.get(position));
                 }
                 lv.setItemChecked(-1,true);
                 lv.setSelection(-1);
