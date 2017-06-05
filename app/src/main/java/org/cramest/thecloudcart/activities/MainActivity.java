@@ -16,6 +16,8 @@ import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.classi.Utente;
+import org.cramest.thecloudcart.dialogs.CondividiDialog;
 import org.cramest.thecloudcart.dialogs.ListaDialog;
 import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener {
+        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener,CondividiDialog.OnCondividiDialogInteraction {
 
     private String username;
     private String userID;
@@ -260,7 +262,10 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
     @Override
     public void OnCondividiLista(Lista lista) {
-        //TODO : Mostra fragment o dialog condividi lista
+        //Quando nel dialog viene premuto "condividi lista"
+        CondividiDialog condividiDialog = new CondividiDialog();
+        condividiDialog.showDialog(this, lista);
+
     }
 
     @Override
@@ -278,5 +283,11 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Quando nella schermata crea prodotto viene premuto il pulsante 'Crea prodotto'
         LoadingOverlayHandler.mostraLoading(this);
         Dati.creaProdottoEAggiungiloALista(userID,nome,prezzo,marca,dimensione,categoria,quantita,descrizione,idLista);
+    }
+
+    @Override
+    public void OnListaCondivisa(Utente user) {
+        //Quando viene confermata la condivisione di una lista con un utente
+
     }
 }

@@ -43,11 +43,7 @@ public class ListaDialog {
                 dialog.dismiss();
             }
         });
-        //Solo se è condivisa con quacluno impostiamo l'adapter
-        if (lista.getVistaDa() != null) {
-            //Impostiamo la lista utenti nella listview
-            setAdapter(dialog, lista.getVistaDa());
-        }
+
         ListView lv = (ListView) dialog.findViewById(R.id.list_condivisa_con);
         final Button btnShare = new Button(activity);
         btnShare.setText("Condividi con qualcuno");
@@ -60,6 +56,9 @@ public class ListaDialog {
         //Alla fine della lista aggiungiamo questo
         lv.addFooterView(btnShare);
 
+        //Impostiamo la lista utenti nella listview
+        setAdapter(dialog, lista.getVistaDa());
+
         instance = this;
         dialog.show();
     }
@@ -68,7 +67,10 @@ public class ListaDialog {
         void OnCondividiLista(Lista lista);
     }
 
-    private void setAdapter(Dialog dialog, final ArrayList<Utente> utenti) {
+    private void setAdapter(Dialog dialog, ArrayList<Utente> utenti) {
+        if(utenti == null){
+            utenti = new ArrayList<Utente>();
+        }
         UtenteAdapter listViewadapter = new UtenteAdapter(dialog.getContext(), R.layout.adapter_utente, utenti);
         ListView lv = (ListView) dialog.findViewById(R.id.list_condivisa_con);
         lv.setAdapter(listViewadapter);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
+    <TextView
+        android:id="@+id/text_view_titolo_condividi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Condividi lista casa"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+    <SearchView
+        android:id="@+id/search_view_condividi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_titolo_condividi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp" />
+</RelativeLayout>
