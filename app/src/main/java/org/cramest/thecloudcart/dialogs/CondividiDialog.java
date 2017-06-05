@@ -31,7 +31,7 @@ public class CondividiDialog {
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_lista);
+        dialog.setContentView(R.layout.dialog_condividi);
 
         ((TextView)activity.findViewById(R.id.text_view_titolo_condividi)).setText("Condividi lista " + lista.getNome());
         SearchView searchView = (SearchView)activity.findViewById(R.id.search_view_condividi);
