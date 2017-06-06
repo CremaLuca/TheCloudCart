@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener,CondividiDialog.OnCondividiDialogInteraction {
+        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener,CondividiDialog.OnCondividiDialogInteractionListener {
 
     private String username;
     private String userID;
@@ -261,10 +262,18 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
 
     @Override
+    public void OnEliminaLista(int listID) {
+        //Quando viene premuto il tasto "elimina lista" dentro il dialog
+        System.out.println("MainActivity - Elimino la lista " + listID);
+        Dati.eliminaLista(listID,userID);
+        LoadingOverlayHandler.mostraLoading(this);
+    }
+
+    @Override
     public void OnCondividiLista(Lista lista) {
         //Quando nel dialog viene premuto "condividi lista"
         CondividiDialog condividiDialog = new CondividiDialog();
-        condividiDialog.showDialog(this, lista);
+        condividiDialog.showDialog(this,this, lista);
 
     }
 

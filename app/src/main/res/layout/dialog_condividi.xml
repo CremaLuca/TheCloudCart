@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
 
 
@@ -20,5 +21,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_view_titolo_condividi"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp" />
+        android:layout_marginTop="25dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Nome o e-mail"
+        android:textAppearance="@android:style/TextAppearance.Material.Small"/>
+
+    <org.cramest.thecloudcart.adapter.NonScrollableListView
+        android:id="@+id/list_condividi_results"
+        style="@style/ListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/search_view_condividi"
+        android:layout_marginTop="25dp" />
+
+    <Button
+        android:id="@+id/button_condividi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="Condividi" />
 </RelativeLayout>

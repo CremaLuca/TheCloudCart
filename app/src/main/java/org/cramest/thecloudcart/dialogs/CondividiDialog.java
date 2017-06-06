@@ -18,6 +18,7 @@ import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.Utente;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cremaluca on 05/06/2017.
@@ -26,20 +27,31 @@ import java.util.ArrayList;
 public class CondividiDialog {
     public static CondividiDialog instance;
 
-    public void showDialog(final Activity activity, final Lista lista) {
+    public void showDialog(final Activity activity,final OnCondividiDialogInteractionListener listener, final Lista lista) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_condividi);
 
-        ((TextView)activity.findViewById(R.id.text_view_titolo_condividi)).setText("Condividi lista " + lista.getNome());
-        SearchView searchView = (SearchView)activity.findViewById(R.id.search_view_condividi);
+        ((TextView)dialog.findViewById(R.id.text_view_titolo_condividi)).setText("Condividi lista " + lista.getNome());
+        SearchView searchView = (SearchView)dialog.findViewById(R.id.search_view_condividi);
+        final ListView listView = (ListView)dialog.findViewById(R.id.list_condividi_results);
+
+        Button btnCondividi = (Button) dialog.findViewById(R.id.button_condividi);
+        btnCondividi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utente utente = (Utente) listView.getSelectedItem();
+                listener.OnListaCondivisa(utente);
+            }
+        });
+
         instance = this;
         dialog.show();
     }
 
-    public interface OnCondividiDialogInteraction{
+    public interface OnCondividiDialogInteractionListener{
         void OnListaCondivisa(Utente user);
     }
 

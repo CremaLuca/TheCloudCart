@@ -38,8 +38,7 @@ public class ListaDialog {
         ((Button)dialog.findViewById(R.id.button_elimina_lista)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dati.eliminaLista(lista.getID(),userID);
-                LoadingOverlayHandler.mostraLoading(activity);
+                listener.OnEliminaLista(lista.getID());
                 dialog.dismiss();
             }
         });
@@ -64,6 +63,7 @@ public class ListaDialog {
     }
 
     public interface OnListaDialogInteractionListener {
+        void OnEliminaLista(int listID);
         void OnCondividiLista(Lista lista);
     }
 
