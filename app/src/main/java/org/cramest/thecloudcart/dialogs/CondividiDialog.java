@@ -86,7 +86,7 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
                 corrispondenze.add(u);
             }
         }
-
+        setAdapter(listViewUtenti,corrispondenze);
     }
 
     private void ricercaSconosciuti(String ricerca){

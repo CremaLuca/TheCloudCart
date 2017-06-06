@@ -95,10 +95,12 @@ public class WebsiteDataManager {
                 Utente[] utenti = new Utente[strUtenti.length];
                 for (int i = 0; i < strUtenti.length; i++) {
                     String[] strUtente = strUtenti[i].split(sepColonne);
-
                     int userID = Integer.parseInt(strUtente[0]);
                     String username = strUtente[1];
-                    String nome = strUtente[2];
+                    String nome = "";
+                    if(strUtente.length > 2) {
+                        nome = strUtente[2];
+                    }
 
                     utenti[i] = new Utente(userID,username,nome);
                 }

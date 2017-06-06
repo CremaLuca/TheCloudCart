@@ -1,6 +1,7 @@
 package org.cramest.thecloudcart.classi;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -469,6 +470,7 @@ public class Dati implements DataHandler{
             @Override
             public void HandleData(String nome, boolean success, String data) {
                 if(success){
+                    //System.out.println("Dati (Debug) - "+data);
                     ArrayList<Utente> users = new ArrayList<Utente>(Arrays.asList(WebsiteDataManager.getUtenti(data)));
                     listener.OnRicercaUtentiCompletata(users);
                 }else{
