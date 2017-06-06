@@ -274,7 +274,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Quando nel dialog viene premuto "condividi lista"
         CondividiDialog condividiDialog = new CondividiDialog();
         condividiDialog.showDialog(this,this, lista);
-
     }
 
     @Override
@@ -295,8 +294,9 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnListaCondivisa(Utente user) {
-        //Quando viene confermata la condivisione di una lista con un utente
+    public void OnRequestCondividiLista(Utente user) {
+        //Quando viene premuto il tasto condividi dentro il dialog di condivisione quindi si richiede al server la condivisione della lista
+        System.out.println("MainActivity - ");
 
     }
 }

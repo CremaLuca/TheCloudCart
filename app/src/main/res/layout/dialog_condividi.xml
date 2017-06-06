@@ -23,23 +23,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Nome o e-mail"
+        android:queryHint="Nome o username"
         android:textAppearance="@android:style/TextAppearance.Material.Small"/>
 
-    <org.cramest.thecloudcart.adapter.NonScrollableListView
+    <ListView
         android:id="@+id/list_condividi_results"
         style="@style/ListView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/search_view_condividi"
         android:layout_marginTop="25dp" />
 
-    <Button
-        android:id="@+id/button_condividi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="Condividi" />
 </RelativeLayout>

@@ -2,13 +2,16 @@ package org.cramest.thecloudcart.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.admin.SystemUpdatePolicy;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
@@ -24,8 +27,10 @@ import java.util.List;
  * Created by cremaluca on 05/06/2017.
  */
 
-public class CondividiDialog {
+public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
     public static CondividiDialog instance;
+
+    public static ListView listViewUtenti;
 
     public void showDialog(final Activity activity,final OnCondividiDialogInteractionListener listener, final Lista lista) {
 
@@ -35,24 +40,72 @@ public class CondividiDialog {
         dialog.setContentView(R.layout.dialog_condividi);
 
         ((TextView)dialog.findViewById(R.id.text_view_titolo_condividi)).setText("Condividi lista " + lista.getNome());
-        SearchView searchView = (SearchView)dialog.findViewById(R.id.search_view_condividi);
-        final ListView listView = (ListView)dialog.findViewById(R.id.list_condividi_results);
+        listViewUtenti = (ListView)dialog.findViewById(R.id.list_condividi_results);
 
-        Button btnCondividi = (Button) dialog.findViewById(R.id.button_condividi);
-        btnCondividi.setOnClickListener(new View.OnClickListener() {
+        listViewUtenti.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Utente utente = (Utente) listView.getSelectedItem();
-                listener.OnListaCondivisa(utente);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
+        SearchView searchView = (SearchView)dialog.findViewById(R.id.search_view_condividi);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                System.out.println("CondividiDialog - Ora cerco " + s);
+                ricercaSconosciuti(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                System.out.println("CondividiDialog - Testo cambiato in " + s);
+                ricercaAmici(s);
+                return false;
+            }
+        });
+        //Mostriamo già la lista
+        ricercaAmici("");
         instance = this;
         dialog.show();
     }
 
+    private void ricercaAmici(String ricerca){
+        ArrayList<Utente> corrispondenze = new ArrayList<>();
+        //TODO : Rimuovere dalla ricerca gli amici con cui la lista è già condivisa
+        for(Utente u : Dati.getUtentiAmici()){
+            if(u.getUsername().toLowerCase().startsWith(ricerca.toLowerCase())){
+                corrispondenze.add(u);
+            }else if(u.getNome().toLowerCase().startsWith(ricerca.toLowerCase())){
+                corrispondenze.add(u);
+            }
+        }
+
+    }
+
+    private void ricercaSconosciuti(String ricerca){
+        Dati.findUser(ricerca,this);
+    }
+
+    private void setAdapter(ListView listView, ArrayList<Utente> utenti) {
+        UtenteAdapter listViewadapter = new UtenteAdapter(listView.getContext(), R.layout.adapter_utente, utenti);
+        listView.setAdapter(listViewadapter);
+    }
+
+    @Override
+    public void OnRicercaUtentiCompletata(ArrayList<Utente> utentiCorrispondenti) {
+        System.out.println("CondividiDialog - Sono arrivati gli utenti corrispondenti");
+        setAdapter(listViewUtenti,utentiCorrispondenti);
+    }
+
     public interface OnCondividiDialogInteractionListener{
-        void OnListaCondivisa(Utente user);
+        void OnRequestCondividiLista(Utente user);
     }
 
 }

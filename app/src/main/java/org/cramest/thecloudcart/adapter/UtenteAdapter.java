@@ -36,7 +36,6 @@ public class UtenteAdapter extends ArrayAdapter<Utente> {
 
         Utente i = utenti.get(position);
         if (i != null) {
-            System.out.println("Ora imposto " + i.getUsername());
             //Impostiamo nome e username
             TextView nomeUtente = (TextView) v.findViewById(R.id.text_view_quantita);
             if (nomeUtente != null) {
