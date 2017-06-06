@@ -480,12 +480,30 @@ public class Dati implements DataHandler{
         },"trovaUtenti",parametri,valori);
     }
 
+    public static void condividiLista(final Lista lista, final Utente user){
+        String[] parametri = {"req","listID","userID"};
+        String[] valori = {"shareList",lista.getID()+"",user.getUserID()+""};
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nome, boolean success, String data) {
+                if(success){
+                    mListener.OnListaCondivisa();
+                }else{
+                    Toast.makeText(ctx, nome + " - " + data, Toast.LENGTH_SHORT).show();
+                    mListener.OnListaNonCondivisa();
+                }
+            }
+        }, "condividiLista", parametri, valori);
+    }
+
     public interface OnDatiListener{
         void OnDatiLoaded();
         void OnProdottoInListaEliminato(int listID);
         void OnProdottoComprato(int listID);
         void OnListaEliminata();
         void OnProdottoInListaCreato(ProdottoInLista prodottoInLista);
+        void OnListaCondivisa();
+        void OnListaNonCondivisa();
     }
 
     public interface OnRichiesteUtentiListener{

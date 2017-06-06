@@ -42,15 +42,17 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
         ((TextView)dialog.findViewById(R.id.text_view_titolo_condividi)).setText("Condividi lista " + lista.getNome());
         listViewUtenti = (ListView)dialog.findViewById(R.id.list_condividi_results);
 
-        listViewUtenti.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ((ListView)dialog.findViewById(R.id.list_condividi_results)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                System.out.println("CondividiDialog - Utente selezionato, ora richiedo la condivisione");
+                listener.OnRequestCondividiLista(lista,(Utente)listViewUtenti.getSelectedItem());
+                dialog.dismiss();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                System.out.println("CondividiDialog - Niente selezionato");
             }
         });
 
@@ -105,7 +107,7 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
     }
 
     public interface OnCondividiDialogInteractionListener{
-        void OnRequestCondividiLista(Utente user);
+        void OnRequestCondividiLista(Lista lista,Utente user);
     }
 
 }

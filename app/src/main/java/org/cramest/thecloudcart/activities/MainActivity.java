@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -208,6 +209,17 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
+    public void OnListaCondivisa() {
+        LoadingOverlayHandler.nascondiLoading(this);
+    }
+
+    @Override
+    public void OnListaNonCondivisa() {
+        //Nel caso fallisca la condivisione di una lista
+        LoadingOverlayHandler.nascondiLoading(this);
+    }
+
+    @Override
     public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
         System.out.println("MainActivity - Premuto bottone 'aggiungi prodotto'");
@@ -294,9 +306,10 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnRequestCondividiLista(Utente user) {
-        //Quando viene premuto il tasto condividi dentro il dialog di condivisione quindi si richiede al server la condivisione della lista
-        System.out.println("MainActivity - ");
-
+    public void OnRequestCondividiLista(Lista lista, Utente utente) {
+        //Quando viene premuto un utente nella lista utenti sulla condivisione
+        System.out.println("MainActivity - Lista " + lista.getNome() + " da condividere");
+        Dati.condividiLista(lista,utente);
+        LoadingOverlayHandler.mostraLoading(this);
     }
 }
