@@ -79,7 +79,6 @@ public class Connettore {
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http").authority("thecloudcart.altervista.org")
                         .appendPath("Android");
-                        //.appendQueryParameter("p", pagina);
                 for (int i = 0; i < nomiParametro.length; i++) {
                     builder.appendQueryParameter(nomiParametro[i], valoriParametro[i]);
                 }
@@ -96,11 +95,13 @@ public class Connettore {
                 }
 
                 reader = new BufferedReader(new InputStreamReader(inputStream));
+
                 String line;
                 while ((line = reader.readLine()) != null) {
                     sb.append(line);
                 }
                 result = sb.toString();
+
                 if (buffer.length() == 0) {
                     return null;
                 }
@@ -116,6 +117,7 @@ public class Connettore {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
+                //alla fine se non abbiamo incontrato errori
                 if (urlConnection != null) {
                     urlConnection.disconnect();
                 }
