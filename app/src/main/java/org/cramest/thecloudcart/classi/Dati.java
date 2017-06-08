@@ -1,12 +1,11 @@
 package org.cramest.thecloudcart.classi;
 
 import android.content.Context;
-import android.provider.Settings;
-import android.view.KeyCharacterMap;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
-import org.cramest.thecloudcart.network.*;
+import org.cramest.thecloudcart.network.Connettore;
+import org.cramest.thecloudcart.network.DataHandler;
+import org.cramest.thecloudcart.network.WebsiteDataManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -190,12 +189,12 @@ public class Dati implements DataHandler{
             }
         }else{
             if(nome.equals("prodotti")){
-                System.out.println("Non ci sono prodotti");
+                System.out.println("Dati - Non ci sono prodotti");
                 prodotti = new ArrayList<Prodotto>();
                 richiediListeSpesa(ctx,userID);
             }
             if(nome.equals("listeSpesa")){
-                System.out.println("Non ci sono liste della spesa");
+                System.out.println("Dati - Non ci sono liste della spesa");
                 listeMie = new ArrayList<Lista>();
             }
             if(nome.equals("listeSpesaCondivise")){
@@ -432,16 +431,17 @@ public class Dati implements DataHandler{
     public static void eliminaLista(final int listID,final String userID){
         String[] pars = {"req","listID","userID"};
         String[] vals = {"deleteList",listID+"",userID};
-        System.out.println("Elimino la lista "+listID);
+        System.out.println("Dati - Elimino la lista " + listID);
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
             @Override
             public void HandleData(String nome, boolean success, String data) {
-                System.out.println("Risposta");
                 if(success) {
+                    System.out.println("Dati - Lista eliminata con successo");
                     listeMie.remove(getListaByID(listID));
                     Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
                     mListener.OnListaEliminata();
                 }else{
+                    System.out.println("Dati - Errore eliminazione lista");
                     Toast.makeText(ctx, data,Toast.LENGTH_SHORT);
                 }
             }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LightTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
         <item name="android:colorAccent">@color/colorAccent</item>
@@ -17,7 +17,7 @@
     </style>
     <style name="ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">@color/colorBackground</item>
-        <item name="android:dividerHeight">5dp</item>
+        <item name="android:dividerHeight">1dp</item>
         <item name="android:listSelector">@color/colorAccentSecondary</item>
     </style>
     <style name="styledButton" parent="android:Widget.Button">

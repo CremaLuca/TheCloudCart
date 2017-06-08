@@ -8,4 +8,7 @@
     <color name="textColorAccent">#FFF</color>
     <color name="colorBackground">#EEEEEE</color>
 
+    <color name="Black">#000</color>
+    <color name="White">#FFF</color>
+
 </resources>

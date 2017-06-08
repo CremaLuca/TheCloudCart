@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewMie"
@@ -22,7 +21,7 @@
             style="@style/ListView"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_crea_lista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

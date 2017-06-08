@@ -1,11 +1,11 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Scope;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.network.LoginApp;
@@ -138,7 +136,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     private void signIn() {
-        System.out.println("Richiedo il signin con google");
+        System.out.println("LoginFragment - Richiedo il signin con google");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, 5);
     }
@@ -155,13 +153,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     private void handleSignInResult(GoogleSignInResult result) {
         //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        System.out.println("handleSignInResult:" + result.isSuccess() + " status : " + result.getStatus());
+        System.out.println("LoginFragment - handleSignInResult:" + result.isSuccess() + " status : " + result.getStatus());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            System.out.println("Benvenuto " + acct.getGivenName());
+            System.out.println("LoginFragment - Benvenuto " + acct.getGivenName());
         } else {
-            System.out.println("Non oke, errore del codice della app, non registrata :" + result.getStatus().getStatusMessage());
+            System.out.println("LoginFragment - Non ok, errore del codice della app, non registrata :" + result.getStatus().getStatusMessage());
         }
     }
 

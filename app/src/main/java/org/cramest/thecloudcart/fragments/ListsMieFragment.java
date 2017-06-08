@@ -58,11 +58,19 @@ public class ListsMieFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         //Setup delle listview
         setAdapter((ListView)getView().findViewById(R.id.listViewMie),listeMie);
-        aggiungiBottoneCreaLista((ListView)getView().findViewById(R.id.listViewMie));
+        //aggiungiBottoneCreaLista((ListView)getView().findViewById(R.id.listViewMie));
+        Button btnCreaLista = (Button) view.findViewById(R.id.button_crea_lista);
+        btnCreaLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAggiungiLista();
+            }
+        });
+
     }
 
     private void aggiungiBottoneCreaLista(ListView lv){
