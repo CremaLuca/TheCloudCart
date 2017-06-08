@@ -46,15 +46,16 @@ public class ListsFragment extends Fragment{
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
+        System.out.println("ListsFragment - onActivityCreated");
+
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         ListsPageAdapter pageAdapter = new ListsPageAdapter
-                (getActivity().getFragmentManager());
+                (getChildFragmentManager());
         mViewPager.setAdapter(pageAdapter);
 
-        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
