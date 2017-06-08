@@ -1,5 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -136,6 +137,18 @@ public class CreaProdottoFragment extends Fragment{
             }
         });
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnCreaProdottiListener) {
+            mListener = (OnCreaProdottiListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnCreaProdottiListener");
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

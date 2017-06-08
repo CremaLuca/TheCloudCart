@@ -1,5 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -54,6 +55,11 @@ public class ImpostazioniFragment extends Fragment {
             public void onClick(View v) {
             }
         });
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
     }
 
     @Override

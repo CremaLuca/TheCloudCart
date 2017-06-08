@@ -1,5 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.app.Fragment;
@@ -80,6 +81,17 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         getActivity().findViewById(R.id.sign_in_button).setOnClickListener(this);
         getActivity().findViewById(R.id.loginButton).setOnClickListener(this);
         getActivity().findViewById(R.id.registerButton).setOnClickListener(this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnLoginFragmentListener) {
+            mListener = (OnLoginFragmentListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnLoginFragmentListener");
+        }
     }
 
     @Override

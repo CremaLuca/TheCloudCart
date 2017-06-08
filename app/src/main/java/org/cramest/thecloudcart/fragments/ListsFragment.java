@@ -1,13 +1,16 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +37,8 @@ public class ListsFragment extends Fragment{
 
     private ArrayList<Lista> listeMie;
     private ArrayList<Lista> listeCondivise;
+
+    private ListaAdapter listAdapter;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -99,12 +104,6 @@ public class ListsFragment extends Fragment{
         return view;
     }
 
-    public void apriLista(int listID) {
-        if (mListener != null) {
-            mListener.OnListaClicked(listID);
-        }
-    }
-
     public void onAggiungiLista() {
         if (mListener != null) {
             mListener.OnAggiungiLista();
@@ -114,6 +113,19 @@ public class ListsFragment extends Fragment{
     public void onListaLongClicked(Lista lista){
         if (mListener != null) {
             mListener.OnListaLongClicked(lista);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        System.out.println("ListFragment - Chiamato onAttach");
+        super.onAttach(activity);
+        if (activity instanceof OnListFragmentInteractionListener) {
+            System.out.println("ListFragment - impostato mListener");
+            mListener = (OnListFragmentInteractionListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnListFragmentInteractionListener");
         }
     }
 
@@ -137,34 +149,33 @@ public class ListsFragment extends Fragment{
     public interface OnListFragmentInteractionListener {
         void OnListaClicked(int listID);
         void OnAggiungiLista();
-
         void OnListaLongClicked(Lista lista);
     }
 
+    public void aggiornaLista(){
+        listAdapter.notifyDataSetChanged();
+    }
+
     private void setAdapter(final ListView lv, final ArrayList<Lista> liste){
-        ListaAdapter listViewadapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, liste);
-        lv.setAdapter(listViewadapter);
+        listAdapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, liste);
+        lv.setAdapter(listAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("ListFragment - Lista cliccata");
                 int idLista = liste.get(position).getID();
                 if(idLista > 0) {
-                    apriLista(idLista);
+                    mListener.OnListaClicked(idLista);
                 }else{
                     Toast.makeText(getActivity(), "Errore, lista con id errato : "+idLista, Toast.LENGTH_SHORT).show();
                 }
-                lv.setItemChecked(-1,true);
-                lv.setSelection(-1);
             }
         });
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(mListener != null) {
-                    onListaLongClicked(liste.get(position));
-                }
-                lv.setItemChecked(-1,true);
-                lv.setSelection(-1);
+                System.out.println("ListFragment - Lista cliccata a lungo");
+                onListaLongClicked(liste.get(position));
                 return true;
             }
         });

@@ -1,5 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -105,6 +106,17 @@ public class RegistraUtenteFragment extends Fragment{
             mListener = (OnRegistraFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
+                    + " must implement OnRegistraFragmentListener");
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnRegistraFragmentListener) {
+            mListener = (OnRegistraFragmentListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
                     + " must implement OnRegistraFragmentListener");
         }
     }

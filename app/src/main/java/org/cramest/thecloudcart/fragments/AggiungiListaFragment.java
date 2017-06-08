@@ -1,5 +1,6 @@
 package org.cramest.thecloudcart.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -96,6 +97,17 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     public void onListaNonAggiunta() {
         if (mListener != null) {
             mListener.onListaNonAggiunta();
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        if (activity instanceof OnAggiungiListaListener) {
+            mListener = (OnAggiungiListaListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 
