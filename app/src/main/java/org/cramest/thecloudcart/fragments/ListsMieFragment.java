@@ -39,8 +39,8 @@ public class ListsMieFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static ListsFragment newInstance(String userID) {
-        ListsFragment fragment = new ListsFragment();
+    public static ListsMieFragment newInstance(String userID) {
+        ListsMieFragment fragment = new ListsMieFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM, userID);
         fragment.setArguments(args);

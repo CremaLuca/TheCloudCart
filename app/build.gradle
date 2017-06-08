@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'Acerkacke'
             keyPassword 'Crema01'
-            storeFile file('C:/Users/cremaluca/Desktop/TheCloudCart/CramestKeystore.jks')
+            storeFile file('E:/Lavori local/Programmazione/Android/TheCloudCart/CramestKeystore.jks')
             storePassword 'Crema01'
         }
     }
@@ -37,9 +37,10 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile 'com.google.android.gms:play-services-auth:9.0.0'
     compile 'org.jetbrains:annotations-java5:15.0'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:support-v13:23.4.0'
+    testCompile 'junit:junit:4.12'
 }
