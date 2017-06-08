@@ -40,8 +40,8 @@ public class ListsCondiviseFragment extends Fragment {
     }
 
 
-    public static ListsFragment newInstance(String userID) {
-        ListsFragment fragment = new ListsFragment();
+    public static ListsCondiviseFragment newInstance(String userID) {
+        ListsCondiviseFragment fragment = new ListsCondiviseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM, userID);
         fragment.setArguments(args);
@@ -103,7 +103,7 @@ public class ListsCondiviseFragment extends Fragment {
     public void onAttach(Activity activity){
         System.out.println("ListCondiviseFragment - Chiamato onAttach");
         super.onAttach(activity);
-        if (activity instanceof ListsFragment.OnListFragmentInteractionListener) {
+        if (activity instanceof OnListCondiviseFragmentInteractionListener) {
             System.out.println("ListCondiviseFragment - impostato mListener");
             mListener = (OnListCondiviseFragmentInteractionListener) activity;
         } else {
@@ -115,7 +115,7 @@ public class ListsCondiviseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ListsFragment.OnListFragmentInteractionListener) {
+        if (context instanceof OnListCondiviseFragmentInteractionListener) {
             mListener = (OnListCondiviseFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()

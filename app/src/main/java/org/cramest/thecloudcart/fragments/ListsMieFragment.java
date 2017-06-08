@@ -103,7 +103,7 @@ public class ListsMieFragment extends Fragment {
     public void onAttach(Activity activity){
         System.out.println("ListMieFragment - Chiamato onAttach");
         super.onAttach(activity);
-        if (activity instanceof ListsFragment.OnListFragmentInteractionListener) {
+        if (activity instanceof OnListMieFragmentInteractionListener) {
             System.out.println("ListMieFragment - impostato mListener");
             mListener = (OnListMieFragmentInteractionListener) activity;
         } else {
@@ -115,7 +115,7 @@ public class ListsMieFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ListsFragment.OnListFragmentInteractionListener) {
+        if (context instanceof OnListMieFragmentInteractionListener) {
             mListener = (OnListMieFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
