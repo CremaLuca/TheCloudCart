@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/activity_lists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textTueListe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_shopping_lists"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+        <org.cramest.thecloudcart.adapter.NonScrollableListView
+            android:id="@+id/listViewMie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ListView"/>
+    </LinearLayout>
+</ScrollView>
