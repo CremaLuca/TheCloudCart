@@ -2,6 +2,7 @@ package org.cramest.thecloudcart.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ public class ListsFragment extends Fragment{
     private ListsPageAdapter mListsPageAdapter;
     private ViewPager mViewPager;
     private ListsPageAdapter mAdapter;
+    private TabLayout tabLayout;
     private String userID;
 
     public ListsFragment(){
@@ -47,15 +49,29 @@ public class ListsFragment extends Fragment{
         View result = inflater.inflate(R.layout.fragment_lists, container, false);
 
         mViewPager = (ViewPager) result.findViewById(R.id.viewpager);
-        mAdapter = new ListsPageAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(mAdapter);
 
-        TabLayout tabLayout = (TabLayout) result.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout = (TabLayout) result.findViewById(R.id.tabs);
 
         return result;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        mAdapter = new ListsPageAdapter(getChildFragmentManager(), userID);
+        mViewPager.setAdapter(mAdapter);
+        tabLayout.setupWithViewPager(mViewPager);
+        System.out.println("ListsFragment - Item corrente : " + mViewPager.getCurrentItem());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        System.out.println("ListsFragment - onResume");
+        mViewPager.setCurrentItem(0);
+        mAdapter.notifyDataSetChanged();
+        System.out.println("ListsFragment - " + mAdapter.getItem(1));
+    }
 
 }
