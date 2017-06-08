@@ -1,5 +1,7 @@
 package org.cramest.thecloudcart.network;
 
+import android.provider.Settings;
+
 import org.cramest.thecloudcart.classi.*;
 
 /**
@@ -71,15 +73,19 @@ public class WebsiteDataManager {
                     System.out.println("IDProdotto : " + strProdottoInLista[0]);
 
                     Prodotto prodotto = Dati.getProdottoByID(Integer.parseInt(strProdottoInLista[0]));
-
-                    int qta = Integer.parseInt(strProdottoInLista[1]);
-
-                    String descrizione = "";
-                    if (strProdottoInLista.length > 2) {
-                        descrizione = strProdottoInLista[2];
+                    if(prodotto == null) {
+                        System.out.println("WebsiteDataManager - Non sono riuscito ad associare il prodotto " + strProdottoInLista[0]);
+                        prodotto = new Prodotto("Prodotto non trovato");
                     }
+                        int qta = Integer.parseInt(strProdottoInLista[1]);
 
-                    prodottiInLista[i] = new ProdottoInLista(listID, prodotto, qta, descrizione);
+                        String descrizione = "";
+                        if (strProdottoInLista.length > 2) {
+                            descrizione = strProdottoInLista[2];
+                        }
+
+                        prodottiInLista[i] = new ProdottoInLista(listID, prodotto, qta, descrizione);
+
                 }
                 return prodottiInLista;
             }

@@ -26,7 +26,7 @@ public class Dati implements DataHandler{
     private static ArrayList<Categoria> categorie;
     private static ArrayList<Prodotto> prodotti;
     private static ArrayList<ProdottoInLista> prodottiInLista;
-    private static ArrayList<ProdottoConsigliato> prodottiConsigliati;
+    private static ArrayList<ProdottoConsigliato> prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
     private static ArrayList<Utente> utenti = new ArrayList<Utente>();
 
     private String userID;
@@ -61,7 +61,7 @@ public class Dati implements DataHandler{
         categorie = null;
         prodotti = null;
         prodottiInLista = null;
-        prodottiConsigliati = null;
+        prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
         utenti = new ArrayList<Utente>();
     }
 
@@ -173,9 +173,14 @@ public class Dati implements DataHandler{
                     prodottiInLista = new ArrayList<ProdottoInLista>();
                 }
                 if(data != null) {
-                    ArrayList<ProdottoInLista> nuoviProdotti = new ArrayList<ProdottoInLista>(Arrays.asList(WebsiteDataManager.getProdottiInLista(data, listID)));
-                    if(nuoviProdotti != null) {
-                        prodottiInLista.addAll(nuoviProdotti);
+                    ProdottoInLista[] arrayProdotti = WebsiteDataManager.getProdottiInLista(data, listID);
+                    if(prodottiInLista != null) {
+                        ArrayList<ProdottoInLista> nuoviProdotti = new ArrayList<ProdottoInLista>(Arrays.asList(arrayProdotti));
+                        if (nuoviProdotti != null) {
+                            prodottiInLista.addAll(nuoviProdotti);
+                        }
+                    }else{
+                        System.out.println("Dati - ERRORE : Mancanod dei prodotti quindi non sono riuscito ad associarli tutti");
                     }
                 }
                 listeCaricate++;
