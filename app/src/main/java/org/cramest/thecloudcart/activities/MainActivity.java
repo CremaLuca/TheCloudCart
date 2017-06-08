@@ -209,7 +209,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnListaCondivisa() {
+    public void OnListaCondivisa(Lista lista,Utente utente) {
         LoadingOverlayHandler.nascondiLoading(this);
     }
 

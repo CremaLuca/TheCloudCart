@@ -31,6 +31,7 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
     public static CondividiDialog instance;
 
     public static ListView listViewUtenti;
+    private UtenteAdapter listViewadapter;
 
     public void showDialog(final Activity activity,final OnCondividiDialogInteractionListener listener, final Lista lista) {
 
@@ -42,19 +43,18 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
         ((TextView)dialog.findViewById(R.id.text_view_titolo_condividi)).setText("Condividi lista " + lista.getNome());
         listViewUtenti = (ListView)dialog.findViewById(R.id.list_condividi_results);
 
-        ((ListView)dialog.findViewById(R.id.list_condividi_results)).setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        listViewUtenti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println("CondividiDialog - Utente selezionato, ora richiedo la condivisione");
-                listener.OnRequestCondividiLista(lista,(Utente)listViewUtenti.getSelectedItem());
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Utente utente = (Utente)listViewUtenti.getAdapter().getItem(i);
+                System.out.println("CondividiDialog - Utente selezionato, ora richiedo la condivisione con " + utente.getUsername());
+                listener.OnRequestCondividiLista(lista,utente);
                 dialog.dismiss();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                System.out.println("CondividiDialog - Niente selezionato");
-            }
         });
+
+        listViewadapter = new UtenteAdapter(listViewUtenti.getContext(), R.layout.adapter_utente, new ArrayList<Utente>());
+        listViewUtenti.setAdapter(listViewadapter);
 
         SearchView searchView = (SearchView)dialog.findViewById(R.id.search_view_condividi);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -88,22 +88,19 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
                 corrispondenze.add(u);
             }
         }
-        setAdapter(listViewUtenti,corrispondenze);
+        listViewadapter.clear();
+        listViewadapter.addAll(corrispondenze);
     }
 
     private void ricercaSconosciuti(String ricerca){
         Dati.findUser(ricerca,this);
     }
 
-    private void setAdapter(ListView listView, ArrayList<Utente> utenti) {
-        UtenteAdapter listViewadapter = new UtenteAdapter(listView.getContext(), R.layout.adapter_utente, utenti);
-        listView.setAdapter(listViewadapter);
-    }
-
     @Override
     public void OnRicercaUtentiCompletata(ArrayList<Utente> utentiCorrispondenti) {
         System.out.println("CondividiDialog - Sono arrivati gli utenti corrispondenti");
-        setAdapter(listViewUtenti,utentiCorrispondenti);
+        listViewadapter.clear();
+        listViewadapter.addAll(utentiCorrispondenti);
     }
 
     public interface OnCondividiDialogInteractionListener{

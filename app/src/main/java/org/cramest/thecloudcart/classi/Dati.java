@@ -2,6 +2,7 @@ package org.cramest.thecloudcart.classi;
 
 import android.content.Context;
 import android.provider.Settings;
+import android.view.KeyCharacterMap;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -366,6 +367,16 @@ public class Dati implements DataHandler{
         }
     }
 
+    private static void aggiungiCondivisione(Lista list,Utente utente){
+        ArrayList<Utente> vistaDa = list.getVistaDa();
+        vistaDa.add(utente);
+        list.setVistaDa(vistaDa);
+        System.out.println("Dati - Aggiunto " + utente.getNome() + " alla visualizzazione della lista " + list.getNome());
+        //Controllo se la lista in cui abbiamo aggiunto è la stessa che teniamo salvata noi, dovrebbe esserlo
+        Lista listaBoh = getListaByID(list.getID());
+        System.out.println("Dati - Controllo: " + listaBoh.getVistaDa().get(listaBoh.getVistaDa().size()-1).getUsername());
+    }
+
     public void rimuoviProdottoInLista(final ProdottoInLista prodottoInLista){
         String[] pars = {"req", "listID","productID"};
         String[] vals = {"deleteProductInList", prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
@@ -487,7 +498,8 @@ public class Dati implements DataHandler{
             @Override
             public void HandleData(String nome, boolean success, String data) {
                 if(success){
-                    mListener.OnListaCondivisa();
+                    aggiungiCondivisione(lista,user);
+                    mListener.OnListaCondivisa(lista,user);
                 }else{
                     Toast.makeText(ctx, nome + " - " + data, Toast.LENGTH_SHORT).show();
                     mListener.OnListaNonCondivisa();
@@ -502,7 +514,7 @@ public class Dati implements DataHandler{
         void OnProdottoComprato(int listID);
         void OnListaEliminata();
         void OnProdottoInListaCreato(ProdottoInLista prodottoInLista);
-        void OnListaCondivisa();
+        void OnListaCondivisa(Lista lista, Utente utente);
         void OnListaNonCondivisa();
     }
 

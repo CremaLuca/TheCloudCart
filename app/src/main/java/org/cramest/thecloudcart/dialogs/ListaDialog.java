@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class ListaDialog {
 
     public static ListaDialog instance;
+    private UtenteAdapter listViewAdapter;
 
     public void showDialog(final Activity activity, final OnListaDialogInteractionListener listener, final Lista lista, final String userID) {
 
@@ -52,11 +53,15 @@ public class ListaDialog {
                 listener.OnCondividiLista(lista);
             }
         });
+
+        //Nel caso non ci siano utentei e sia ancora null
+        if(lista.getVistaDa() == null) lista.setVistaDa(new ArrayList<Utente>());
+
+        listViewAdapter = new UtenteAdapter(dialog.getContext(), R.layout.adapter_utente, lista.getVistaDa());
+        lv.setAdapter(listViewAdapter);
+
         //Alla fine della lista aggiungiamo questo
         lv.addFooterView(btnShare);
-
-        //Impostiamo la lista utenti nella listview
-        setAdapter(dialog, lista.getVistaDa());
 
         instance = this;
         dialog.show();
@@ -65,14 +70,5 @@ public class ListaDialog {
     public interface OnListaDialogInteractionListener {
         void OnEliminaLista(int listID);
         void OnCondividiLista(Lista lista);
-    }
-
-    private void setAdapter(Dialog dialog, ArrayList<Utente> utenti) {
-        if(utenti == null){
-            utenti = new ArrayList<Utente>();
-        }
-        UtenteAdapter listViewadapter = new UtenteAdapter(dialog.getContext(), R.layout.adapter_utente, utenti);
-        ListView lv = (ListView) dialog.findViewById(R.id.list_condivisa_con);
-        lv.setAdapter(listViewadapter);
     }
 }
