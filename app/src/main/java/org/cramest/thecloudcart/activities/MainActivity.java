@@ -210,6 +210,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
     @Override
     public void OnListaCondivisa(Lista lista,Utente utente) {
+        System.out.println("MainActivity - Lista " + lista.getNome() + " condivisa con " + utente.getUsername());
         LoadingOverlayHandler.nascondiLoading(this);
     }
 

@@ -351,7 +351,7 @@ public class Dati implements DataHandler{
         listeMie.add(lista);
     }
 
-    private void salvaUtenti(ArrayList<Utente> users){
+    private static void salvaUtenti(ArrayList<Utente> users){
         for(Utente u : users){
             boolean possoAggiungere = true;
             for(Utente su : utenti){
@@ -367,6 +367,16 @@ public class Dati implements DataHandler{
         }
     }
 
+    private static void salvaUtente(Utente utente){
+        for(Utente su : utenti){
+            if(utente.getUsername().equals(su)){
+                return;
+            }
+        }
+        //Se arriviamo alla fine del ciclo senza essere usciti
+        utenti.add(utente);
+    }
+
     private static void aggiungiCondivisione(Lista list,Utente utente){
         ArrayList<Utente> vistaDa = list.getVistaDa();
         vistaDa.add(utente);
@@ -375,6 +385,8 @@ public class Dati implements DataHandler{
         //Controllo se la lista in cui abbiamo aggiunto è la stessa che teniamo salvata noi, dovrebbe esserlo
         Lista listaBoh = getListaByID(list.getID());
         System.out.println("Dati - Controllo: " + listaBoh.getVistaDa().get(listaBoh.getVistaDa().size()-1).getUsername());
+        //Ora salviamolo negli amici
+        salvaUtente(utente);
     }
 
     public void rimuoviProdottoInLista(final ProdottoInLista prodottoInLista){
