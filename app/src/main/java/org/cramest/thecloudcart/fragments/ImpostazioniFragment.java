@@ -1,13 +1,12 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import org.cramest.thecloudcart.R;
 
@@ -49,12 +48,7 @@ public class ImpostazioniFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        Button aggiungi = (Button)getActivity().findViewById(R.id.crea_prodotto_button);
-        aggiungi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+
     }
 
     @Override

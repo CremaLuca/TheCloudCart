@@ -26,4 +26,8 @@
         <item name="android:background">@color/colorAccent</item>
         <item name="android:padding">12dp</item>
     </style>
+
+    <style name="borderlessButton" parent="android:Widget.Holo.Button.Borderless">
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
 </resources>

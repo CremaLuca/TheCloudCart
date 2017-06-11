@@ -5,8 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.Settings;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +24,8 @@ import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
 import org.cramest.thecloudcart.fragments.ImpostazioniFragment;
+import org.cramest.thecloudcart.fragments.ListeCondiviseFragment;
+import org.cramest.thecloudcart.fragments.ListeMieFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener,CondividiDialog.OnCondividiDialogInteractionListener {
+        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
+        ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener {
 
     private String username;
     private String userID;
