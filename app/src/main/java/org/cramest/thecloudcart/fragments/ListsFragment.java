@@ -16,7 +16,6 @@ public class ListsFragment extends Fragment{
     private static final String ARG_PARAM = "userID";
     private ListsPageAdapter mListsPageAdapter;
     private ViewPager mViewPager;
-    private ListsPageAdapter mAdapter;
     private String userID;
 
     public ListsFragment(){
@@ -34,7 +33,6 @@ public class ListsFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("ListsFragment - onCreate");
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
         }
@@ -44,18 +42,21 @@ public class ListsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View result = inflater.inflate(R.layout.fragment_lists, container, false);
-
-        mViewPager = (ViewPager) result.findViewById(R.id.viewpager);
-        mAdapter = new ListsPageAdapter(getChildFragmentManager());
-        mViewPager.setAdapter(mAdapter);
-
-        TabLayout tabLayout = (TabLayout) result.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-
-        return result;
+        return inflater.inflate(R.layout.fragment_lists, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        System.out.println("ListsFragment - onActivityCreated");
 
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        ListsPageAdapter pageAdapter = new ListsPageAdapter
+                (getChildFragmentManager());
+        mViewPager.setAdapter(pageAdapter);
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+    }
 
 }

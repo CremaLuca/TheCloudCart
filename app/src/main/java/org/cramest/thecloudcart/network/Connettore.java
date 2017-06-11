@@ -123,7 +123,7 @@ public class Connettore {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        System.out.println("Connettore - ERRORE");
+                        System.out.println("ERRORE");
                         return null;
                     }
                 }
@@ -133,7 +133,7 @@ public class Connettore {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            System.out.println("Connettore - Caricamento : " + values);
+            System.out.println("Caricamento : " + values);
 
         }
 
@@ -144,15 +144,15 @@ public class Connettore {
                 if(risultati.length > 1) {
                     boolean success = false;
                     success = risultati[0].equals("OK");
-                    System.out.println("Connettore - Risultato : " + risultati[0] + " quindi success: " + success + ", per la richiesta " + nome + " con dati: " + risultati[1]);
+                    System.out.println("res " + risultati[0] + " quindi success: " + success + ", per la richiesta " + nome + " con dati: "+risultati[1]);
                     handler.HandleData(nome, success, risultati[1]);
                     super.onPostExecute(result);
                 }else{
-                    System.out.println("Connettore - Result vuoto : " + result + " richiesta con nome : " + nome);
+                    System.out.println("Result vuoto : " + result + " richiesta con nome : " + nome);
                     handler.HandleData(nome, true, null);
                 }
             }else{
-                System.out.println("Connettore - Result = null");
+                System.out.println("Result = null");
             }
         }
     }

@@ -1,8 +1,12 @@
 package org.cramest.thecloudcart.network;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import org.cramest.thecloudcart.activities.MainActivity;
+import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.utils.DataSaver;
 
 /**
@@ -41,7 +45,7 @@ public class LoginApp implements DataHandler {
             //Data conterra' il nome utente, quindi controlliamo di averlo salvato giusto
             if(success){
                 if(nome.equals("loginApp")) {
-                    System.out.println("LoginApp - Nome utente e password corretti");
+                    System.out.println("Nome utente e password corretti");
 
                     //Salviamo nella memoria i nostri dati
                     SaveLoginData(c,username,data,password);

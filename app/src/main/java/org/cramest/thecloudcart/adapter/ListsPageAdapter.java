@@ -24,18 +24,12 @@ public class ListsPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         System.out.println("ListsPageAdapter - Mi hanno chiesto l'item");
+        //Possibile farlo anche con uno switch case
         if (listsMieFragment == null) {
             listsMieFragment = ListsMieFragment.newInstance(userID);
             listsCondiviseFragment = ListsCondiviseFragment.newInstance(userID);
         }
-        switch (position) {
-            case 0:
-                return listsMieFragment;
-            case 1:
-                return listsCondiviseFragment;
-            default:
-                return null;
-        }
+        return (position == 0) ? listsMieFragment : listsCondiviseFragment;
     }
 
     @Override
