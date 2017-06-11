@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/activity_lists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,20 +15,17 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:weightSum="1">
 
+        <TextView
+            android:id="@+id/textTueListe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_shopping_lists"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewMie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/ListView"/>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:text="Button"
-            android:layout_marginBottom="5px"
-            android:layout_marginTop="5px" />
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

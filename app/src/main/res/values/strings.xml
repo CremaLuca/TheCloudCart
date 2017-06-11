@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">TheCloudCart</string>
 
-    <string name="sign_in_id">339385394250-0cg2n1igfgcoh0ubvlvoh1gu1r35lqp6.apps.googleusercontent.com</string>
-    >
+    <string name="sign_in_id">339385394250-0cg2n1igfgcoh0ubvlvoh1gu1r35lqp6.apps.googleusercontent.com</string>>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -59,6 +58,4 @@
     <string name="Crea_prodotto">Crea prodotto</string>
     <string name="salva_e_aggiungi_alla_lista">Salva e aggiungi alla lista</string>
     <string name="title_login_activity">LoginActivity</string>
-    <string name="title_activity_swipe_test">SwipeTestActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

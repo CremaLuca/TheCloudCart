@@ -1,22 +1,33 @@
 package org.cramest.thecloudcart.fragments;
 
-import android.app.Fragment;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.app.Fragment;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.adapter.ListsPageAdapter;
+import org.cramest.thecloudcart.adapter.ListaAdapter;
+import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Lista;
+
+import java.util.ArrayList;
 
 public class ListsFragment extends Fragment{
 
     private static final String ARG_PARAM = "userID";
-    private ListsPageAdapter mListsPageAdapter;
-    private ViewPager mViewPager;
-    private String userID;
 
     public ListsFragment(){
 
@@ -32,30 +43,7 @@ public class ListsFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            userID = getArguments().getString(ARG_PARAM);
-        }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lists, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewPager = (ViewPager) getActivity().findViewById(R.id.viewpager);
-        ListsPageAdapter pageAdapter = new ListsPageAdapter
-                (getActivity().getFragmentManager());
-        mViewPager.setAdapter(pageAdapter);
-
-        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
-        //viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setupWithViewPager(mViewPager);
     }
 
 }

@@ -14,6 +14,13 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:weightSum="1">
 
+        <TextView
+            android:id="@+id/textAltreListe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shared_with_you_lists"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
         <org.cramest.thecloudcart.adapter.NonScrollableListView
             android:id="@+id/listViewCondivise"
             android:layout_width="match_parent"
