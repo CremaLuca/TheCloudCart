@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -137,7 +139,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks, ListsMieFragment.
 
     @Override
     public void OnListaClicked(int listID) {
-        System.out.println("MainActivity - Premuta la lista con id: " + listID);
+        System.out.println("Premuta la lista con id: " + listID);
         //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
         mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }
