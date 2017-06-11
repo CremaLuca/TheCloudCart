@@ -1,44 +1,46 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fillViewport="true">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:titleTextColor="@color/colorAccent"
-            />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:background="#dddddd"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorAccent"
-            app:tabIndicatorHeight="5dp"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextColor="@color/textColorPrimary"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+    <LinearLayout
+        android:id="@+id/activity_lists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="1">
 
+        <TextView
+            android:id="@+id/textTueListe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/your_shopping_lists"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
-</android.support.design.widget.CoordinatorLayout>
+        <org.cramest.thecloudcart.adapter.NonScrollableListView
+            android:id="@+id/listViewMie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ListView"/>
+
+        <TextView
+            android:id="@+id/textAltreListe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/shared_with_you_lists"
+            android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+        <org.cramest.thecloudcart.adapter.NonScrollableListView
+            android:id="@+id/listViewCondivise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            style="@style/ListView"/>
+
+    </LinearLayout>
+</ScrollView>

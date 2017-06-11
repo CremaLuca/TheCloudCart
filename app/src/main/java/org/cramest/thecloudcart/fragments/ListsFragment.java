@@ -5,10 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.SystemClock;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +21,38 @@ import org.cramest.thecloudcart.classi.Lista;
 
 import java.util.ArrayList;
 
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link ListsFragment.OnListFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link ListsFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class ListsFragment extends Fragment{
 
     private static final String ARG_PARAM = "userID";
 
-    public ListsFragment(){
+    private String userID;
 
+    private ArrayList<Lista> listeMie;
+    private ArrayList<Lista> listeCondivise;
+
+    private ListaAdapter listAdapter;
+
+    private OnListFragmentInteractionListener mListener;
+
+    public ListsFragment() {
+        // Required empty public constructor
     }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param userID L'ID dell'utente.
+     * @return A new instance of fragment ListsFragment.
+     */
 
     public static ListsFragment newInstance(String userID) {
         ListsFragment fragment = new ListsFragment();
@@ -43,7 +64,121 @@ public class ListsFragment extends Fragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        //Lo chiamo qui così viene chiamato una volta sola teoricamente
+        if (getArguments() != null) {
+            userID = getArguments().getString(ARG_PARAM);
+            listeMie = new ArrayList<Lista>(Dati.getListeMie());
+            listeCondivise = Dati.getListeCondivise();
+        }
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        //Setup delle listview
+        setAdapter((ListView)getView().findViewById(R.id.listViewMie),listeMie);
+        aggiungiBottoneCreaLista((ListView)getView().findViewById(R.id.listViewMie));
+        setAdapter((ListView)getView().findViewById(R.id.listViewCondivise),listeCondivise);
+    }
+
+    private void aggiungiBottoneCreaLista(ListView lv){
+        //Aggiungiamo alla fine della lista il bottone
+        final Button btnCrea = new Button(getActivity());
+        btnCrea.setText("Crea nuova lista");
+        btnCrea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAggiungiLista();
+            }
+        });
+        //Alla fine della lista aggiungiamo questo
+        lv.addFooterView(btnCrea);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_lists, container, false);
+        return view;
+    }
+
+    public void onAggiungiLista() {
+        if (mListener != null) {
+            mListener.OnAggiungiLista();
+        }
+    }
+
+    public void onListaLongClicked(Lista lista){
+        if (mListener != null) {
+            mListener.OnListaLongClicked(lista);
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity){
+        System.out.println("ListFragment - Chiamato onAttach");
+        super.onAttach(activity);
+        if (activity instanceof OnListFragmentInteractionListener) {
+            System.out.println("ListFragment - impostato mListener");
+            mListener = (OnListFragmentInteractionListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnListFragmentInteractionListener {
+        void OnListaClicked(int listID);
+        void OnAggiungiLista();
+        void OnListaLongClicked(Lista lista);
+    }
+
+    public void aggiornaLista(){
+        listAdapter.notifyDataSetChanged();
+    }
+
+    private void setAdapter(final ListView lv, final ArrayList<Lista> liste){
+        listAdapter = new ListaAdapter(getActivity(), R.layout.adapter_lista_prodotti, liste);
+        lv.setAdapter(listAdapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("ListFragment - Lista cliccata");
+                int idLista = liste.get(position).getID();
+                if(idLista > 0) {
+                    mListener.OnListaClicked(idLista);
+                }else{
+                    Toast.makeText(getActivity(), "Errore, lista con id errato : "+idLista, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("ListFragment - Lista cliccata a lungo");
+                onListaLongClicked(liste.get(position));
+                return true;
+            }
+        });
+
+    }
 }

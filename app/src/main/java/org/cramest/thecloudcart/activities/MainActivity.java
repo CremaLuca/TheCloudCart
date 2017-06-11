@@ -26,16 +26,14 @@ import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
 import org.cramest.thecloudcart.fragments.ImpostazioniFragment;
-import org.cramest.thecloudcart.fragments.ListsCondiviseFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
-import org.cramest.thecloudcart.fragments.ListsMieFragment;
 import org.cramest.thecloudcart.fragments.LoadingFragment;
 import org.cramest.thecloudcart.fragments.NavigationDrawerFragment;
 import org.cramest.thecloudcart.fragments.ProdottiFragment;
 import org.cramest.utils.DataSaver;
 
 public class MainActivity extends AppCompatActivity
-implements NavigationDrawerFragment.NavigationDrawerCallbacks, ListsMieFragment.OnListMieFragmentInteractionListener, ListsCondiviseFragment.OnListCondiviseFragmentInteractionListener,
+implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
         ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener,CondividiDialog.OnCondividiDialogInteractionListener {
