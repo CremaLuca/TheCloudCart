@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
@@ -71,13 +72,22 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_quantita)).setText(username);
         restoreActionBar();
         InizializzaApplicazione();
-        mostraFragmentSenzaBackStack(LoadingFragment.newInstance());
+        mostraFragmentSenzaBackStack(LoadingFragment.newInstance(), "LoadingFragment");
     }
 
     private void mostraFragmentConBackStack(Fragment fragment,String fragmentName){
-        if (findViewById(R.id.fragment_container) != null) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack(fragmentName);
-            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right,R.animator.slide_in_right,R.animator.slide_out_left);
+        View fragmentView = findViewById(R.id.fragment_container);
+        if (fragmentView != null) {
+            FragmentManager fm = getFragmentManager();
+
+            //SE non sto mostrando lo stesso fragment
+            if (fm.findFragmentById(fragmentView.getId()) != null) {
+                if (fragment.equals(fm.findFragmentById(fragmentView.getId()).getTag())) {
+                    return;
+                }
+            }
+            FragmentTransaction transaction = fm.beginTransaction().addToBackStack(fragmentName);
+            transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left);
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
         }else{
@@ -85,11 +95,20 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         }
     }
 
-    private void mostraFragmentSenzaBackStack(Fragment fragment){
+    private void mostraFragmentSenzaBackStack(Fragment fragment, String fragmentName) {
+        View fragmentView = findViewById(R.id.fragment_container);
         if (findViewById(R.id.fragment_container) != null) {
+            FragmentManager fm = getFragmentManager();
+            //SE non sto mostrando lo stesso fragment
+            if (fm.findFragmentById(fragmentView.getId()) != null) {
+                if (fragment.equals(fm.findFragmentById(fragmentView.getId()).getTag())) {
+
+                    return;
+                }
+            }
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_right,R.animator.slide_in_right,R.animator.slide_out_left);
-            transaction.replace(R.id.fragment_container, fragment);
+            transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left);
+            transaction.replace(R.id.fragment_container, fragment, fragmentName);
             transaction.commit();
         }else{
             System.out.println("Manca il fragment container");
@@ -98,11 +117,11 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        System.out.println("MainActibity - Chiamato drawerselected - "+position);
+        System.out.println("MainActivity - Chiamato drawerselected - " + position);
         switch (position) {
             case 0:
                 //Le mie liste
-                mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
+                mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID), "ListsFragment");
                 break;
             case 1:
                 //I miei prodotti
@@ -174,7 +193,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnDatiLoaded() {
         //Quando la prima volta vengono caricati i dati viene mostrata questa finestra
         System.out.println("MainActivity - Dati caricati, mostro il fragment liste");
-        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
+        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID), "ListsFragment");
     }
 
     @Override
@@ -198,7 +217,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Quando torna la risposta dal server che la lista è stata eliminata
         System.out.println("MainActivity - Lista eliminata con successo");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
+        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID), "ListsFragment");
     }
 
     @Override
@@ -206,7 +225,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Un prodotto viene aggiunto ad una lista, torniamo alla visualizzazione della lista
         System.out.println("MainActivity - Nuovo prodotto creato");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentSenzaBackStack(ProdottiFragment.newInstance(prodottoInLista.getIdLista()));
+        mostraFragmentSenzaBackStack(ProdottiFragment.newInstance(prodottoInLista.getIdLista()), "ProdottiFragment");
     }
 
     @Override
@@ -264,7 +283,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Nel caso venga confermata la creazione di una nuova lista
         System.out.println("MainActivity - Lista "+lista.getNome()+" creata con successo");
         Dati.aggiungiLista(lista);
-        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID));
+        mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID), "ListsFragment");
     }
 
     @Override

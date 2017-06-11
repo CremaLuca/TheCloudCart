@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -59,20 +58,6 @@ public class ListeMieFragment extends Fragment {
         }
     }
 
-    private void aggiungiBottoneCreaLista(ListView lv) {
-        //Aggiungiamo alla fine della lista il bottone
-        final Button btnCrea = new Button(getActivity());
-        btnCrea.setText("Crea nuova lista");
-        btnCrea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAggiungiLista();
-            }
-        });
-        //Alla fine della lista aggiungiamo questo
-        lv.addFooterView(btnCrea);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,7 +65,12 @@ public class ListeMieFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_liste_mie, container, false);
         if (listeMie != null) {
             setAdapter((ListView) view.findViewById(R.id.listViewMie), listeMie);
-            aggiungiBottoneCreaLista((ListView) view.findViewById(R.id.listViewMie));
+            view.findViewById(R.id.button_crea_lista).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAggiungiLista();
+                }
+            });
         } else {
             System.out.println("ListeMieFragment - listeMie e' null");
         }
