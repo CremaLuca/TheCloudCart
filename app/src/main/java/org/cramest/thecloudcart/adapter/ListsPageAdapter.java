@@ -15,12 +15,10 @@ public class ListsPageAdapter extends FragmentPagerAdapter {
 
     ListsMieFragment listsMieFragment;
     ListsCondiviseFragment listsCondiviseFragment;
-    String userID;
+    String userID = "1";
 
-    public ListsPageAdapter(FragmentManager fm, String userID) {
+    public ListsPageAdapter(FragmentManager fm) {
         super(fm);
-        System.out.println("ListPageAdapter - Istanziato Adapter");
-        this.userID = userID;
     }
 
     @Override
