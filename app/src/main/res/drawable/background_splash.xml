@@ -7,7 +7,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/the_cloud_cart_320"/>
+            android:src="@drawable/the_cloud_cart320" />
     </item>
 
 </layer-list>
