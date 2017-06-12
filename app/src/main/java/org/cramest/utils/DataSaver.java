@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by User on 19/01/2017.
- */
-
 public class DataSaver {
 
     private static DataSaver instance;

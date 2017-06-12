@@ -1,10 +1,5 @@
 package org.cramest.thecloudcart.classi;
 
-import java.sql.Date;
-
-/**
- * Created by cremaluca on 09/03/2017.
- */
 public class ProdottoInLista {
 
     private int idLista;

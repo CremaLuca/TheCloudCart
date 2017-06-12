@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 
 import org.cramest.thecloudcart.R;
 
-/**
- * Created by CREMALUCA on 12/05/2017.
- */
 public class ImpostazioniFragment extends Fragment {
 
     private static final String ARG_PARAM = "userID";

@@ -7,20 +7,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
-import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.Utente;
 
 import java.util.ArrayList;
-
-/**
- * Created by User on 19/05/2017.
- */
 
 public class ListaDialog {
 

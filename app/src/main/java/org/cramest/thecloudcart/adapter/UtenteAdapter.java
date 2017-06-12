@@ -12,10 +12,6 @@ import org.cramest.thecloudcart.classi.Utente;
 
 import java.util.ArrayList;
 
-/**
- * Created by User on 19/05/2017.
- */
-
 public class UtenteAdapter extends ArrayAdapter<Utente> {
 
     private ArrayList<Utente> utenti;

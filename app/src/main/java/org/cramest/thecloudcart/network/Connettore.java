@@ -16,9 +16,6 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by cremaluca on 03/06/2016.
- */
 public class Connettore {
 
     static Context context;

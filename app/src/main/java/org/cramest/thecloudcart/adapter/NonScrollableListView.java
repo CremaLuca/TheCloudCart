@@ -6,10 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-/**
- * Created by cremaluca on 18/05/2017.
- */
-
 public class NonScrollableListView extends ListView {
 
     public NonScrollableListView(Context context) {

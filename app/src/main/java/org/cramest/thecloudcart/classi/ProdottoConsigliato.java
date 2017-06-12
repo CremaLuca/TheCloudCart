@@ -1,9 +1,5 @@
 package org.cramest.thecloudcart.classi;
 
-/**
- * Created by cremaluca on 22/05/2017.
- */
-
 public class ProdottoConsigliato {
 
     private Prodotto prodotto;

@@ -15,7 +15,7 @@ public class LandActivity extends Activity implements LoginApp.OnLoginAppListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("LandActivity - C'è un username salvato : " + DataSaver.getInstance().getDataString(this, "username"));
+        System.out.println("LandActivity - Username salvato : " + DataSaver.getInstance().getDataString(this, "username"));
         //Controlliamo se c'è rete
         if(Connettore.getInstance(this).isNetworkAvailable()) {
             //Se non ha già effettuato il login in un altro momento

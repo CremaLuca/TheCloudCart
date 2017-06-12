@@ -5,10 +5,6 @@ import android.widget.Toast;
 
 import org.cramest.utils.DataSaver;
 
-/**
- * Created by User on 19/01/2017.
- */
-
 public class LoginApp implements DataHandler {
 
     private String username;

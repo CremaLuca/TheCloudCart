@@ -2,30 +2,21 @@ package org.cramest.thecloudcart.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.admin.SystemUpdatePolicy;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.Utente;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by cremaluca on 05/06/2017.
- */
 
 public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
     public static CondividiDialog instance;

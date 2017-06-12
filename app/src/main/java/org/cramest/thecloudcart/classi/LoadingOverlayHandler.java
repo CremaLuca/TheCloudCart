@@ -3,14 +3,9 @@ package org.cramest.thecloudcart.classi;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.app.admin.SystemUpdatePolicy;
 import android.view.View;
 
 import org.cramest.thecloudcart.R;
-
-/**
- * Created by cremaluca on 30/05/2017.
- */
 
 public class LoadingOverlayHandler {
 

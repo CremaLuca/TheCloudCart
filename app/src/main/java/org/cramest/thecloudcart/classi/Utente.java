@@ -1,9 +1,5 @@
 package org.cramest.thecloudcart.classi;
 
-/**
- * Created by User on 19/05/2017.
- */
-
 public class Utente {
 
     private int userID;

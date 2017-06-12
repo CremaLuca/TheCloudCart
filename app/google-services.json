@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:339385394250:android:010cfd6f230ab0e6",
         "android_client_info": {
-          "package_name": "cramest.altervista.org.thecloudcart"
+          "package_name": "org.cramest.thecloudcart"
         }
       },
       "oauth_client": [
@@ -53,6 +53,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "339385394250-8lftv4n86fc9n0prkrcv9jur6qenokq3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.cramest.thecloudcart",
+            "certificate_hash": "9a968c45e137ca18affdcfea8598d770defba522"
+          }
+        },
         {
           "client_id": "339385394250-0cg2n1igfgcoh0ubvlvoh1gu1r35lqp6.apps.googleusercontent.com",
           "client_type": 3
