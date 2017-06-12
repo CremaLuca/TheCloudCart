@@ -29,6 +29,7 @@
             android:name=".activities.LoginActivity"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/title_login_activity"/>
         <activity
             android:name=".activities.MainActivity"
