@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import org.cramest.thecloudcart.R;
 
 public class ListsFragment extends Fragment{
@@ -18,6 +22,8 @@ public class ListsFragment extends Fragment{
 
     private String userID;
     private OnListFragmentInteractionListener mListener;
+
+    private AdView mAdView;
 
     public ListsFragment() {
         // Required empty public constructor
@@ -38,6 +44,7 @@ public class ListsFragment extends Fragment{
         if (getArguments() != null) {
             userID = getArguments().getString(ARG_PARAM);
         }
+
     }
 
     private void mostraFragmentListeMie() {
@@ -84,6 +91,41 @@ public class ListsFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 mostraFragmentListCondivise();
+            }
+        });
+        mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice("FE3059E0490D901C37DCB894C93DFCC0")
+                .build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (mAdView.getVisibility() == View.GONE) {
+                    mAdView.setVisibility(View.VISIBLE);
+                }
             }
         });
         return view;
