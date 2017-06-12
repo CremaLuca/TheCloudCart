@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin">
 
+    <TextView
+        android:id="@+id/text_view_nome_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Nome lista"
+        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
     <EditText
         android:id="@+id/edit_nome_lista"
         android:layout_width="match_parent"
@@ -24,22 +34,12 @@
         android:id="@+id/text_view_condivisa_con"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_nome_lista"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
         android:text="Condivisa con"
         android:textAppearance="@android:style/TextAppearance.Material.Title"
-        android:textColor="?android:attr/editTextColor" />
-
-    <TextView
-        android:id="@+id/text_view_nome_lista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="Nome lista"
-        android:textAppearance="@android:style/TextAppearance.Material.Title" />
+        android:textColor="?android:attr/editTextColor"
+        android:layout_below="@+id/edit_nome_lista"
+        android:layout_alignParentStart="true" />
 
     <org.cramest.thecloudcart.adapter.NonScrollableListView
         android:id="@+id/list_condivisa_con"
@@ -48,7 +48,7 @@
         android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/text_view_condivisa_con"
-        android:layout_marginTop="27dp" />
+        android:layout_marginTop="20dp" />
 
     <Button
         android:id="@+id/button_elimina_lista"

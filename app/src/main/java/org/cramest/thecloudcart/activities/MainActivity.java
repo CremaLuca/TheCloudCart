@@ -251,8 +251,17 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnProdottoAggiunto(ProdottoInLista prodotto) {
         //Nel caso venga confemata l'aggiunta di un nuovo prodotto ad una lista
         System.out.println("MainActivity - Prodotto in lista aggiunto alla lista id:"+prodotto.getIdLista());
+        Dati.aggiungiProdottoInLista(prodotto);
         LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentConBackStack(ProdottiFragment.newInstance(prodotto.getIdLista()),"ProdottiFragment");
+    }
+
+    @Override
+    public void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista) {
+        //Nel caso venga confermata la NON aggiunta del prodotto
+        System.out.println("MainActivity - Prodotto in lista NON aggiunto alla lista id:" + prodottoInLista.getIdLista());
+        LoadingOverlayHandler.nascondiLoading(this);
+        mostraFragmentConBackStack(ProdottiFragment.newInstance(prodottoInLista.getIdLista()), "ProdottiFragment");
     }
 
     @Override

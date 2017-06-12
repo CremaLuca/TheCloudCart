@@ -148,12 +148,11 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             if (Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                 LoadingOverlayHandler.mostraLoading(getActivity());
                 //Chiediamo al sito di creare il prodotto
-                Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiProdottoFragment.this, "aggiungiProdotto", parametri, valori);
+                Connettore.getInstance(getActivity()).GetDataFromWebsite(this, "aggiungiProdotto", parametri, valori);
             } else {
                 //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             }
-            //Comunque sia alla fine dobbiamo aggiungere il prodotto alla lista
-            Dati.aggiungiProdottoInLista(tmpProdottoInLista);
+
         }else{
             System.out.println("AggiungiProdottoFragment - Nessun prodotto selezionato");
             Toast.makeText(getActivity(), "Nessun prodotto selezionato", Toast.LENGTH_SHORT).show();
@@ -225,6 +224,12 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             mListener.OnProdottoAggiunto(prodotto);
         }
     }
+
+    public void onProdottoNonAggiunto(ProdottoInLista prodotto) {
+        if (mListener != null) {
+            mListener.OnProdottoNonAggiunto(prodotto);
+        }
+    }
     public void onDevoCreareNuovoProdotto(int listID) {
         if (mListener != null) {
             mListener.OnDevoCreareNuovoProdotto(listID);
@@ -268,11 +273,16 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             }
         }else{
             Toast.makeText(getActivity(),data, Toast.LENGTH_SHORT).show();
+            if (tmpProdottoInLista != null) {
+                onProdottoNonAggiunto(tmpProdottoInLista);
+            }
         }
     }
 
     public interface OnAggiungiProdottiListener {
-        void OnProdottoAggiunto(ProdottoInLista prodotto);
+        void OnProdottoAggiunto(ProdottoInLista prodottoInLista);
+
+        void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista);
         void OnDevoCreareNuovoProdotto(int listID);
     }
 }
