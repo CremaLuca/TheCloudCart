@@ -188,8 +188,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             // Signed in successfully, show authenticated UI.
             final GoogleSignInAccount acct = result.getSignInAccount();
             //Estraiamo l'username dal display name
-            String usern = acct.getDisplayName().replace('(', '§');
-            usern = usern.split("§")[1].replace(")", "");
+            System.out.println("LoginFragment - Benvenuto " + acct.getEmail());
+            String usern = acct.getEmail().split("@")[0];
             final String username = usern;
             System.out.println("LoginFragment - Benvenuto " + usern + " con auth code " + acct.getId());
             String[] parametri = {"req", "username", "name", "email", "googleID"};
