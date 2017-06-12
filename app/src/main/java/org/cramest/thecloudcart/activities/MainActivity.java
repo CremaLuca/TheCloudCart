@@ -91,7 +91,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
             transaction.replace(R.id.fragment_container, fragment);
             transaction.commit();
         }else{
-            System.out.println("Manca il fragment container");
+            System.out.println("MainActivity - Manca il fragment container");
         }
     }
 
@@ -111,7 +111,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
             transaction.replace(R.id.fragment_container, fragment, fragmentName);
             transaction.commit();
         }else{
-            System.out.println("Manca il fragment container");
+            System.out.println("MainActivity - Manca il fragment container");
         }
     }
 
@@ -157,7 +157,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
     @Override
     public void OnListaClicked(int listID) {
-        System.out.println("Premuta la lista con id: " + listID);
+        System.out.println("MainActivity - Premuta la lista con id: " + listID);
         //Questa funzione viene chiamata dal fragment della lista quando viene cliccato qualcosa
         mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }

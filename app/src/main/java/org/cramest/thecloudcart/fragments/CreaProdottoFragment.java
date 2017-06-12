@@ -107,7 +107,7 @@ public class CreaProdottoFragment extends Fragment{
             prezzo = Double.parseDouble(editPrezzo.getText().toString());
             quantita = Integer.parseInt(editQuantita.getText().toString());
         } catch (Exception e) {
-            System.out.println("Manca prezzo o quantita, ma non importa");
+            System.out.println("CreaProdottoFragment - Manca prezzo o quantita, ma non importa");
         }
         //TODO : Controlli sui dati inseriti
         mListener.OnDevoCreareProdotto(nome,prezzo,marca,dimensione,categoria,quantita,descrizione,listID);

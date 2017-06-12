@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.LoginApp;
-import org.cramest.thecloudcart.R;
 import org.cramest.utils.DataSaver;
 
 public class LandActivity extends Activity implements LoginApp.OnLoginAppListener{
@@ -15,7 +15,7 @@ public class LandActivity extends Activity implements LoginApp.OnLoginAppListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("LANDACTIVITY - Username salvato : " + DataSaver.getInstance().getDataString(this,"username"));
+        System.out.println("LandActivity - C'è un username salvato : " + DataSaver.getInstance().getDataString(this, "username"));
         //Controlliamo se c'è rete
         if(Connettore.getInstance(this).isNetworkAvailable()) {
             //Se non ha già effettuato il login in un altro momento

@@ -1,8 +1,12 @@
 package org.cramest.thecloudcart.network;
 
-import android.provider.Settings;
-
-import org.cramest.thecloudcart.classi.*;
+import org.cramest.thecloudcart.classi.Categoria;
+import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.Prodotto;
+import org.cramest.thecloudcart.classi.ProdottoConsigliato;
+import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.classi.Utente;
 
 /**
  * Created by User on 20/01/2017.
@@ -56,7 +60,7 @@ public class WebsiteDataManager {
                 String dimensione = strProdotto[4];
                 Categoria categoria = Dati.getCategoriaByID(Integer.parseInt(strProdotto[5]));
                 prodotti[i] = new Prodotto(ID, nome, prezzo, marca, dimensione, categoria);
-                System.out.println("Creato nuovo prodotto : " + prodotti[i]);
+                System.out.println("WebsiteDataManager - Creato nuovo prodotto : " + prodotti[i]);
             }
             return prodotti;
         }
@@ -70,7 +74,7 @@ public class WebsiteDataManager {
                 ProdottoInLista[] prodottiInLista = new ProdottoInLista[strProdottiInLista.length];
                 for (int i = 0; i < strProdottiInLista.length; i++) {
                     String[] strProdottoInLista = strProdottiInLista[i].split(sepColonne);
-                    System.out.println("IDProdotto : " + strProdottoInLista[0]);
+                    System.out.println("WebsiteDataManager - IDProdotto : " + strProdottoInLista[0]);
 
                     Prodotto prodotto = Dati.getProdottoByID(Integer.parseInt(strProdottoInLista[0]));
                     if(prodotto == null) {

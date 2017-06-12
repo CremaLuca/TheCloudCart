@@ -47,7 +47,7 @@ public class ListsFragment extends Fragment{
             transaction.replace(R.id.fragment_liste_container, ListeMieFragment.newInstance(userID));
             transaction.commit();
         } else {
-            System.out.println("Manca il fragment container");
+            System.out.println("ListsActivity - Manca il fragment container");
         }
     }
 
@@ -58,7 +58,7 @@ public class ListsFragment extends Fragment{
             transaction.replace(R.id.fragment_liste_container, ListeCondiviseFragment.newInstance(userID));
             transaction.commit();
         } else {
-            System.out.println("Manca il fragment container");
+            System.out.println("ListsActivity - Manca il fragment container");
         }
     }
 

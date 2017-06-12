@@ -1,9 +1,9 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 import java.util.ArrayList;
@@ -110,7 +109,6 @@ public class ProdottiFragment extends Fragment{
 
     public void onAggiungiProdotto(int listID) {
         if (mListener != null) {
-            System.out.println("Premuto aggiungi in lista : " +listID);
             mListener.OnAggiungiProdotto(listID);
         }
     }
