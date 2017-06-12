@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
@@ -37,41 +41,66 @@
         android:layout_marginTop="71dp"
         android:layout_alignParentEnd="true"/>
 
-    <Button
-        android:text="@string/login"
+        <TextView
+            android:id="@+id/textViewAppLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/loginButton"
-        android:layout_below="@+id/editPassword"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        style="@style/styledButton"/>
+            android:layout_below="@+id/textViewGoogleLogin"
+            android:layout_marginTop="63dp"
+            android:text="@string/login_app_account"
+            android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
-    <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewAppLogin"
+            android:layout_marginTop="21dp">
+
+            <EditText
+                android:id="@+id/editUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/username"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textInputLayoutUsername"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/styledButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/editPassword"
-        android:layout_marginTop="19dp"
-        android:layout_below="@+id/editUsername"
+            android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:hint="@string/password" />
+            android:layout_below="@+id/textInputLayoutPassword"
+            android:layout_marginTop="20dp"
+            android:text="@string/login" />
 
     <TextView
-        android:id="@+id/textViewAppLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textViewGoogleLogin"
-        android:layout_marginTop="63dp"
-        android:text="@string/login_app_account"
-        android:textAppearance="@android:style/TextAppearance.Material.Small" />
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text_view_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -86,23 +115,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:id="@+id/registerButton"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/text_view_no_account"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         style="@style/styledButton"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="21dp"
-        android:id="@+id/editUsername"
-        android:hint="@string/username"
-        android:layout_below="@+id/textViewAppLogin"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-
-
 </RelativeLayout>
+</ScrollView>

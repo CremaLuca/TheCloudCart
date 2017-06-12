@@ -197,12 +197,13 @@ public class Dati implements DataHandler{
                 listeCondivise = new ArrayList<Lista>();
                 richiediProdottiInLista(ctx);
             }
-            if(prodotti != null && categorie != null && listeMie != null && listeCondivise != null && prodottiInLista != null){
+            //System.out.println("Dati - Prodotti : " + prodotti + " listeMie : " +listeMie + " listeCondivise : " + listeCondivise + " prodottiInLista : " + prodottiInLista);
+            if (prodotti != null && categorie != null && listeMie != null && listeCondivise != null) {
                 if(prodottiInLista == null){
-                    prodottiInLista = new ArrayList<ProdottoInLista>();
+                    prodottiInLista = new ArrayList<>();
                 }
                 if(prodottiConsigliati == null){
-                    prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
+                    prodottiConsigliati = new ArrayList<>();
                 }
                 LoadedDati();
             }

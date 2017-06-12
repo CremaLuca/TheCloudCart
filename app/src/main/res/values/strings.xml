@@ -42,7 +42,7 @@
     <string name="your_shopping_lists">Le tue liste della spesa</string>
     <string name="shared_with_you_lists">Le liste condivise con te</string>
     <string name="login">Login</string>
-    <string name="login_with_google">Esegui il login con google (non ancora funzionante)</string>
+    <string name="login_with_google">Esegui il login con google</string>
     <string name="login_app_account">Esegui il login con l\'account dell\'app</string>
     <string name="no_account_register">Non hai un account? Registrati</string>
     <string name="save">Salva</string>

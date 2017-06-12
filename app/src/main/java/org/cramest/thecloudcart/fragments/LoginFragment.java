@@ -19,13 +19,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.LoginApp;
+import org.cramest.utils.DataSaver;
 
 /**
  * Created by User on 08/05/2017.
@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     private OnLoginFragmentListener mListener;
 
-    GoogleApiClient mGoogleApiClient;
+    static GoogleApiClient mGoogleApiClient;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public void onStart() {
         super.onStart();
 
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        /*OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
@@ -91,7 +91,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     handleSignInResult(googleSignInResult);
                 }
             });
-        }
+        }*/
     }
 
     @Override
@@ -150,6 +150,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 String username = ((EditText)getActivity().findViewById(R.id.editUsername)).getText().toString();
                 String password = ((EditText)getActivity().findViewById(R.id.editPassword)).getText().toString();
                 if(!username.equals("") && !password.equals("")) {
+                    LoadingOverlayHandler.mostraLoading(getActivity());
                     System.out.println("LoginFragment - Chiamo loginApp("+username+","+password+")");
                     new LoginApp(getActivity(), username, password);
                 }else{
@@ -185,22 +186,35 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         System.out.println("LoginFragment - handleSignInResult:" + result.isSuccess() + " status : " + result.getStatus());
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            System.out.println("LoginFragment - Benvenuto " + acct.getGivenName());
-            String[] parametri = {"req", "email", "serverAuthCode"};
-            String[] valori = {"googleLogin", acct.getEmail(), acct.getServerAuthCode()};
+            final GoogleSignInAccount acct = result.getSignInAccount();
+            //Estraiamo l'username dal display name
+            String usern = acct.getDisplayName().replace('(', '§');
+            usern = usern.split("§")[1].replace(")", "");
+            final String username = usern;
+            System.out.println("LoginFragment - Benvenuto " + usern + " con auth code " + acct.getId());
+            String[] parametri = {"req", "username", "name", "email", "googleID"};
+            String[] valori = {"googleLogin", username, acct.getGivenName(), acct.getEmail(), acct.getId()};
 
             Connettore.getInstance(getActivity()).GetDataFromWebsite(new DataHandler() {
                 @Override
                 public void HandleData(String nome, boolean success, String data) {
                     if (success) {
-
+                        System.out.println("LoginFragment - Login con google con successo anche al sito");
+                        SaveLoginData(getActivity(), username, data, acct.getId());
+                        //Notifichiamo il fragment che siamo riusciti a fare l'accesso il quale chiamera l'activity che ne caricherà un altra
+                        mListener.OnLogin(username, data);
                     }
                 }
             }, "googleLogin", parametri, valori);
         } else {
             System.out.println("LoginFragment - Non oke, errore del codice della app, non registrata :" + result.getStatus().getStatusMessage());
         }
+    }
+
+    public static void SaveLoginData(Context c, String username, String userID, String password) {
+        DataSaver.getInstance().saveDataString(c, "username", username);
+        DataSaver.getInstance().saveDataString(c, "userID", userID);
+        DataSaver.getInstance().saveDataString(c, "password", password);//Serve per rifare l'accesso
     }
 
     @Override
