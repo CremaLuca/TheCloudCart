@@ -412,6 +412,8 @@ public class Dati implements DataHandler{
             @Override
             public void HandleData(String nome, boolean success, String data) {
                 if(success) {
+                    //Togliamolo dalla lista anche se non è stato eliminato
+                    prodottiInLista.remove(prodottoInLista);
                     mListener.OnProdottoComprato(prodottoInLista.getIdLista());
                     Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
                 }else{
