@@ -1,9 +1,9 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +22,13 @@ import org.cramest.thecloudcart.network.DataHandler;
  * Use the {@link AggiungiListaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AggiungiListaFragment extends Fragment implements DataHandler{
+public class AggiungiListaFragment extends Fragment {
 
     private static final String ARG_PARAM = "userID";
 
     private String userID;
 
-    private OnAggiungiListaListener mListener;
+    private OnAggiungiListaFragmentInteractionListener mListener;
     private String nomelista;
 
     public AggiungiListaFragment() {
@@ -72,14 +72,24 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
             @Override
             public void onClick(View v) {
                 nomelista = ((EditText)getActivity().findViewById(R.id.editTextNomeLista)).getText().toString();
-                //Generiamo l'intent
-
                 //Aggiungiamo la lista tramite l'API
                 String[] parametri = {"req","userID","listName"};
                 String[] valori = {"addList",userID,nomelista};
                 if(Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                     //Chiediamo al sito le liste
-                    Connettore.getInstance(getActivity()).GetDataFromWebsite(AggiungiListaFragment.this, "aggiungiLista", parametri, valori);
+                    Connettore.getInstance(getActivity()).GetDataFromWebsite(new DataHandler() {
+                        @Override
+                        public void HandleData(String nomeRichiesta, boolean success, String data) {
+                            if (success) {
+                                Toast.makeText(getActivity(), "Lista creata con successo", Toast.LENGTH_SHORT).show();
+                                //data in questo caso sarà l'id della lista
+                                onListaAggiunta(new Lista(Integer.parseInt(data), nomelista, 0));
+                            } else {
+                                Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+                                onListaNonAggiunta();
+                            }
+                        }
+                    }, "aggiungiLista", parametri, valori);
                     LoadingOverlayHandler.mostraLoading(getActivity());
                     //TODO : Aprire la activity condividi per condividere la lista con gli amici
                 }else{
@@ -103,8 +113,8 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
-        if (activity instanceof OnAggiungiListaListener) {
-            mListener = (OnAggiungiListaListener) activity;
+        if (activity instanceof OnAggiungiListaFragmentInteractionListener) {
+            mListener = (OnAggiungiListaFragmentInteractionListener) activity;
         } else {
             throw new RuntimeException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -114,8 +124,8 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnAggiungiListaListener) {
-            mListener = (OnAggiungiListaListener) context;
+        if (context instanceof OnAggiungiListaFragmentInteractionListener) {
+            mListener = (OnAggiungiListaFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -128,20 +138,7 @@ public class AggiungiListaFragment extends Fragment implements DataHandler{
         mListener = null;
     }
 
-    @Override
-    public void HandleData(String nome, boolean success, String data) {
-        LoadingOverlayHandler.nascondiLoading(getActivity());
-        if(success) {
-            Toast.makeText(getContext(),"Lista creata con successo", Toast.LENGTH_SHORT).show();
-            //data in questo caso sarà l'id della lista
-            onListaAggiunta(new Lista(Integer.parseInt(data),nomelista,0));
-        }else{
-            Toast.makeText(getContext(),data, Toast.LENGTH_SHORT).show();
-            onListaNonAggiunta();
-        }
-    }
-
-    public interface OnAggiungiListaListener {
+    public interface OnAggiungiListaFragmentInteractionListener {
         void onListaAggiunta(Lista lista);
         void onListaNonAggiunta();
     }

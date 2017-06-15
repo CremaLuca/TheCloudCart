@@ -121,9 +121,7 @@ public class ListeMieFragment extends Fragment {
 
     public interface OnListeMieFragmentInteractionListener {
         void OnListaClicked(int listID);
-
         void OnAggiungiLista();
-
         void OnListaLongClicked(Lista lista);
     }
 

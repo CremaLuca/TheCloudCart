@@ -36,7 +36,7 @@ import org.cramest.utils.DataSaver;
 
 public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
-        ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
+        ProdottiFragment.OnProdottiFragmentInteractionListener, Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaFragmentInteractionListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
         ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
         ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener, ImpostazioniFragment.OnImpostazioniFragmentListener {
@@ -295,6 +295,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void onListaAggiunta(Lista lista) {
         //Nel caso venga confermata la creazione di una nuova lista
         System.out.println("MainActivity - Lista "+lista.getNome()+" creata con successo");
+        LoadingOverlayHandler.nascondiLoading(this);
         Dati.aggiungiLista(lista);
         mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID), "ListsFragment");
     }
@@ -303,6 +304,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void onListaNonAggiunta() {
         //Nel caso non venga aggiunta l'unica soluzione è deprimersi
         System.out.println("MainActivity - Lista non creata");
+        LoadingOverlayHandler.nascondiLoading(this);
         //TODO : Gestire il caso della lista non aggiunta
     }
 
