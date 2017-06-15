@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import org.cramest.thecloudcart.R;
 
 public class InformazioniFragment extends Fragment {
@@ -41,6 +43,8 @@ public class InformazioniFragment extends Fragment {
                 versione.setText(version);
             }
         } catch (PackageManager.NameNotFoundException e) {
+            FirebaseCrash.log("Impossibile recuperare la versione");
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
 

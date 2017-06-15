@@ -1,5 +1,7 @@
 package org.cramest.thecloudcart.network;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import org.cramest.thecloudcart.classi.Categoria;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
@@ -55,6 +57,8 @@ public class WebsiteDataManager {
                 try {
                     prezzo = Double.parseDouble(strProdotto[2]);
                 } catch (Exception e) {
+                    FirebaseCrash.log("Impossibile convertire " + strProdotto[2] + " in double " +
+                            " per il prezzo, prodotto id = " + ID);
                 }
                 String marca = strProdotto[3];
                 String dimensione = strProdotto[4];
