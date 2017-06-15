@@ -94,10 +94,8 @@ public class ListeCondiviseFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
-        System.out.println("ListFragment - Chiamato onAttach");
         super.onAttach(activity);
         if (activity instanceof OnListeCondiviseFragmentInteractionListener) {
-            System.out.println("ListFragment - impostato mListener");
             mListener = (OnListeCondiviseFragmentInteractionListener) activity;
         } else {
             throw new RuntimeException(activity.toString()

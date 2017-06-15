@@ -38,7 +38,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         ProdottiFragment.OnProdottiFragmentInteractionListener,Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
         ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
-        ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener {
+        ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener, ImpostazioniFragment.OnImpostazioniFragmentListener {
 
     private String username;
     private String nameUser;
@@ -71,7 +71,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");
         nameUser = getIntent().getExtras().getString("nameUser");
-        System.out.println("DEBUG MainActivity - Ciao " + nameUser);
         ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_quantita)).setText(username);
         restoreActionBar();
         InizializzaApplicazione();
@@ -344,5 +343,16 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         System.out.println("MainActivity - Lista " + lista.getNome() + " da condividere");
         Dati.condividiLista(lista,utente);
         LoadingOverlayHandler.mostraLoading(this);
+    }
+
+    @Override
+    public void OnRichiestoCambioNome(String nome) {
+        LoadingOverlayHandler.mostraLoading(this);
+    }
+
+    @Override
+    public void OnCambioNomeEseguito(String nome) {
+        LoadingOverlayHandler.nascondiLoading(this);
+        nameUser = nome;
     }
 }

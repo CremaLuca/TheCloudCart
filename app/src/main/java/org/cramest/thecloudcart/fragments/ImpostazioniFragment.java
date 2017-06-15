@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
+import org.cramest.thecloudcart.network.Connettore;
+import org.cramest.thecloudcart.network.DataHandler;
 
 public class ImpostazioniFragment extends Fragment {
 
@@ -18,6 +21,8 @@ public class ImpostazioniFragment extends Fragment {
 
     private String nameUser;
     private String userID;
+
+    private OnImpostazioniFragmentListener mListener;
 
     public ImpostazioniFragment() {
     }
@@ -45,9 +50,32 @@ public class ImpostazioniFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_impostazioni, container, false);
-        EditText nome = (EditText) view.findViewById(R.id.edit_nome);
+        final EditText nome = (EditText) view.findViewById(R.id.edit_nome);
         nome.setText(nameUser);
-        System.out.println("DEBUG ImpostazioniFragment - Ciao " + nameUser);
+        view.findViewById(R.id.btn_salva_impostazioni).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String nomeUtente = nome.getText().toString();
+
+                String[] parametri = {"req", "userID", "name"};
+                String[] valori = {"changeName", userID, nomeUtente};
+
+
+                Connettore.getInstance(getActivity()).GetDataFromWebsite(new DataHandler() {
+                    @Override
+                    public void HandleData(String nome, boolean success, String data) {
+                        if (success) {
+                            nameUser = nomeUtente;
+                            Toast.makeText(getActivity(), "Modificato nome con successo", Toast.LENGTH_SHORT).show();
+                            mListener.OnCambioNomeEseguito(nomeUtente);
+                        } else {
+                            Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, "cambioNome", parametri, valori);
+                mListener.OnRichiestoCambioNome(nomeUtente);
+            }
+        });
         return view;
     }
 
@@ -60,11 +88,23 @@ public class ImpostazioniFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        if (activity instanceof OnImpostazioniFragmentListener) {
+            mListener = (OnImpostazioniFragmentListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnImpostazioniFragmentListener");
+        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof OnImpostazioniFragmentListener) {
+            mListener = (OnImpostazioniFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnImpostazioniFragmentListener");
+        }
     }
 
     @Override
@@ -72,5 +112,10 @@ public class ImpostazioniFragment extends Fragment {
         super.onDetach();
     }
 
+    public interface OnImpostazioniFragmentListener {
+        void OnRichiestoCambioNome(String nome);
+
+        void OnCambioNomeEseguito(String nome);
+    }
 
 }
