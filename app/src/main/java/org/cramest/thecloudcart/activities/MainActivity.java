@@ -25,6 +25,7 @@ import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
 import org.cramest.thecloudcart.fragments.ImpostazioniFragment;
+import org.cramest.thecloudcart.fragments.InformazioniFragment;
 import org.cramest.thecloudcart.fragments.ListeCondiviseFragment;
 import org.cramest.thecloudcart.fragments.ListeMieFragment;
 import org.cramest.thecloudcart.fragments.ListsFragment;
@@ -141,6 +142,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
                 break;
             case 3:
                 //Info su The CloudCart
+                mostraFragmentConBackStack(InformazioniFragment.newInstance(),"InformazioniFragment");
                 break;
         }
     }

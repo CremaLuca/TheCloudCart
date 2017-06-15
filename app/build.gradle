@@ -16,8 +16,8 @@ android {
         applicationId 'org.cramest.thecloudcart'
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 8
-        versionName '2.12'
+        versionCode 9
+        versionName '2.20'
         signingConfig signingConfigs.config
     }
     buildTypes {
