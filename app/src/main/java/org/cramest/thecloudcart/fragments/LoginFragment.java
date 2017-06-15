@@ -201,8 +201,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     if (success) {
                         System.out.println("LoginFragment - Login con google con successo anche al sito");
                         SaveLoginData(getActivity(), username, data, acct.getId());
+                        String userID = data.split("♦")[0];
+                        String nameUser = data.split("♦")[1];
                         //Notifichiamo il fragment che siamo riusciti a fare l'accesso il quale chiamera l'activity che ne caricherà un altra
-                        mListener.OnLogin(username, data);
+                        mListener.OnLogin(username, userID, nameUser);
                     }
                 }
             }, "googleLogin", parametri, valori);
@@ -222,7 +224,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
     }
     public interface OnLoginFragmentListener {
-        void OnLogin(String username,String userID);
+        void OnLogin(String username, String userID, String nomeUser);
         void OnCreateNewUser();
     }
 

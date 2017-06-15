@@ -40,9 +40,11 @@ public class LoginApp implements DataHandler {
                     System.out.println("LoginApp - Nome utente e password corretti");
 
                     //Salviamo nella memoria i nostri dati
-                    SaveLoginData(c,username,data,password);
+                    String userID = data.split("♦")[0];
+                    String nameUser = data.split("♦")[1];
+                    SaveLoginData(c, username, userID, nameUser, password);
                     //Notifichiamo il fragment che siamo riusciti a fare l'accesso il quale chiamera l'activity che ne caricherà un altra
-                    mListener.OnLoginSuccess(username,data);
+                    mListener.OnLoginSuccess(username, userID, nameUser);
                 }
             }else{
                 Toast.makeText(c, "Errore : " + data, Toast.LENGTH_SHORT).show();
@@ -52,14 +54,15 @@ public class LoginApp implements DataHandler {
         }
     }
 
-    public static void SaveLoginData(Context c,String username,String userID,String password){
+    public static void SaveLoginData(Context c, String username, String userID, String nameUser, String password) {
         DataSaver.getInstance().saveDataString(c, "username", username);
         DataSaver.getInstance().saveDataString(c, "userID", userID);
+        DataSaver.getInstance().saveDataString(c, "nameUser", nameUser);
         DataSaver.getInstance().saveDataString(c, "password", password);//Serve per rifare l'accesso
     }
 
     public interface OnLoginAppListener{
-        void OnLoginSuccess(String username, String userID);
+        void OnLoginSuccess(String username, String userID, String nameUser);
         void OnLoginFailed();
     }
 }

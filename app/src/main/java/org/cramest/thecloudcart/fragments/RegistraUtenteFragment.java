@@ -1,16 +1,13 @@
 package org.cramest.thecloudcart.fragments;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.app.Fragment;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +82,7 @@ public class RegistraUtenteFragment extends Fragment{
                             LoadingOverlayHandler.nascondiLoading(getActivity());
                             if(success){
                                 Toast.makeText(getActivity(),"Registazione effettuata con successo",Toast.LENGTH_SHORT).show();
-                                OnRegistraSuccess(username,data,password);
+                                OnRegistraSuccess(username, data, nome, password);
                             }else{
                                 Toast.makeText(getActivity(),data,Toast.LENGTH_SHORT).show();
                                 OnRegistraFailed();
@@ -127,9 +124,9 @@ public class RegistraUtenteFragment extends Fragment{
         mListener = null;
     }
 
-    public void OnRegistraSuccess(String username, String userID,String password) {
+    public void OnRegistraSuccess(String username, String userID, String nameUser, String password) {
         if(mListener != null) {
-            mListener.OnRegistraSuccess(username, userID,password);
+            mListener.OnRegistraSuccess(username, userID, nameUser, password);
         }else{
             throw new RuntimeException("missing OnRegistraFragmentListener");
         }
@@ -143,7 +140,7 @@ public class RegistraUtenteFragment extends Fragment{
     }
 
     public interface OnRegistraFragmentListener {
-        void OnRegistraSuccess(String username, String userID,String password);
+        void OnRegistraSuccess(String username, String userID, String nameUser, String password);
         void OnRegistraFailed();
     }
 

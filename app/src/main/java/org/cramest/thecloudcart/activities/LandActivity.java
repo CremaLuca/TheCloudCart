@@ -38,12 +38,13 @@ public class LandActivity extends Activity implements LoginApp.OnLoginAppListene
             //Se manca la connessione ad internet facciamo l'accesso con l'ultimo account, altrimenti notifichiamo che e' necessaria una connessione internet al primo accesso
             String username = DataSaver.getInstance().getDataString(this, "username");
             String userID = DataSaver.getInstance().getDataString(this, "userID");
-
+            String nameUser = DataSaver.getInstance().getDataString(this, "nameUser");
             if(username != null) {
                 //Passiamo direttamente alla activity in cui mostriamo la lista
                 Intent i = new Intent(this, MainActivity.class);
                 i.putExtra("username", username);
                 i.putExtra("userID", userID);
+                i.putExtra("nameUser", nameUser);
                 startActivity(i);
                 //impediamo di tornare indietro con finish()
                 finish();
@@ -54,10 +55,11 @@ public class LandActivity extends Activity implements LoginApp.OnLoginAppListene
     }
 
     @Override
-    public void OnLoginSuccess(String username, String userID) {
+    public void OnLoginSuccess(String username, String userID, String nameUser) {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("username", username);
         i.putExtra("userID", userID);
+        i.putExtra("nameUser", nameUser);
         startActivity(i);
         //impediamo di tornare indietro con finish()
         finish();

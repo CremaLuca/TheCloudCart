@@ -41,6 +41,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener {
 
     private String username;
+    private String nameUser;
     private String userID;
 
     private ListsFragment listFragment;
@@ -69,6 +70,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //recuperiamo nome utente e password dall'intent
         username = getIntent().getExtras().getString("username");
         userID = getIntent().getExtras().getString("userID");
+        nameUser = getIntent().getExtras().getString("nameUser");
+        System.out.println("DEBUG MainActivity - Ciao " + nameUser);
         ((TextView)mNavigationDrawerFragment.getActivity().findViewById(R.id.text_view_quantita)).setText(username);
         restoreActionBar();
         InizializzaApplicazione();
@@ -128,7 +131,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
                 break;
             case 2:
                 //Impostazioni
-                mostraFragmentConBackStack(ImpostazioniFragment.newInstance(userID),"ImpostazioniFragment");
+                mostraFragmentConBackStack(ImpostazioniFragment.newInstance(userID, nameUser), "ImpostazioniFragment");
                 break;
             case 3:
                 //Disconnetti

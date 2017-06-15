@@ -17,7 +17,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 8
-        versionName '2.11'
+        versionName '2.12'
         signingConfig signingConfigs.config
     }
     buildTypes {
