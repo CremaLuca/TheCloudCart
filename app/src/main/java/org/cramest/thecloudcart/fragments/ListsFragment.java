@@ -95,7 +95,7 @@ public class ListsFragment extends Fragment{
         });
         mAdView = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice("FE3059E0490D901C37DCB894C93DFCC0")
+                .addTestDevice("FE3059E0490D901C37DCB894C93DFCC0")
                 .build();
         mAdView.loadAd(adRequest);
         mAdView.setAdListener(new AdListener() {

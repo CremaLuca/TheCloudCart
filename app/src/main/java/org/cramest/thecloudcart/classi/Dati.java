@@ -440,16 +440,16 @@ public class Dati implements DataHandler{
         }, "eliminaLista", pars, vals);
     }
 
-    public static void creaProdottoEAggiungiloALista(final String userID,final String nome,final Double prezzo,final String marca,final String dimensione,final Categoria categoria,final int quantita,final String descrizione,final int listID){
+    public static void creaProdottoEAggiungiloALista(final String userID, final String nomeProdotto, final Double prezzo, final String marca, final String dimensione, final Categoria categoria, final int quantita, final String descrizione, final int listID) {
         String[] parametri = {"req","userID","name","price","brand","dimension","categoryID"};
-        String[] valori = {"createProduct",userID,nome,prezzo+"",marca,dimensione,categoria.getID()+""};
+        String[] valori = {"createProduct", userID, nomeProdotto, prezzo + "", marca, dimensione, categoria.getID() + ""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
             @Override
             public void HandleData(String nome, boolean success, String data) {
                 if(success) {
                     //Ricostruiamo il prodotto con il nuovo ID
                     int ID = Integer.parseInt(data);
-                    final Prodotto prod = new Prodotto(ID,nome,prezzo,marca,dimensione,categoria);
+                    final Prodotto prod = new Prodotto(ID, nomeProdotto, prezzo, marca, dimensione, categoria);
 
                     //Toast.makeText(ctx,"Prodotto salvato con successo (debug-ID: "+data+")", Toast.LENGTH_SHORT).show();
 

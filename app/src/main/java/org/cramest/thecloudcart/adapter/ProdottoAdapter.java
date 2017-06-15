@@ -40,10 +40,10 @@ public class ProdottoAdapter extends ArrayAdapter<ProdottoInLista> {
             quantita.setText(prodottoInLista.getQuantita() + "");
 
             if(prodottoInLista.getDescrizione() != null && !prodottoInLista.getDescrizione().equals("")){
-                System.out.println("ProdottoAdapter("+prodottoInLista.getProdotto().getNome()+") - Imposto la descrizione '"+prodottoInLista.getDescrizione()+"' ");
+                //System.out.println("ProdottoAdapter("+prodottoInLista.getProdotto().getNome()+") - Imposto la descrizione '"+prodottoInLista.getDescrizione()+"' ");
                 descrizione.setText(prodottoInLista.getDescrizione());
             }else{
-                System.out.println("ProdottoAdapter("+prodottoInLista.getProdotto().getNome()+") - Imposto descrizione nulla");
+                //System.out.println("ProdottoAdapter("+prodottoInLista.getProdotto().getNome()+") - Imposto descrizione nulla");
                 descrizione.setText("Nessuna descrizione");
                 descrizione.setVisibility(View.GONE);
                 descrizione.setHeight(0);
