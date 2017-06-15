@@ -1,6 +1,8 @@
 package org.cramest.thecloudcart.network;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -22,12 +24,18 @@ public class Connettore {
 
     static Context context;
     private static Connettore instance = new Connettore();
-    ConnectivityManager connectivityManager;
-    NetworkInfo wifiInfo, mobileInfo;
-    boolean connected = false;
+    private static final String divisoreDocumento = "•";
+    private static String appVersion = "2.22";
 
     public static Connettore getInstance(Context ctx) {
         context = ctx.getApplicationContext();
+        PackageInfo pInfo = null;
+        try {
+            pInfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+            appVersion = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         return instance;
     }
 
@@ -77,8 +85,8 @@ public class Connettore {
                 URL url = null;
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http").authority("thecloudcart.altervista.org")
-                        .appendPath("Android");
-                        //.appendQueryParameter("p", pagina);
+                        .appendPath("Android")
+                        .appendQueryParameter("appVersion", appVersion);
                 for (int i = 0; i < nomiParametro.length; i++) {
                     builder.appendQueryParameter(nomiParametro[i], valoriParametro[i]);
                 }
@@ -139,8 +147,10 @@ public class Connettore {
 
         @Override
         protected void onPostExecute(String result) {
+            //Allora questa riga serve a prendere solo la prima parte del documento così la pubblicità non viene processata
+            result = result.split(divisoreDocumento)[0];
             if(result != null) {
-                String[] risultati = result.split("%");
+                String[] risultati = result.split("↔");
                 if(risultati.length > 1) {
                     boolean success = false;
                     success = risultati[0].equals("OK");
