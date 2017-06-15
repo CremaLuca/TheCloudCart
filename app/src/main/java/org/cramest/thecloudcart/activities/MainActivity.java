@@ -125,22 +125,22 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
                 //Le mie liste
                 mostraFragmentSenzaBackStack(ListsFragment.newInstance(userID), "ListsFragment");
                 break;
-            case 1:
+            /*case 1:
                 //I miei prodotti
-                break;
-            case 2:
+                break;*/
+            case 1:
                 //Impostazioni
                 mostraFragmentConBackStack(ImpostazioniFragment.newInstance(userID, nameUser), "ImpostazioniFragment");
                 break;
-            case 3:
+            case 2:
                 //Disconnetti
                 DataSaver.getInstance().clearData(this);
                 Intent i = new Intent(getApplicationContext(), LandActivity.class);
                 startActivity(i);
                 finish();
                 break;
-            case 4:
-                //Informazioni
+            case 3:
+                //Info su The CloudCart
                 break;
         }
     }
