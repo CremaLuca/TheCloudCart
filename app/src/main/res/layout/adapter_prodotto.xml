@@ -26,7 +26,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
         android:layout_toStartOf="@+id/text_view_quantita"
-        android:text="@string/quantita_duepunti" />
+        android:text="@string/quantity_duepunti" />
 
     <TextView
         android:id="@+id/text_view_quantita"
@@ -41,7 +41,7 @@
         android:id="@+id/textViewDescrizioneProdotto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/descrizione"
+        android:text="@string/description"
         android:maxLines="2"
         android:nestedScrollingEnabled="false"
         android:layout_below="@+id/textViewNomeProdotto"

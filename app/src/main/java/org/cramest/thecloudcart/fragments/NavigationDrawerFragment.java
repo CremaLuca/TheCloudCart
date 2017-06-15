@@ -243,17 +243,9 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        /*if (item.getItemId() == R.id.action_example) {
-
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Callbacks interface that all activities using this fragment must implement.
-     */
     public static interface NavigationDrawerCallbacks {
         void onNavigationDrawerItemSelected(int position);
         void onNavigationHeaderClicked();

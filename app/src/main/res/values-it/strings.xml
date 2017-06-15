@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">The Cloudcart</string>
+    <string name="add">Aggiungi</string>
+    <string name="Crea_prodotto">Crea prodotto</string>
+    <string name="Crea_nuovo_prodotto">Crea nuovo prodotto</string>
+    <string name="add_to_list_duepunti">Aggiungi a lista :</string>
+    <string name="already_saved_product">Prodotto già salvato</string>
+    <string name="bought">Comprato</string>
+    <string name="brand">Marca\n</string>
+    <string name="category">Categoria</string>
+    <string name="create_list">Crea lista</string>
+    <string name="delete">Elimina</string>
+    <string name="dimension_es_1kg">Dimensione (es. 1kg/1lt)</string>
+    <string name="description">Descrizione</string>
+    <string name="dimension">Dimensione</string>
+    <string name="email">Email</string>
+    <string name="icon">Icona</string>
+    <string name="list_name">Nome lista</string>
+    <string name="quantity_duepunti">Quantità :</string>
+    <string name="register_yoruself">Registrati</string>
+    <string name="repeat_password">Ripeti password*</string>
+    <string name="login_with_google">Esegui il login con google</string>
+    <string name="name">Nome</string>
+    <string name="login">Login</string>
+    <string name="save">Salva</string>
+    <string name="save_new_product">Salva nuovo prodotto</string>
+    <string name="save_product">Salva prodotto</string>
+    <string name="settings">Impostazioni</string>
+    <string name="username">Nome utente</string>
+    <string name="usernameRequired">Nome utente*</string>
+    <string name="whats_your_name">Come ti chiami?</string>
+    <string name="salva_e_aggiungi_alla_lista">Salva e aggiungi alla lista</string>
+    <string name="quantity">Quantità</string>
+    <string name="product">Prodotto</string>
+    <string name="price">Prezzo</string>
+    <string name="no_account_register">Non hai un account? Registrati</string>
+    <string name="new_user">Nuovo utente</string>
+    <string name="passwordRequired">Password*</string>
+</resources>
