@@ -73,25 +73,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onStart() {
         super.onStart();
-
-        /*OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
-        if (opr.isDone()) {
-            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
-            // and the GoogleSignInResult will be available instantly.
-            System.out.println("LoginFragment - C'è un accesso in cache");
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        } else {
-            // If the user has not previously signed in on this device or the sign-in has expired,
-            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
-            // single sign-on will occur in this branch.
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
-                    handleSignInResult(googleSignInResult);
-                }
-            });
-        }*/
     }
 
     @Override
@@ -107,7 +88,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         //Quando abbiamo almeno una view gli diciamo cosa fare
         getActivity().findViewById(R.id.sign_in_button).setOnClickListener(this);
         getActivity().findViewById(R.id.loginButton).setOnClickListener(this);
-        getActivity().findViewById(R.id.registerButton).setOnClickListener(this);
+        getActivity().findViewById(R.id.text_view_no_account).setOnClickListener(this);
     }
 
     @Override
@@ -159,7 +140,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 }
                 //Da qui in poi si arrangia con i listener
                 break;
-            case R.id.registerButton:
+            case R.id.text_view_no_account:
                 mListener.OnCreateNewUser();
                 break;
         }
