@@ -37,4 +37,5 @@
     <string name="no_account_register">Non hai un account? Registrati</string>
     <string name="new_user">Nuovo utente</string>
     <string name="passwordRequired">Password*</string>
+    <string name="Logging_in">Effettuando il login...</string>
 </resources>
