@@ -48,4 +48,13 @@
     <string name="title_login_activity" translatable="false">LoginActivity</string>
     <string name="fragment_list_banner" translatable="false">ca-app-pub-3337410811427983/5930335959</string>
     <string name="Logging_in">Logging in...</string>
+    <string name="Error">Error</string>
+    <string name="Mine">Mine</string>
+    <string name="Shared_with_me">Shared with me</string>
+    <string name="New_product">New product</string>
+    <string name="My_lists">My lists</string>
+    <string name="Logout">Logout</string>
+    <string name="About_the_cloudcart">About The Cloudcart</string>
+    <string name="Add_product">Add product</string>
+    <string name="Recommended">Recommended</string>
 </resources>

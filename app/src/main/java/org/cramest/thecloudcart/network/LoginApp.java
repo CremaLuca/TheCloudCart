@@ -3,6 +3,7 @@ package org.cramest.thecloudcart.network;
 import android.content.Context;
 import android.widget.Toast;
 
+import org.cramest.thecloudcart.R;
 import org.cramest.utils.DataSaver;
 
 public class LoginApp implements DataHandler {
@@ -47,7 +48,7 @@ public class LoginApp implements DataHandler {
                     mListener.OnLoginSuccess(username, userID, nameUser);
                 }
             }else{
-                Toast.makeText(c, "Errore : " + data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(c, c.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                 mListener.OnLoginFailed();
 
             }

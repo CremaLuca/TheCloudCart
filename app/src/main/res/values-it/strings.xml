@@ -38,4 +38,13 @@
     <string name="new_user">Nuovo utente</string>
     <string name="passwordRequired">Password*</string>
     <string name="Logging_in">Effettuando il login...</string>
+    <string name="Mine">Mie</string>
+    <string name="Shared_with_me">Condivise con me</string>
+    <string name="New_product">Nuovo prodotto</string>
+    <string name="My_lists">Le mie liste</string>
+    <string name="Logout">Disconnetti</string>
+    <string name="About_the_cloudcart">Info su The Cloudcart</string>
+    <string name="Add_product">Aggiungi prodotto</string>
+    <string name="Error">Errore</string>
+    <string name="Recommended">Consigliati</string>
 </resources>

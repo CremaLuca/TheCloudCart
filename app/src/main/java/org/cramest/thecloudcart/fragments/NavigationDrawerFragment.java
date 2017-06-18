@@ -92,11 +92,11 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        "Le mie liste",
+                        getString(R.string.My_lists),
                         //"I miei prodotti",
-                        "Impostazioni",
-                        "Disconnetti",
-                        "Info su The Cloudcart"
+                        getString(R.string.settings),
+                        getString(R.string.Logout),
+                        getString(R.string.About_the_cloudcart)
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 

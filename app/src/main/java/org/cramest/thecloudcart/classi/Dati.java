@@ -3,6 +3,7 @@ package org.cramest.thecloudcart.classi;
 import android.content.Context;
 import android.widget.Toast;
 
+import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.network.Connettore;
 import org.cramest.thecloudcart.network.DataHandler;
 import org.cramest.thecloudcart.network.WebsiteDataManager;
@@ -399,7 +400,7 @@ public class Dati implements DataHandler{
                     prodottiInLista.remove(prodottoInLista);
                     OnProdottoInListaEliminato(listID);
                 }else{
-                    Toast.makeText(ctx, "Errore: " + data, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                 }
             }
         }, "eliminaProdotto=" + prodottoInLista.getIdLista(), pars, vals);
@@ -417,7 +418,7 @@ public class Dati implements DataHandler{
                     mListener.OnProdottoComprato(prodottoInLista.getIdLista());
                     Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                 }
             }
         }, "compraProdotto=" + prodottoInLista.getIdLista(), pars, vals);
@@ -436,7 +437,7 @@ public class Dati implements DataHandler{
                     Toast.makeText(ctx, data, Toast.LENGTH_SHORT).show();
                     mListener.OnListaEliminata();
                 }else{
-                    Toast.makeText(ctx, data,Toast.LENGTH_SHORT);
+                    Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT);
                 }
             }
         }, "eliminaLista", pars, vals);
@@ -472,13 +473,13 @@ public class Dati implements DataHandler{
                                 mListener.OnProdottoInListaCreato(tmpProdottoInLista);
                             }else{
                                 //TODO : GESTIRE TUTTI GLI ERRORI DI AGGIUNTA DEL PRODOTTO
-                                Toast.makeText(ctx,data, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                             }
                         }
                     },"Aggiungi a lista",parametri,valori);
 
                 }else{
-                    Toast.makeText(ctx,data, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                     /*mListener.onProdottoNonCreato(listID);*/
                 }
             }
