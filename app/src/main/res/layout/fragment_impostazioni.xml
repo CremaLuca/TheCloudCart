@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:hint="Come ti chiami?"
+            android:hint="@string/whats_your_name"
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Salva"
+        android:text="@string/save"
         android:layout_marginBottom="5dp" />
 
 

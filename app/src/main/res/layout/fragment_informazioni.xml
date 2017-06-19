@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="Informazioni su The Cloudcart"
+        android:text="@string/Information_about_the_cloudcart"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:id="@+id/textView_creatore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Da un idea di"
+            android:text="@string/An_idea_of"
             android:textAppearance="@android:style/TextAppearance.Material.Menu"
             android:layout_marginTop="10dp"/>
 
@@ -43,7 +43,7 @@
             android:id="@+id/textView_prodotto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prodotto da"
+            android:text="@string/produced_by"
             android:textAppearance="@android:style/TextAppearance.Material.Menu"
             android:layout_marginTop="10dp"/>
 
@@ -58,7 +58,7 @@
             android:id="@+id/textView_versione"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Codice versione"
+            android:text="@string/Version_code"
             android:textAppearance="@android:style/TextAppearance.Material.Menu"
             android:layout_marginTop="10dp"/>
 

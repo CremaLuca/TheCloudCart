@@ -72,4 +72,8 @@
     <string name="Category_12">Animals</string>
     <string name="Category_13">Other</string>
     <string name="Products">Products</string>
+    <string name="Information_about_the_cloudcart">Information about The Cloudcart</string>
+    <string name="An_idea_of">An idea of</string>
+    <string name="produced_by">Produced by</string>
+    <string name="Version_code">Version code</string>
 </resources>
