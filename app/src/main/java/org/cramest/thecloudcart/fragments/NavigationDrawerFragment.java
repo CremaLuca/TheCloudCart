@@ -246,6 +246,10 @@ public class NavigationDrawerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    public DrawerLayout getmDrawerLayout() {
+        return mDrawerLayout;
+    }
+
     public static interface NavigationDrawerCallbacks {
         void onNavigationDrawerItemSelected(int position);
         void onNavigationHeaderClicked();
