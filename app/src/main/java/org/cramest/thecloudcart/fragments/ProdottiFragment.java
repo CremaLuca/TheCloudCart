@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.ProdottoAdapter;
@@ -98,7 +99,9 @@ public class ProdottiFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_prodotti, container, false);
+        View v = inflater.inflate(R.layout.fragment_prodotti, container, false);
+        ((TextView) v.findViewById(R.id.text_view_header_name)).setText(curList.getNome());
+        return v;
     }
 
     public void onProdottoClicked(ProdottoInLista prodottoInLista) {

@@ -8,12 +8,32 @@
     tools:context="org.cramest.thecloudcart.fragments.ProdottiFragment"
     android:background="@color/colorBackground">
 
+    <RelativeLayout
+        android:id="@+id/list_header"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/text_view_header_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:text="Casa"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="30sp"
+            android:typeface="normal" />
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/listProdotti"
         style="@style/ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btn_aggiungi_prodotto"
+        android:layout_below="@+id/list_header"
         android:layout_marginBottom="15dp"/>
 
     <Button

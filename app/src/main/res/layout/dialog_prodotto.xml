@@ -15,7 +15,7 @@
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textViewPrezzoCrea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -23,44 +23,79 @@
         android:text="@string/price"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
+    <EditText
+        android:id="@+id/edit_prezzo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewPrezzoCrea"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:editable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:maxLines="1"
+        android:textSize="14sp" />
+
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/textViewMarcaCrea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView9"
+        android:layout_below="@+id/textViewPrezzoCrea"
         android:layout_marginTop="50dp"
         android:text="@string/brand"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
+    <EditText
+        android:id="@+id/edit_marca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewMarcaCrea"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:editable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:maxLines="1"
+        android:textSize="14sp" />
+
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewDimensioneCrea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView10"
+        android:layout_below="@+id/textViewMarcaCrea"
         android:layout_marginTop="50dp"
         android:text="@string/dimension"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/edit_dimensione"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView11"
-        android:layout_marginTop="50dp"
-        android:text="@string/quantity"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+        android:layout_below="@+id/textViewDimensioneCrea"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:editable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:maxLines="1"
+        android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/textViewQuantitaCrea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView12"
+        android:layout_below="@+id/textViewDimensioneCrea"
         android:layout_marginTop="50dp"
-        android:text="@string/description"
+        android:text="@string/quantity"
         android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <EditText
@@ -68,15 +103,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView12"
-        android:ems="10"
+        android:layout_below="@+id/textViewQuantitaCrea"
         android:clickable="false"
         android:cursorVisible="false"
+        android:editable="false"
+        android:ems="10"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:editable="false"
         android:maxLines="1"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewDescrizioneCrea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textViewQuantitaCrea"
+        android:layout_marginTop="50dp"
+        android:text="@string/description"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     <EditText
         android:id="@+id/edit_descrizione"
@@ -84,58 +129,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView13"
+        android:layout_below="@+id/textViewDescrizioneCrea"
         android:editable="false"
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:ems="10"
-        android:textSize="14sp" />
-
-    <EditText
-        android:id="@+id/edit_dimensione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView11"
-        android:editable="false"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:ems="10"
-        android:maxLines="1"
-        android:textSize="14sp" />
-
-    <EditText
-        android:id="@+id/edit_marca"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView10"
-        android:editable="false"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:ems="10"
-        android:maxLines="1"
-        android:textSize="14sp" />
-
-    <EditText
-        android:id="@+id/edit_prezzo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView9"
-        android:editable="false"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:ems="10"
-        android:maxLines="1"
         android:textSize="14sp" />
 
     <Button
