@@ -57,4 +57,19 @@
     <string name="About_the_cloudcart">About The Cloudcart</string>
     <string name="Add_product">Add product</string>
     <string name="Recommended">Recommended</string>
+    <string name="Add_to_list">Add to list</string>
+    <string name="Category_1">Fruit &amp; vegetables</string>
+    <string name="Category_2">Bakery</string>
+    <string name="Category_3">Dairy</string>
+    <string name="Category_4">Meat &amp; fish</string>
+    <string name="Category_5">Ingredients &amp; spieces</string>
+    <string name="Category_6">Pasta, rice &amp; cereals</string>
+    <string name="Category_7">Snack &amp; desserts</string>
+    <string name="Category_8">Beverages</string>
+    <string name="Category_9">Tobacco</string>
+    <string name="Category_10">House</string>
+    <string name="Category_11">Hygene</string>
+    <string name="Category_12">Animals</string>
+    <string name="Category_13">Other</string>
+    <string name="number_of_products">Number of products : </string>
 </resources>

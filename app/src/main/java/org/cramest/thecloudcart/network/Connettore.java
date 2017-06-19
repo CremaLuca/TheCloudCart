@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 public class Connettore {
 
@@ -26,6 +27,7 @@ public class Connettore {
     private static Connettore instance = new Connettore();
     private static final String divisoreDocumento = "•";
     private static String appVersion = "2.22";
+    private static String lang = "en";
 
     public static Connettore getInstance(Context ctx) {
         context = ctx.getApplicationContext();
@@ -36,6 +38,7 @@ public class Connettore {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        lang = Locale.getDefault().getLanguage();
         return instance;
     }
 
@@ -86,7 +89,8 @@ public class Connettore {
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http").authority("thecloudcart.altervista.org")
                         .appendPath("Android")
-                        .appendQueryParameter("appVersion", appVersion);
+                        .appendQueryParameter("appVersion", appVersion)
+                        .appendQueryParameter("lang", lang);
                 for (int i = 0; i < nomiParametro.length; i++) {
                     builder.appendQueryParameter(nomiParametro[i], valoriParametro[i]);
                 }
@@ -119,6 +123,8 @@ public class Connettore {
                 System.out.println("Connettore - ConnectException : Ora riprovo a caricare la pagina se c'è internet");
                 if(isNetworkAvailable()) {
                     doInBackground(); //Riprova a caricare
+                } else {
+                    System.out.println("Connettore - Non c'è internet, non carico più niente");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

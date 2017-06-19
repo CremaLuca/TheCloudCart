@@ -23,8 +23,8 @@ public class Dati implements DataHandler{
     private static ArrayList<Categoria> categorie;
     private static ArrayList<Prodotto> prodotti;
     private static ArrayList<ProdottoInLista> prodottiInLista;
-    private static ArrayList<ProdottoConsigliato> prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
-    private static ArrayList<Utente> utenti = new ArrayList<Utente>();
+    private static ArrayList<ProdottoConsigliato> prodottiConsigliati = new ArrayList<>();
+    private static ArrayList<Utente> utenti = new ArrayList<>();
 
     private String userID;
     private static Context ctx;
@@ -48,23 +48,35 @@ public class Dati implements DataHandler{
         instance = this;
         //Svuotiamo le liste nel caso contengano qualcosa
         svuotaListe();
+        setupCategorie();
+        //Iniziamo
+        richiediProdotti(ctx, userID);
+    }
 
-        richiediCategorie(ctx);
+    private void setupCategorie() {
+        categorie = new ArrayList<>();
+        categorie.add(new Categoria(1, ctx.getString(R.string.Category_1)));
+        categorie.add(new Categoria(2, ctx.getString(R.string.Category_2)));
+        categorie.add(new Categoria(3, ctx.getString(R.string.Category_3)));
+        categorie.add(new Categoria(4, ctx.getString(R.string.Category_4)));
+        categorie.add(new Categoria(5, ctx.getString(R.string.Category_5)));
+        categorie.add(new Categoria(6, ctx.getString(R.string.Category_6)));
+        categorie.add(new Categoria(7, ctx.getString(R.string.Category_7)));
+        categorie.add(new Categoria(8, ctx.getString(R.string.Category_8)));
+        categorie.add(new Categoria(9, ctx.getString(R.string.Category_9)));
+        categorie.add(new Categoria(10, ctx.getString(R.string.Category_10)));
+        categorie.add(new Categoria(11, ctx.getString(R.string.Category_11)));
+        categorie.add(new Categoria(12, ctx.getString(R.string.Category_12)));
+        categorie.add(new Categoria(13, ctx.getString(R.string.Category_13)));
     }
 
     private void svuotaListe(){
         listeMie = null;
         listeCondivise = null;
-        categorie = null;
         prodotti = null;
         prodottiInLista = null;
         prodottiConsigliati = new ArrayList<ProdottoConsigliato>();
         utenti = new ArrayList<Utente>();
-    }
-
-    private void richiediCategorie(Context ctx){
-        //richiediamo le categorie
-        Connettore.getInstance(ctx).GetDataFromWebsite(this,"categorie","req","getAllCategorie");
     }
 
     private void richiediProdotti(Context ctx,String userID){
@@ -129,10 +141,6 @@ public class Dati implements DataHandler{
     @Override
     public void HandleData(String nome, boolean success, String data) {
         if(success){
-            if(nome.equals("categorie")){
-                categorie = new ArrayList<Categoria>(Arrays.asList(WebsiteDataManager.getCategorie(data)));
-                richiediProdotti(ctx,userID);
-            }
             if(nome.equals("prodotti")){
                 Prodotto[] arrayProdotti = WebsiteDataManager.getProdotti(data);
                 if(arrayProdotti != null) {
@@ -264,7 +272,7 @@ public class Dati implements DataHandler{
         if(listeMie != null) {
             return listeMie;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public static ArrayList<Lista> getListeCondivise() {

@@ -54,7 +54,11 @@ public class ListeMieFragment extends Fragment {
         if (getArguments() != null) {
             System.out.println("ListeMieFragment - OnCreate con argomenti");
             userID = getArguments().getString(ARG_PARAM);
-            listeMie = new ArrayList<Lista>(Dati.getListeMie());
+            if (Dati.getListeMie() != null) {
+                listeMie = new ArrayList<>(Dati.getListeMie());
+            } else {
+                listeMie = new ArrayList<>();
+            }
         }
     }
 

@@ -47,4 +47,19 @@
     <string name="Add_product">Aggiungi prodotto</string>
     <string name="Error">Errore</string>
     <string name="Recommended">Consigliati</string>
+    <string name="Add_to_list">Aggiungi a lista</string>
+    <string name="Category_1">Frutta &amp; Verdura</string>
+    <string name="Category_2">Panetteria</string>
+    <string name="Category_3">Latte e formaggi</string>
+    <string name="Category_4">Carne &amp; pesce</string>
+    <string name="Category_5">Ingredienti &amp; spezie</string>
+    <string name="Category_6">Pasta, riso &amp; cereali</string>
+    <string name="Category_7">Snack &amp; dolci</string>
+    <string name="Category_8">Bevande</string>
+    <string name="Category_9">Tabacco</string>
+    <string name="Category_10">Casa</string>
+    <string name="Category_11">Igene</string>
+    <string name="Category_12">Animali</string>
+    <string name="Category_13">Altro</string>
+    <string name="number_of_products">Numero di prodotti : </string>
 </resources>

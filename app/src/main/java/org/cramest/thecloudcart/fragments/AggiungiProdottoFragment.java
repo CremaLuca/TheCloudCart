@@ -104,7 +104,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         TextView titolo =(TextView)getActivity().findViewById(R.id.title_aggiungi_prodotto);
-        titolo.setText("Aggiungi a lista : "+curList.getNome());
+        titolo.setText(getString(R.string.Add_to_list) + ":" + curList.getNome());
         setCategorieSpinner();
         updatePodottoSpinner(0);
         if(initialProdotto != null){
@@ -165,8 +165,8 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         //Recuperiamo i nomi delle categorie
         ArrayList<String> stringCategorie = Dati.getCategorieAsString();
         //Questo sposta di uno la posizione delle categorie
-        stringCategorie.add(0, "Consigliati per questa lista");
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, stringCategorie);
+        stringCategorie.add(0, getString(R.string.Recommended));
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, stringCategorie);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();
@@ -191,7 +191,7 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
         curProdottiByCategoria = Dati.getProdottiByCategoria(idCategoria, listID);
         ArrayList<String> prodotti = Dati.prodottiToString(curProdottiByCategoria);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, prodotti);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, prodotti);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();

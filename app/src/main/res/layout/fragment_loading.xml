@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.cramest.thecloudcart.fragments.LoadingFragment">
+    tools:context="org.cramest.thecloudcart.fragments.LoadingFragment"
+    android:background="@color/colorBackground">
 
     <ProgressBar
         android:id="@+id/progressBar2"
