@@ -348,6 +348,7 @@ public class Dati implements DataHandler{
     }
     public static void aggiungiProdottoInLista(ProdottoInLista prodottoInLista){
         prodottiInLista.add(prodottoInLista);
+        getListaByID(prodottoInLista.getIdLista()).aggiungiQuantita();
     }
 
     public static void aggiungiProdotto(Prodotto prod){
@@ -411,7 +412,7 @@ public class Dati implements DataHandler{
                     Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                 }
             }
-        }, "eliminaProdotto=" + prodottoInLista.getIdLista(), pars, vals);
+        }, "eliminaProdotto", pars, vals);
     }
 
     public static void compraProdotto(String userID,final ProdottoInLista prodottoInLista){
@@ -429,7 +430,7 @@ public class Dati implements DataHandler{
                     Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                 }
             }
-        }, "compraProdotto=" + prodottoInLista.getIdLista(), pars, vals);
+        }, "compraProdotto", pars, vals);
     }
 
     //Elimina la lista solo se mia

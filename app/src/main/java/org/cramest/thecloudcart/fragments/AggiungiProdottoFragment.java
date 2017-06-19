@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Use the {@link AggiungiProdottoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AggiungiProdottoFragment extends Fragment implements DataHandler{
+public class AggiungiProdottoFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "userID";
     private static final String ARG_PARAM2 = "listID";
@@ -148,7 +148,22 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
             if (Connettore.getInstance(getActivity()).isNetworkAvailable()) {
                 LoadingOverlayHandler.mostraLoading(getActivity());
                 //Chiediamo al sito di creare il prodotto
-                Connettore.getInstance(getActivity()).GetDataFromWebsite(this, "aggiungiProdotto", parametri, valori);
+                Connettore.getInstance(getActivity()).GetDataFromWebsite(new DataHandler() {
+                    @Override
+                    public void HandleData(String nomeRichiesta, boolean success, String data) {
+                        if (success) {
+                            Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+                            if (tmpProdottoInLista != null) {
+                                onProdottoAggiunto(tmpProdottoInLista);
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+                            if (tmpProdottoInLista != null) {
+                                onProdottoNonAggiunto(tmpProdottoInLista);
+                            }
+                        }
+                    }
+                }, "aggiungiProdotto", parametri, valori);
             } else {
                 //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
             }
@@ -262,21 +277,6 @@ public class AggiungiProdottoFragment extends Fragment implements DataHandler{
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void HandleData(String nome, boolean success, String data) {
-        if(success) {
-            Toast.makeText(getActivity(),data, Toast.LENGTH_SHORT).show();
-            if(tmpProdottoInLista != null) {
-                onProdottoAggiunto(tmpProdottoInLista);
-            }
-        }else{
-            Toast.makeText(getActivity(),data, Toast.LENGTH_SHORT).show();
-            if (tmpProdottoInLista != null) {
-                onProdottoNonAggiunto(tmpProdottoInLista);
-            }
-        }
     }
 
     public interface OnAggiungiProdottiListener {

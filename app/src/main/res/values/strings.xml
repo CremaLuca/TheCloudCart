@@ -71,5 +71,5 @@
     <string name="Category_11">Hygene</string>
     <string name="Category_12">Animals</string>
     <string name="Category_13">Other</string>
-    <string name="number_of_products">Number of products : </string>
+    <string name="Products">Products</string>
 </resources>
