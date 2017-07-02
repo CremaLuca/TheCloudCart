@@ -19,9 +19,10 @@ public class ListaDialog {
 
     public static ListaDialog instance;
     private UtenteAdapter listViewAdapter;
+    private OnListaDialogInteractionListener mListener;
 
     public void showDialog(final Activity activity, final OnListaDialogInteractionListener listener, final Lista lista, final String userID) {
-
+        mListener = listener;
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -32,7 +33,7 @@ public class ListaDialog {
         ((Button)dialog.findViewById(R.id.button_elimina_lista)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.OnEliminaLista(lista.getID());
+                listener.OnEliminaLista(lista);
                 dialog.dismiss();
             }
         });
@@ -61,7 +62,7 @@ public class ListaDialog {
     }
 
     public interface OnListaDialogInteractionListener {
-        void OnEliminaLista(int listID);
+        void OnEliminaLista(Lista lista);
         void OnCondividiLista(Lista lista);
     }
 }

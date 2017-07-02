@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Created by User on 11/06/2017.
  */
 
-public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener {
+public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener, Dati.OnListeEliminaListener, Dati.OnListeCondividiListener {
 
     private static final String ARG_PARAM = "userID";
 
@@ -92,7 +92,6 @@ public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDia
 
     public void onListaLongClicked(Lista lista) {
 
-
         ListaDialog listaDialog = new ListaDialog();
         listaDialog.showDialog(getActivity(), this, lista, userID);
 
@@ -132,28 +131,33 @@ public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDia
     }
 
     @Override
-    public void OnEliminaLista(int listID) {
-
+    public void OnEliminaLista(Lista lista) {
+        Dati.eliminaLista(lista, this);
+        mListener.OnEliminaLista(lista);
     }
 
     @Override
     public void OnCondividiLista(Lista lista) {
-        aggiornaLista();
+        CondividiDialog condividiDialog = new CondividiDialog();
+        condividiDialog.showDialog(getActivity(), this, lista);
+        mListener.OnCondividiLista(lista);
     }
 
     @Override
     public void OnRequestCondividiLista(Lista lista, Utente user) {
-
+        Dati.condividiLista(lista, user, this);
+        mListener.OnRequestCondividiLista(lista, user);
     }
 
-    public interface OnListeMieFragmentInteractionListener {
-        void OnListaClicked(int listID);
-        void OnAggiungiLista();
-        void OnListaLongClicked(Lista lista);
+    @Override
+    public void OnListaEliminata(Lista lista) {
+        aggiornaLista();
+        mListener.OnListaEliminata(lista);
+    }
 
-        void OnListaCondivisa(Lista lista, Utente utente);
-
-        void OnListaNonCondivisa(Lista lista, Utente utente);
+    @Override
+    public void OnListaNonEliminata(Lista lista, String errore) {
+        mListener.OnListaNonEliminata(lista, errore);
     }
 
     public void aggiornaLista() {
@@ -184,5 +188,37 @@ public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDia
             }
         });
 
+    }
+
+    @Override
+    public void OnListaCondivisa(Lista lista, Utente utente) {
+        mListener.OnListaCondivisa(lista, utente);
+    }
+
+    @Override
+    public void OnListaNonCondivisa(Lista lista, Utente utente, String errore) {
+        mListener.OnListaNonCondivisa(lista, utente, errore);
+    }
+
+    public interface OnListeMieFragmentInteractionListener {
+        void OnEliminaLista(Lista lista);
+
+        void OnCondividiLista(Lista lista);
+
+        void OnListaClicked(int listID);
+
+        void OnAggiungiLista();
+
+        void OnRequestCondividiLista(Lista lista, Utente utente);
+
+        void OnListaLongClicked(Lista lista);
+
+        void OnListaCondivisa(Lista lista, Utente utente);
+
+        void OnListaNonCondivisa(Lista lista, Utente utente, String errore);
+
+        void OnListaEliminata(Lista lista);
+
+        void OnListaNonEliminata(Lista lista, String errore);
     }
 }

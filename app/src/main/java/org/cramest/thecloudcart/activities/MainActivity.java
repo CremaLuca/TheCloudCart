@@ -18,8 +18,6 @@ import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.classi.Utente;
-import org.cramest.thecloudcart.dialogs.CondividiDialog;
-import org.cramest.thecloudcart.dialogs.ListaDialog;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
@@ -37,8 +35,8 @@ public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener, Dati.DatiLoadedListener, AggiungiListaFragment.OnAggiungiListaFragmentInteractionListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ListaDialog.OnListaDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
-        ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener, ImpostazioniFragment.OnImpostazioniFragmentListener {
+        ListeMieFragment.OnListeMieFragmentInteractionListener,
+        ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener, ImpostazioniFragment.OnImpostazioniFragmentListener, Dati.ProdottiInListaCreatiListener {
 
     private String username;
     private String nameUser;
@@ -229,11 +227,23 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
+    public void OnListaNonEliminata(Lista lista, String errore) {
+        System.out.println("MainActivity - Lista eliminata con successo");
+        LoadingOverlayHandler.nascondiLoading(this);
+    }
+
+    @Override
     public void OnProdottoInListaCreato(ProdottoInLista prodottoInLista) {
         //Un prodotto viene aggiunto ad una lista, torniamo alla visualizzazione della lista
         System.out.println("MainActivity - Nuovo prodotto creato");
         LoadingOverlayHandler.nascondiLoading(this);
         mostraFragmentSenzaBackStack(ProdottiFragment.newInstance(prodottoInLista.getIdLista()), "ProdottiFragment");
+    }
+
+    @Override
+    public void OnProdottoInListaNonCreato(ProdottoInLista prodottoInLista, String errore) {
+        System.out.println("MainActivity - Nuovo prodotto NON creato - " + errore);
+        LoadingOverlayHandler.nascondiLoading(this);
     }
 
     @Override
@@ -243,8 +253,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnListaNonCondivisa(Lista lista, Utente utente) {
-        //Nel caso fallisca la condivisione di una lista
+    public void OnListaNonCondivisa(Lista lista, Utente utente, String errore) {
+        System.out.println("MainActivity - Lista non condivisa - " + errore);
         LoadingOverlayHandler.nascondiLoading(this);
     }
 
@@ -252,7 +262,12 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnAggiungiProdotto(int listID) {
         //Questa funzione viene chiamata quando viene cliccato il pulsante "aggiungi prodotto";
         System.out.println("MainActivity - Premuto bottone 'aggiungi prodotto'");
-        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(userID,listID),"AggiungiProdottoFragment");
+        mostraFragmentConBackStack(AggiungiProdottoFragment.newInstance(listID), "AggiungiProdottoFragment");
+    }
+
+    @Override
+    public void OnDevoAggiungereProdotto(ProdottoInLista prodottoInLista) {
+        LoadingOverlayHandler.mostraLoading(this);
     }
 
     @Override
@@ -265,7 +280,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista) {
+    public void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista, String errore) {
         //Nel caso venga confermata la NON aggiunta del prodotto
         System.out.println("MainActivity - Prodotto in lista NON aggiunto alla lista id:" + prodottoInLista.getIdLista());
         LoadingOverlayHandler.nascondiLoading(this);
@@ -312,18 +327,16 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
 
 
     @Override
-    public void OnEliminaLista(int listID) {
+    public void OnEliminaLista(Lista lista) {
         //Quando viene premuto il tasto "elimina lista" dentro il dialog
-        System.out.println("MainActivity - Elimino la lista " + listID);
-        Dati.eliminaLista(listID,userID);
+        System.out.println("MainActivity - Elimino la lista " + lista.getNome());
         LoadingOverlayHandler.mostraLoading(this);
     }
 
     @Override
     public void OnCondividiLista(Lista lista) {
         //Quando nel dialog viene premuto "condividi lista"
-        CondividiDialog condividiDialog = new CondividiDialog();
-        condividiDialog.showDialog(this,this, lista);
+
     }
 
     @Override
@@ -351,7 +364,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnRequestCondividiLista(Lista lista, Utente utente) {
         //Quando viene premuto un utente nella lista utenti sulla condivisione
         System.out.println("MainActivity - Lista " + lista.getNome() + " da condividere");
-        Dati.condividiLista(lista, utente, this);
         LoadingOverlayHandler.mostraLoading(this);
     }
 

@@ -419,7 +419,7 @@ public class Dati implements DataHandler{
     }
 
     //Elimina la lista solo se mia
-    public static void eliminaLista(final Lista lista, final String userID, final ListeListener listeListener) {
+    public static void eliminaLista(final Lista lista, final OnListeEliminaListener listeListener) {
         String[] pars = {"req","listID","userID"};
         String[] vals = {"deleteList", lista.getID() + "", userID};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
@@ -489,7 +489,7 @@ public class Dati implements DataHandler{
         },"trovaUtenti",parametri,valori);
     }
 
-    public static void condividiLista(final Lista lista, final Utente user, final ListeListener listaListener) {
+    public static void condividiLista(final Lista lista, final Utente user, final OnListeCondividiListener listaListener) {
         String[] parametri = {"req","listID","userID"};
         String[] valori = {"shareList",lista.getID()+"",user.getUserID()+""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
@@ -505,6 +505,23 @@ public class Dati implements DataHandler{
         }, "condividiLista", parametri, valori);
     }
 
+    public static void aggiungiProdottoALista(final ProdottoInLista prodottoInLista, final OnProdottiAggiungiListener onProdottiAggiungiListener) {
+        String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
+        String[] valori = {"addProduct", userID, prodottoInLista.getIdLista() + "", prodottoInLista.getProdotto().getID() + "", prodottoInLista.getQuantita() + "", prodottoInLista.getDescrizione()};
+        //Chiediamo al sito di creare il prodotto
+        Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
+            @Override
+            public void HandleData(String nomeRichiesta, boolean success, String data) {
+                if (success) {
+                    onProdottiAggiungiListener.OnProdottoAggiunto(prodottoInLista);
+                } else {
+                    onProdottiAggiungiListener.OnProdottoNonAggiunto(prodottoInLista, data);
+                }
+            }
+        }, "aggiungiProdotto", parametri, valori);
+    }
+
+
     public interface DatiLoadedListener {
         void OnDatiLoaded();
     }
@@ -518,20 +535,26 @@ public class Dati implements DataHandler{
 
     public interface ProdottiInListaCreatiListener {
         void OnProdottoInListaCreato(ProdottoInLista prodottoInLista);
-
         void OnProdottoInListaNonCreato(ProdottoInLista prodottoInLista, String errore);
     }
 
     public interface ProdottiInListaEliminatiListener {
         void OnProdottoInListaEliminato(ProdottoInLista prodottoInLista);
-
         void OnProdottoInListaNonEliminato(ProdottoInLista prodottoInLista, String errore);
     }
 
-    public interface ListeListener {
-        void OnListaCondivisa(Lista lista, Utente utente);
+    public interface OnProdottiAggiungiListener {
+        void OnProdottoAggiunto(ProdottoInLista prodottoInLista);
 
+        void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista, String errore);
+    }
+
+    public interface OnListeCondividiListener {
+        void OnListaCondivisa(Lista lista, Utente utente);
         void OnListaNonCondivisa(Lista lista, Utente utente, String errore);
+    }
+
+    public interface OnListeEliminaListener {
         void OnListaEliminata(Lista lista);
 
         void OnListaNonEliminata(Lista lista, String errore);

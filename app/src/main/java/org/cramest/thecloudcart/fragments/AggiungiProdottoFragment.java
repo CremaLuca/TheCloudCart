@@ -18,63 +18,32 @@ import android.widget.Toast;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
-import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
 import org.cramest.thecloudcart.classi.Prodotto;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
-import org.cramest.thecloudcart.network.Connettore;
-import org.cramest.thecloudcart.network.DataHandler;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AggiungiProdottoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class AggiungiProdottoFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "userID";
-    private static final String ARG_PARAM2 = "listID";
-    private static final String ARG_PARAM3 = "productID";
+public class AggiungiProdottoFragment extends Fragment implements Dati.OnProdottiAggiungiListener {
+
+    private static final String ARG_PARAM = "listID";
 
     private int listID;
     private Lista curList;
-    private String userID;
 
     private OnAggiungiProdottiListener mListener;
 
     private ArrayList<Prodotto> curProdottiByCategoria;
     private Prodotto curProdottoSel = null;
-    private Prodotto initialProdotto = null;
-
-    private ProdottoInLista tmpProdottoInLista;
 
     public AggiungiProdottoFragment() {
-        // Required empty public constructor
+
     }
 
-    /** TODO : Rifare documentazione
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param listID Parameter 1.
-     * @return A new instance of fragment AggiungiListaFragment.
-     */
-    public static AggiungiProdottoFragment newInstance(String userID,int listID) {
+    public static AggiungiProdottoFragment newInstance(int listID) {
         AggiungiProdottoFragment fragment = new AggiungiProdottoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, userID);
-        args.putInt(ARG_PARAM2, listID);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static AggiungiProdottoFragment newInstance(String userID,int listID,int productID) {
-        AggiungiProdottoFragment fragment = new AggiungiProdottoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, userID);
-        args.putInt(ARG_PARAM2, listID);
-        args.putInt(ARG_PARAM3, productID);
+        args.putInt(ARG_PARAM, listID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,13 +52,8 @@ public class AggiungiProdottoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userID = getArguments().getString(ARG_PARAM1);
-            listID = getArguments().getInt(ARG_PARAM2);
+            listID = getArguments().getInt(ARG_PARAM);
             curList = Dati.getListaByID(listID);
-            int productID = getArguments().getInt(ARG_PARAM3);
-            if(productID != 0 && productID>0) {
-                initialProdotto = Dati.getProdottoByID(getArguments().getInt(ARG_PARAM3));
-            }
         }
     }
 
@@ -106,10 +70,6 @@ public class AggiungiProdottoFragment extends Fragment {
         titolo.setText(getString(R.string.Add_to_list) + ":" + curList.getNome());
         setCategorieSpinner();
         updatePodottoSpinner(0);
-        if(initialProdotto != null){
-            Spinner spinnerCategorie = (Spinner)getActivity().findViewById(R.id.categoria_spinner);
-            spinnerCategorie.setSelection(initialProdotto.getCategoria().getID()-1);
-        }
 
         Button aggiungi = (Button)getActivity().findViewById(R.id.aggiungi_prodotto_button);
         aggiungi.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +83,7 @@ public class AggiungiProdottoFragment extends Fragment {
         crea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onDevoCreareNuovoProdotto(listID);
+                mListener.OnDevoCreareNuovoProdotto(listID);
             }
         });
     }
@@ -137,35 +97,10 @@ public class AggiungiProdottoFragment extends Fragment {
             } catch (Exception e) {
                 System.out.println("AggiungiProdottoFragment - Manca la quantità, non importa");
             }
-            tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
+            ProdottoInLista tmpProdottoInLista = new ProdottoInLista(listID, prodotto, quantita, descrizione);
 
-            //TODO : Delegare il tutto alla main activity e alla classe dati
-
-            //Aggiungiamo la lista tramite l'API
-            String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
-            String[] valori = {"addProduct", userID, listID + "", prodotto.getID() + "", quantita + "", descrizione};
-            if (Connettore.getInstance(getActivity()).isNetworkAvailable()) {
-                LoadingOverlayHandler.mostraLoading(getActivity());
-                //Chiediamo al sito di creare il prodotto
-                Connettore.getInstance(getActivity()).GetDataFromWebsite(new DataHandler() {
-                    @Override
-                    public void HandleData(String nomeRichiesta, boolean success, String data) {
-                        if (success) {
-                            Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
-                            if (tmpProdottoInLista != null) {
-                                onProdottoAggiunto(tmpProdottoInLista);
-                            }
-                        } else {
-                            Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
-                            if (tmpProdottoInLista != null) {
-                                onProdottoNonAggiunto(tmpProdottoInLista);
-                            }
-                        }
-                    }
-                }, "aggiungiProdotto", parametri, valori);
-            } else {
-                //TODO : Aggiunta prodotto in locale alla lista degli aggiornamenti
-            }
+            mListener.OnDevoAggiungereProdotto(tmpProdottoInLista);
+            Dati.aggiungiProdottoALista(tmpProdottoInLista, this);
 
         }else{
             System.out.println("AggiungiProdottoFragment - Nessun prodotto selezionato");
@@ -210,16 +145,6 @@ public class AggiungiProdottoFragment extends Fragment {
         spinner.setAdapter(spinnerAdapter);
         spinnerAdapter.notifyDataSetChanged();
 
-        if(initialProdotto != null){
-            for(int i=0;i<prodotti.size();i++){
-                if(prodotti.get(i).equals(initialProdotto.getNome())){
-                    //Impostiamo il prodotto selezionato dove è stata trovata corrispondenza
-                    spinner.setSelection(i);
-                }
-            }
-            //Abbiamo già selezionato, adesso non ci serve più e lo eliminiamo
-            initialProdotto = null;
-        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -231,23 +156,6 @@ public class AggiungiProdottoFragment extends Fragment {
 
             }
         });
-    }
-
-    public void onProdottoAggiunto(ProdottoInLista prodotto) {
-        if (mListener != null) {
-            mListener.OnProdottoAggiunto(prodotto);
-        }
-    }
-
-    public void onProdottoNonAggiunto(ProdottoInLista prodotto) {
-        if (mListener != null) {
-            mListener.OnProdottoNonAggiunto(prodotto);
-        }
-    }
-    public void onDevoCreareNuovoProdotto(int listID) {
-        if (mListener != null) {
-            mListener.OnDevoCreareNuovoProdotto(listID);
-        }
     }
 
     @Override
@@ -278,10 +186,21 @@ public class AggiungiProdottoFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void OnProdottoAggiunto(ProdottoInLista prodottoInLista) {
+        mListener.OnProdottoAggiunto(prodottoInLista);
+    }
+
+    @Override
+    public void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista, String errore) {
+        mListener.OnProdottoNonAggiunto(prodottoInLista, errore);
+    }
+
     public interface OnAggiungiProdottiListener {
+        void OnDevoAggiungereProdotto(ProdottoInLista prodottoInLista);
         void OnProdottoAggiunto(ProdottoInLista prodottoInLista);
 
-        void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista);
+        void OnProdottoNonAggiunto(ProdottoInLista prodottoInLista, String errore);
         void OnDevoCreareNuovoProdotto(int listID);
     }
 }
