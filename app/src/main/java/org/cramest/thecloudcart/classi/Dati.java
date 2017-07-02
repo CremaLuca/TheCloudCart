@@ -471,7 +471,7 @@ public class Dati implements DataHandler{
         }, "creaProdotto", parametri, valori);
     }
 
-    public static void findUser(final String name, final RichiesteUtentiListener listener) {
+    public static void findUser(final String name, final OnRichiesteUtentiListener listener) {
         String[] parametri = {"req","username"};
         String[] valori = {"findUser",name};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
@@ -560,7 +560,7 @@ public class Dati implements DataHandler{
         void OnListaNonEliminata(Lista lista, String errore);
     }
 
-    public interface RichiesteUtentiListener {
+    public interface OnRichiesteUtentiListener {
         void OnRicercaUtentiCompletata(ArrayList<Utente> utenti);
 
         void OnRicercaUtentiVuota();

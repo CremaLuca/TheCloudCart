@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.UtenteAdapter;
@@ -24,8 +25,10 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
     public static ListView listViewUtenti;
     private UtenteAdapter listViewadapter;
 
-    public void showDialog(final Activity activity,final OnCondividiDialogInteractionListener listener, final Lista lista) {
+    private Activity curActivity;
 
+    public void showDialog(final Activity activity,final OnCondividiDialogInteractionListener listener, final Lista lista) {
+        curActivity = activity;
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -92,6 +95,12 @@ public class CondividiDialog implements Dati.OnRichiesteUtentiListener{
         System.out.println("CondividiDialog - Sono arrivati gli utenti corrispondenti");
         listViewadapter.clear();
         listViewadapter.addAll(utentiCorrispondenti);
+    }
+
+    @Override
+    public void OnRicercaUtentiVuota() {
+        listViewadapter.clear();
+        Toast.makeText(curActivity, "TO TRANSALTE : Nessun utente trovato", Toast.LENGTH_SHORT).show();
     }
 
     public interface OnCondividiDialogInteractionListener{

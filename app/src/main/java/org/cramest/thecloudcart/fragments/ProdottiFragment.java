@@ -51,6 +51,8 @@ public class ProdottiFragment extends Fragment implements ProdottoDialog.OnProdo
     }
 
     public void aggiornaLista() {
+        System.out.println("ProdottiFragment - Aggiornata lista prodotti");
+        prodottiInLista = Dati.getProdottoInListaByListID(listID);
         prodottoAdapter.notifyDataSetChanged();
     }
 
@@ -161,6 +163,7 @@ public class ProdottiFragment extends Fragment implements ProdottoDialog.OnProdo
 
     @Override
     public void OnProdottoInListaEliminato(ProdottoInLista prodottoInLista) {
+        aggiornaLista();
         mListener.OnProdottoInListaEliminato(prodottoInLista);
     }
 

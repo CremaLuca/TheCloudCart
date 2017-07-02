@@ -161,6 +161,7 @@ public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDia
     }
 
     public void aggiornaLista() {
+        listeMie = Dati.getListeMie();
         listAdapter.notifyDataSetChanged();
     }
 
