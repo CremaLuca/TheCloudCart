@@ -19,7 +19,7 @@
     <style name="ListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">@color/colorBackground</item>
         <item name="android:dividerHeight">1dp</item>
-        <item name="android:listSelector">@color/colorAccentSecondary</item>
+        <item name="android:listSelector">@color/colorPrimary</item>
     </style>
     <style name="styledButton" parent="android:Widget.Button">
         <item name="android:textColor">@color/textColorAccent</item>

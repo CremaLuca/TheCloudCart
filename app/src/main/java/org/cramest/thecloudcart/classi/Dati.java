@@ -14,7 +14,9 @@ import java.util.Arrays;
 
 public class Dati implements DataHandler{
 
-    private static OnDatiListener mListener;
+    private static OnDatiListener onDatiListener;
+    private static OnProdottiListener onProdottiListener;
+    private static On
 
     public static Dati instance;
 
@@ -38,7 +40,7 @@ public class Dati implements DataHandler{
         System.out.println("Dati - User id : " + userID);
         //Ci salviamo il listener se esiste
         if (ctx instanceof OnDatiListener) {
-            mListener = (OnDatiListener) ctx;
+            onDatiListener = (OnDatiListener) ctx;
         } else {
             throw new RuntimeException(ctx.toString()
                     + " must implement OnDatiListener");
@@ -287,10 +289,10 @@ public class Dati implements DataHandler{
     }
 
     private void LoadedDati() {
-        if (mListener != null) {
+        if (onDatiListener != null) {
             if(!chiamatoLoaded) {
                 chiamatoLoaded = true;
-                mListener.OnDatiLoaded();
+                onDatiListener.OnDatiLoaded();
             }
         }
     }
@@ -397,7 +399,7 @@ public class Dati implements DataHandler{
         salvaUtente(utente);
     }
 
-    public void rimuoviProdottoInLista(final ProdottoInLista prodottoInLista){
+    public void rimuoviProdottoInLista(final ProdottoInLista prodottoInLista, final OnProdottiListener onProdottiListener) {
         String[] pars = {"req", "listID","productID"};
         String[] vals = {"deleteProductInList", prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
@@ -405,9 +407,8 @@ public class Dati implements DataHandler{
             public void HandleData(String nome, boolean success, String data) {
                 if(success) {
                     Toast.makeText(ctx, "Prodotto eliminato con successo", Toast.LENGTH_SHORT).show();
-                    int listID = Integer.parseInt(nome.split("=")[1]);
                     prodottiInLista.remove(prodottoInLista);
-                    OnProdottoInListaEliminato(listID);
+                    onProdottiListener.OnProdottoInListaEliminato(prodottoInLista.getIdLista());
                 }else{
                     Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
                 }
@@ -415,7 +416,7 @@ public class Dati implements DataHandler{
         }, "eliminaProdotto", pars, vals);
     }
 
-    public static void compraProdotto(String userID,final ProdottoInLista prodottoInLista){
+    public static void compraProdotto(String userID, final ProdottoInLista prodottoInLista, OnProd) {
         String[] pars = {"req","userID", "listID","productID"};
         String[] vals = {"buyProduct",userID, prodottoInLista.getIdLista() + "",prodottoInLista.getProdotto().getID()+""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
@@ -452,16 +453,16 @@ public class Dati implements DataHandler{
         }, "eliminaLista", pars, vals);
     }
 
-    public static void creaProdottoEAggiungiloALista(final String userID, final String nomeProdotto, final Double prezzo, final String marca, final String dimensione, final Categoria categoria, final int quantita, final String descrizione, final int listID) {
+    public static void creaProdottoEAggiungiloALista(final String userID, final ProdottoInLista prodottoInLista, final ProdottiListener prodottiListener) {
         String[] parametri = {"req","userID","name","price","brand","dimension","categoryID"};
-        String[] valori = {"createProduct", userID, nomeProdotto, prezzo + "", marca, dimensione, categoria.getID() + ""};
+        String[] valori = {"createProduct", userID, prodottoInLista.getProdotto().getNome(), prodottoInLista.getProdotto().getPrezzo() + "", prodottoInLista.getProdotto().getMarca(), prodottoInLista.getProdotto().getDimensione(), prodottoInLista.getProdotto().getCategoria().getID() + ""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
             @Override
             public void HandleData(String nome, boolean success, String data) {
                 if(success) {
                     //Ricostruiamo il prodotto con il nuovo ID
                     int ID = Integer.parseInt(data);
-                    final Prodotto prod = new Prodotto(ID, nomeProdotto, prezzo, marca, dimensione, categoria);
+                    final Prodotto prod = prodottoInLista.getProdotto();
 
                     //Toast.makeText(ctx,"Prodotto salvato con successo (debug-ID: "+data+")", Toast.LENGTH_SHORT).show();
 
@@ -469,17 +470,15 @@ public class Dati implements DataHandler{
                     /*Dati.*/aggiungiProdotto(prod);
 
                     String[] parametri = {"req", "userID", "listID", "productID", "quantity", "description"};
-                    String[] valori = {"addProduct",userID,listID+"",prod.getID()+"",quantita+"",descrizione};
+                    String[] valori = {"addProduct", userID, prodottoInLista.getIdLista() + "", prod.getID() + "", prodottoInLista.getQuantita() + "", prodottoInLista.getDescrizione()};
                     Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
                         @Override
                         public void HandleData(String nome, boolean success, String data) {
                             if(success) {
-                                ProdottoInLista tmpProdottoInLista = new ProdottoInLista(listID, prod, quantita, descrizione);
                             /*Dati.*/
-                                aggiungiProdottoInLista(tmpProdottoInLista);
-
-                                //Notifichiamo la mainActivity che il prodotto è stato creato con successo
-                                mListener.OnProdottoInListaCreato(tmpProdottoInLista);
+                                aggiungiProdottoInLista(prodottoInLista);
+                                //Notifichiamo il listener che il prodotto è stato creato con successo
+                                prodottiListener.OnProdottoInListaCreato(prodottoInLista);
                             }else{
                                 //TODO : GESTIRE TUTTI GLI ERRORI DI AGGIUNTA DEL PRODOTTO
                                 Toast.makeText(ctx, ctx.getString(R.string.Error) + " : " + data, Toast.LENGTH_SHORT).show();
@@ -512,7 +511,7 @@ public class Dati implements DataHandler{
         },"trovaUtenti",parametri,valori);
     }
 
-    public static void condividiLista(final Lista lista, final Utente user){
+    public static void condividiLista(final Lista lista, final Utente user, final ListaListener listaListener) {
         String[] parametri = {"req","listID","userID"};
         String[] valori = {"shareList",lista.getID()+"",user.getUserID()+""};
         Connettore.getInstance(ctx).GetDataFromWebsite(new DataHandler() {
@@ -520,23 +519,33 @@ public class Dati implements DataHandler{
             public void HandleData(String nome, boolean success, String data) {
                 if(success){
                     aggiungiCondivisione(lista,user);
-                    mListener.OnListaCondivisa(lista,user);
+                    listaListener.OnListaCondivisa(lista, user);
                 }else{
                     Toast.makeText(ctx, nome + " - " + data, Toast.LENGTH_SHORT).show();
-                    mListener.OnListaNonCondivisa();
+                    listaListener.OnListaNonCondivisa(lista, user);
                 }
             }
         }, "condividiLista", parametri, valori);
     }
 
-    public interface OnDatiListener{
+    public interface DatiLoadedListener {
         void OnDatiLoaded();
+    }
+
+    public interface ProdottiListener {
         void OnProdottoInListaEliminato(int listID);
+
         void OnProdottoComprato(int listID);
-        void OnListaEliminata();
+
         void OnProdottoInListaCreato(ProdottoInLista prodottoInLista);
+    }
+
+    public interface ListaListener {
         void OnListaCondivisa(Lista lista, Utente utente);
-        void OnListaNonCondivisa();
+
+        void OnListaNonCondivisa(Lista lista, Utente utente);
+
+        void OnListaEliminata(Lista lista);
     }
 
     public interface OnRichiesteUtentiListener{

@@ -39,14 +39,12 @@ public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
         ProdottiFragment.OnProdottiFragmentInteractionListener, Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaFragmentInteractionListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
+        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
         ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener, ImpostazioniFragment.OnImpostazioniFragmentListener {
 
     private String username;
     private String nameUser;
     private String userID;
-
-    private ListsFragment listFragment;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -177,8 +175,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnListaLongClicked(Lista lista) {
         //Quando teniamo premuto su una lista
-        ListaDialog listaDialog = new ListaDialog();
-        listaDialog.showDialog(this, this, lista,userID);
     }
 
     @Override
@@ -240,7 +236,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnListaNonCondivisa() {
+    public void OnListaNonCondivisa(Lista lista, Utente utente) {
         //Nel caso fallisca la condivisione di una lista
         LoadingOverlayHandler.nascondiLoading(this);
     }

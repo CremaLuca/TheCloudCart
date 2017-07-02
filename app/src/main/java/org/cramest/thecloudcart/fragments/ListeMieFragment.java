@@ -15,6 +15,9 @@ import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.adapter.ListaAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
+import org.cramest.thecloudcart.classi.Utente;
+import org.cramest.thecloudcart.dialogs.CondividiDialog;
+import org.cramest.thecloudcart.dialogs.ListaDialog;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ import java.util.ArrayList;
  * Created by User on 11/06/2017.
  */
 
-public class ListeMieFragment extends Fragment {
+public class ListeMieFragment extends Fragment implements ListaDialog.OnListaDialogInteractionListener, CondividiDialog.OnCondividiDialogInteractionListener {
 
     private static final String ARG_PARAM = "userID";
 
@@ -88,6 +91,11 @@ public class ListeMieFragment extends Fragment {
     }
 
     public void onListaLongClicked(Lista lista) {
+
+
+        ListaDialog listaDialog = new ListaDialog();
+        listaDialog.showDialog(getActivity(), this, lista, userID);
+
         if (mListener != null) {
             mListener.OnListaLongClicked(lista);
         }
@@ -123,10 +131,29 @@ public class ListeMieFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void OnEliminaLista(int listID) {
+
+    }
+
+    @Override
+    public void OnCondividiLista(Lista lista) {
+        aggiornaLista();
+    }
+
+    @Override
+    public void OnRequestCondividiLista(Lista lista, Utente user) {
+
+    }
+
     public interface OnListeMieFragmentInteractionListener {
         void OnListaClicked(int listID);
         void OnAggiungiLista();
         void OnListaLongClicked(Lista lista);
+
+        void OnListaCondivisa(Lista lista, Utente utente);
+
+        void OnListaNonCondivisa(Lista lista, Utente utente);
     }
 
     public void aggiornaLista() {
