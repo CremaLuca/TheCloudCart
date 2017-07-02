@@ -17,38 +17,22 @@ import org.cramest.thecloudcart.adapter.ProdottoAdapter;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.ProdottoInLista;
+import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProdottiFragment.OnProdottiFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProdottiFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ProdottiFragment extends Fragment{
-
+public class ProdottiFragment extends Fragment implements ProdottoDialog.OnProdottoDialogInteractionListener, Dati.ProdottiCompratiListener, Dati.ProdottiInListaEliminatiListener {
     private static final String ARG_PARAM = "listID";
 
     private int listID;
     private Lista curList;
     private ArrayList<ProdottoInLista> prodottiInLista;
-
+    private ProdottoAdapter prodottoAdapter;
     private OnProdottiFragmentInteractionListener mListener;
 
     public ProdottiFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param listID ID della lista da cui ricavare i prodotti.
-     * @return A new instance of fragment ProdottiFragment.
-     */
     public static ProdottiFragment newInstance(int listID) {
         ProdottiFragment fragment = new ProdottiFragment();
         Bundle args = new Bundle();
@@ -66,6 +50,10 @@ public class ProdottiFragment extends Fragment{
         }
     }
 
+    public void aggiornaLista() {
+        prodottoAdapter.notifyDataSetChanged();
+    }
+
     private void main(){
         prodottiInLista = Dati.getProdottoInListaByListID(listID);
         setListAdapter();
@@ -80,17 +68,16 @@ public class ProdottiFragment extends Fragment{
 
     private void setListAdapter(){
         ListView lv = (ListView)getView().findViewById(R.id.listProdotti);
-        ProdottoAdapter listViewadapter = new ProdottoAdapter(getActivity(), R.layout.adapter_prodotto, prodottiInLista);
-        lv.setAdapter(listViewadapter);
+        prodottoAdapter = new ProdottoAdapter(getActivity(), R.layout.adapter_prodotto, prodottiInLista);
+        lv.setAdapter(prodottoAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProdottoInLista curProdotto = prodottiInLista.get(position);
-                if(curProdotto.getQuantita() > 0){
-                    onProdottoClicked(curProdotto);
-                }else if(curProdotto.getQuantita() == 0){
-                    onAggiungiProdotto(listID);
-                }
+                ProdottoDialog prodottoDialog = new ProdottoDialog();
+                prodottoDialog.showDialog(getActivity(), ProdottiFragment.this, curProdotto);
+                //Alla fine notifichiamo MainActivity
+                onProdottoClicked(curProdotto);
             }
         });
     }
@@ -98,7 +85,6 @@ public class ProdottiFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_prodotti, container, false);
         ((TextView) v.findViewById(R.id.text_view_header_name)).setText(curList.getNome());
         return v;
@@ -150,8 +136,53 @@ public class ProdottiFragment extends Fragment{
         mListener = null;
     }
 
+    @Override
+    public void OnCompraProdotto(ProdottoInLista prodotto) {
+        Dati.compraProdotto(prodotto, this);
+        mListener.OnCompraProdotto(prodotto);
+    }
+
+    @Override
+    public void OnEliminaProdotto(ProdottoInLista prodotto) {
+        Dati.rimuoviProdottoInLista(prodotto, this);
+        mListener.OnEliminaProdotto(prodotto);
+    }
+
+    @Override
+    public void OnProdottoComprato(ProdottoInLista prodottoInLista) {
+        aggiornaLista();
+        mListener.OnProdottoComprato(prodottoInLista);
+    }
+
+    @Override
+    public void OnProdottoNonComprato(ProdottoInLista prodottoInLista, String errore) {
+        mListener.OnProdottoNonComprato(prodottoInLista, errore);
+    }
+
+    @Override
+    public void OnProdottoInListaEliminato(ProdottoInLista prodottoInLista) {
+        mListener.OnProdottoInListaEliminato(prodottoInLista);
+    }
+
+    @Override
+    public void OnProdottoInListaNonEliminato(ProdottoInLista prodottoInLista, String errore) {
+        mListener.OnProdottoInListaNonEliminato(prodottoInLista, errore);
+    }
+
     public interface OnProdottiFragmentInteractionListener {
         void OnProdottoClicked(ProdottoInLista prodottoInLista);
         void OnAggiungiProdotto(int listID);
+
+        void OnCompraProdotto(ProdottoInLista prodottoInLista);
+
+        void OnEliminaProdotto(ProdottoInLista prodottoInLista);
+
+        void OnProdottoComprato(ProdottoInLista prodottoInLista);
+
+        void OnProdottoNonComprato(ProdottoInLista prodottoInLista, String errore);
+
+        void OnProdottoInListaEliminato(ProdottoInLista prodottoInLista);
+
+        void OnProdottoInListaNonEliminato(ProdottoInLista prodottoInLista, String errore);
     }
 }

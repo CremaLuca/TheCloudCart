@@ -96,7 +96,6 @@ public class AggiungiProdottoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_aggiungi_prodotto_lista, container, false);
     }
 

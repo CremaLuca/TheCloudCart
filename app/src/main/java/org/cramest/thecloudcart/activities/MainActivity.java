@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.cramest.thecloudcart.R;
-import org.cramest.thecloudcart.classi.Categoria;
 import org.cramest.thecloudcart.classi.Dati;
 import org.cramest.thecloudcart.classi.Lista;
 import org.cramest.thecloudcart.classi.LoadingOverlayHandler;
@@ -21,7 +20,6 @@ import org.cramest.thecloudcart.classi.ProdottoInLista;
 import org.cramest.thecloudcart.classi.Utente;
 import org.cramest.thecloudcart.dialogs.CondividiDialog;
 import org.cramest.thecloudcart.dialogs.ListaDialog;
-import org.cramest.thecloudcart.dialogs.ProdottoDialog;
 import org.cramest.thecloudcart.fragments.AggiungiListaFragment;
 import org.cramest.thecloudcart.fragments.AggiungiProdottoFragment;
 import org.cramest.thecloudcart.fragments.CreaProdottoFragment;
@@ -37,9 +35,9 @@ import org.cramest.utils.DataSaver;
 
 public class MainActivity extends AppCompatActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnListFragmentInteractionListener,
-        ProdottiFragment.OnProdottiFragmentInteractionListener, Dati.OnDatiListener, AggiungiListaFragment.OnAggiungiListaFragmentInteractionListener,
+        ProdottiFragment.OnProdottiFragmentInteractionListener, Dati.DatiLoadedListener, AggiungiListaFragment.OnAggiungiListaFragmentInteractionListener,
         AggiungiProdottoFragment.OnAggiungiProdottiListener,CreaProdottoFragment.OnCreaProdottiListener,
-        ProdottoDialog.OnProdottoDialogInteractionListener, ListaDialog.OnListaDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
+        ListaDialog.OnListaDialogInteractionListener, ListeMieFragment.OnListeMieFragmentInteractionListener,
         ListeCondiviseFragment.OnListeCondiviseFragmentInteractionListener, ImpostazioniFragment.OnImpostazioniFragmentListener {
 
     private String username;
@@ -180,8 +178,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     @Override
     public void OnProdottoClicked(ProdottoInLista prodottoInLista) {
         //Questa funzione viene chiamata invece dal fragment dei prodotti quando uno della lista viene cliccato
-        ProdottoDialog prodottoDialog = new ProdottoDialog();
-        prodottoDialog.showDialog(this,this,prodottoInLista);
+
     }
 
     private void InizializzaApplicazione(){
@@ -198,23 +195,33 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnProdottoInListaEliminato(int listID) {
+    public void OnProdottoInListaEliminato(ProdottoInLista prodottoInLista) {
         //Quando un prodotto qualsiasi viene eliminato (non comprato) apparirà qua
-        System.out.println("MainActivity - Eliminato prodotto in lista("+listID+")");
+        System.out.println("MainActivity - Eliminato prodotto in lista(" + prodottoInLista.getProdotto().getNome() + ")");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }
 
     @Override
-    public void OnProdottoComprato(int listID) {
+    public void OnProdottoInListaNonEliminato(ProdottoInLista prodottoInLista, String errore) {
+        System.out.println("MainActivity - Prodotto in lista NON eliminato " + errore);
+        LoadingOverlayHandler.nascondiLoading(this);
+    }
+
+    @Override
+    public void OnProdottoComprato(ProdottoInLista prodottoInLista) {
         //Quando un prodotto viene comprato e torna la risposta positiva dalla pagina web
         System.out.println("MainActivity - Prodotto comprato");
         LoadingOverlayHandler.nascondiLoading(this);
-        mostraFragmentConBackStack(ProdottiFragment.newInstance(listID),"ProdottiFragment");
     }
 
     @Override
-    public void OnListaEliminata() {
+    public void OnProdottoNonComprato(ProdottoInLista prodottoInLista, String errore) {
+        System.out.println("MainActivity - Prodotto NON comprato - " + errore);
+        LoadingOverlayHandler.nascondiLoading(this);
+    }
+
+    @Override
+    public void OnListaEliminata(Lista lista) {
         //Quando torna la risposta dal server che la lista è stata eliminata
         System.out.println("MainActivity - Lista eliminata con successo");
         LoadingOverlayHandler.nascondiLoading(this);
@@ -269,7 +276,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     public void OnDevoCreareNuovoProdotto(int listID) {
         //Quando durante la creazione di un prodotto viene premuto il tasto "crea prodotto" questa funzione viene chiamata
         System.out.println("MainActivity - Premuto bottone 'crea prodotto'");
-        mostraFragmentConBackStack(CreaProdottoFragment.newInstance(userID,listID),"CreaProdotto");
+        mostraFragmentConBackStack(CreaProdottoFragment.newInstance(listID), "CreaProdotto");
     }
 
     @Override
@@ -277,7 +284,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Se nel dialog il prodotto viene comprato
         System.out.println("MainActivity - Premuto il bottone 'compra prodotto'");
         LoadingOverlayHandler.mostraLoading(this);
-        Dati.instance.compraProdotto(userID,prodotto);
     }
 
     @Override
@@ -285,7 +291,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
         //Se nel dialog si vuole eliminare il prodotto in lista
         System.out.println("MainActivity - Prodotto in lista da eliminare");
         LoadingOverlayHandler.mostraLoading(this);
-        Dati.instance.rimuoviProdottoInLista(prodotto);
     }
 
     @Override
@@ -336,17 +341,17 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks,ListsFragment.OnLi
     }
 
     @Override
-    public void OnDevoCreareProdotto(String nome, Double prezzo, String marca, String dimensione, Categoria categoria, int quantita, String descrizione,int idLista) {
+    public void OnDevoCreareProdotto(ProdottoInLista prodottoInLista) {
         //Quando nella schermata crea prodotto viene premuto il pulsante 'Crea prodotto'
         LoadingOverlayHandler.mostraLoading(this);
-        Dati.creaProdottoEAggiungiloALista(userID,nome,prezzo,marca,dimensione,categoria,quantita,descrizione,idLista);
+        Dati.creaProdottoEAggiungiloALista(prodottoInLista, this);
     }
 
     @Override
     public void OnRequestCondividiLista(Lista lista, Utente utente) {
         //Quando viene premuto un utente nella lista utenti sulla condivisione
         System.out.println("MainActivity - Lista " + lista.getNome() + " da condividere");
-        Dati.condividiLista(lista,utente);
+        Dati.condividiLista(lista, utente, this);
         LoadingOverlayHandler.mostraLoading(this);
     }
 

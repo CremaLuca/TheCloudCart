@@ -16,41 +16,28 @@ import android.widget.Spinner;
 import org.cramest.thecloudcart.R;
 import org.cramest.thecloudcart.classi.Categoria;
 import org.cramest.thecloudcart.classi.Dati;
+import org.cramest.thecloudcart.classi.Prodotto;
+import org.cramest.thecloudcart.classi.ProdottoInLista;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreaProdottoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CreaProdottoFragment extends Fragment{
 
-    private static final String ARG_PARAM1 = "userID";
-    private static final String ARG_PARAM2 = "listID";
+    private static final String ARG_PARAM = "listID";
 
     private int listID;
-    private String userID;
 
     private OnCreaProdottiListener mListener;
     private int curCategoriaID;
 
     public CreaProdottoFragment() {
-        // Required empty public constructor
+
     }
 
-    /** TODO : Rifare documentazione
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param listID Parameter 1.
-     * @return A new instance of fragment AggiungiListaFragment.
-     */
-    public static CreaProdottoFragment newInstance(String userID, int listID) {
+    public static CreaProdottoFragment newInstance(int listID) {
         CreaProdottoFragment fragment = new CreaProdottoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, userID);
-        args.putInt(ARG_PARAM2, listID);
+        args.putInt(ARG_PARAM, listID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,15 +46,13 @@ public class CreaProdottoFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userID = getArguments().getString(ARG_PARAM1);
-            listID = getArguments().getInt(ARG_PARAM2);
+            listID = getArguments().getInt(ARG_PARAM);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_crea_prodotto, container, false);
     }
 
@@ -110,7 +95,10 @@ public class CreaProdottoFragment extends Fragment{
             System.out.println("CreaProdottoFragment - Manca prezzo o quantita, ma non importa");
         }
         //TODO : Controlli sui dati inseriti
-        mListener.OnDevoCreareProdotto(nome,prezzo,marca,dimensione,categoria,quantita,descrizione,listID);
+        int idCasuale = 66666;
+        Prodotto prod = new Prodotto(idCasuale, nome, prezzo, marca, dimensione, categoria);
+        ProdottoInLista prodottoInLista = new ProdottoInLista(listID, prod, quantita, descrizione);
+        mListener.OnDevoCreareProdotto(prodottoInLista);
 
     }
 
@@ -167,6 +155,6 @@ public class CreaProdottoFragment extends Fragment{
     }
 
     public interface OnCreaProdottiListener {
-        void OnDevoCreareProdotto(String nome,Double prezzo,String marca,String dimensione,Categoria categoria,int quantita,String descrizione, int idLista);
+        void OnDevoCreareProdotto(ProdottoInLista prodottoInLista);
     }
 }
